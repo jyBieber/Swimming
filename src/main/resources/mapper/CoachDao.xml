@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.it.swim.dao.CoachDao">
+    <select id="queryCoach" resultType="com.it.swim.entity.Coach">
+        SELECT coach_id, password, coach_name, profile_img, gender, age, phone, email, remarks
+        FROM coach
+    </select>
+
+    <select id="queryCoachById" resultType="com.it.swim.entity.Coach">
+        SELECT coach_id, password, coach_name, profile_img, gender, age, phone, email, remarks
+        FROM coach
+        WHERE coach_id = #{coachId}
+    </select>
+
+    <insert id="addCoach" useGeneratedKeys="true" keyColumn="cardRecord_id" keyProperty="cardRecordId">
+        INSERT INTO
+            coach
+        (coach_id, coach_name, profile_img, gender, age, phone, email, remarks)
+        VALUES
+        (#{coachId},#{coachName},#{profileImg},#{gender},#{age},#{phone},#{email},#{remarks})
+    </insert>
+
+    <update id="modifyCoach" parameterType="com.it.swim.entity.Coach"
+            keyProperty="coach_id" useGeneratedKeys="true">
+        UPDATE coach
+        <set>
+            <if test="password != null">password=#{password},</if>
+            <if test="coachName != null">coach_name=#{coachName},</if>
+            <if test="profileImg != null">profile_img=#{profileImg},</if>
+            <if test="gender != null">gender=#{gender},</if>
+            <if test="age != null">age=#{age},</if>
+            <if test="phone != null">phone=#{phone},</if>
+            <if test="email != null">email=#{email},</if>
+            <if test="remarks != null">remarks=#{remarks},</if>
+        </set>
+        WHERE coach_id = #{coachId}
+    </update>
+
+    <delete id="deleteCoach">
+        DELETE FROM
+            coach
+        WHERE
+            coach_id = #{coachId}
+    </delete>
+</mapper>

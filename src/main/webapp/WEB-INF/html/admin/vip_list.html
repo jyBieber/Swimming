@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>会员列表</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="../../../resources/layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../../../resources/layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+
+  <div class="layui-card layadmin-header">
+    <div class="layui-breadcrumb" lay-filter="breadcrumb">
+      <a lay-href="">主页</a>
+      <a><cite>组件</cite></a>
+      <a><cite>数据表格</cite></a>
+      <a><cite>开启头部工具栏</cite></a>
+    </div>
+  </div>
+  
+  <div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+      <div class="layui-col-md12">
+        <div class="layui-card">
+          <div class="layui-card-header">会员信息列表</div>
+          <div class="layui-card-body">
+            <table class="layui-hide" id="vip-list" lay-filter="vip-list"></table>
+             
+            <script type="text/html" id="operation">
+              <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+              <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+            </script>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="../../../resources/layuiadmin/layui/layui.js"></script>
+  <script src="../../../resources/js/common.js"></script>
+  <script>
+  layui.config({
+    base: '../../../resources/layuiadmin/' //静态资源所在路径
+  }).extend({
+    index: 'lib/index' //主入口模块
+  }).use(['index', 'table', 'form'], function(){
+    var table = layui.table
+    ,$ = layui.$
+    ,form = layui.form
+    ,layer = layui.layer;
+
+    /* 自定义验证规则 */
+    form.verify({
+      vipName: function(value){
+        if(containsNumber(value) === true){
+          return '会员姓名不能含有数字';
+        }
+      }
+    });
+  
+    table.render({
+      elem: '#vip-list'
+      ,id: 'vipTable'
+      ,url: '/admin/listVip'
+      ,toolbar: '#operation'
+      ,title: '会员信息列表'
+      ,cols: [[
+        {field:'vipId', title:'会员ID号', width:120, fixed: 'left', unresize: true, sort: true},
+        {field:'password', title:'密码', width:150},
+        {field:'vipName', title:'会员姓名', width:120, sort: true},
+        {field:'gender', title:'性别', width:80},
+        {field:'age', title:'年龄', width:80},
+        {field:'phone', title:'电话', width:80},
+        {field:'email', title:'邮箱', width:150, templet: function(res){
+          return '<em>'+ res.email +'</em>'
+        }},
+        // {field:'type', title:'会员种类', width:80},
+        // {field: 'createTime', title: '激活时间', width: 200, sort: true},
+        // {field: 'expireTime', title: '到期时间', width: 200, sort: true},
+        {field:'remarks', title:'备注', width:250},
+        {fixed: 'right', title:'操作', toolbar: '#operation', width:150}
+      ]]
+      ,page: true
+    });
+    
+    //监听行工具事件
+    table.on('tool(vip-list)', function(obj){
+      var data = obj.data;
+      if(obj.event === 'del'){
+        layer.confirm('确定要删除吗', function(index){
+          delVipById(data.vipId);
+          layer.close(index);
+        });
+      } else if(obj.event === 'edit'){
+        layer.open({
+          //layer提供了5种层类型。可传入的值有：0（信息框，默认）1（页面层）2（iframe层）3（加载层）4（tips层）
+          type: 1,
+          title: "修改会员信息",
+          area: ['600px', '400px'],
+          content: $("#popUpdateVip")//引用的弹出层的页面层的方式加载修改界面表单
+      });
+        //动态向表传递赋值可以参看文章进行修改界面的更新前数据的显示，当然也是异步请求的要数据的修改数据的获取
+        setFormValue(obj,data);
+      }
+    });
+    layui.use('form',function(){
+      var form = layui.form;
+      //刷新界面 所有元素
+      form.render();
+    });
+    // layui.use('laydate', function(){
+    //   var laydate = layui.laydate;
+    //
+    //   //日期时间选择器，#expireTime为时间选择标签的Id
+    //   laydate.render({
+    //     elem: '#createTime'
+    //     ,format: 'yyyy-MM-dd'
+    //   });
+    //   laydate.render({
+    //     elem: '#expireTime'
+    //     ,min: 0
+    //     ,max: 366
+    //     ,format: 'yyyy-MM-dd'
+    //   });
+    // });
+
+    //删除记录
+    function delVipById(id) {
+      $.get("/admin/deleteVip?vipId=" + id,
+              function(res) {
+                if(res.success){
+                  layer.msg('删除成功');
+                  table.reload('vipTable', {//vipTable是组件名称,表格名
+                    page: {//page参数是指重新刷新后从第几页开始
+                      curr: 1 //重新从第 1 页开始
+                    }
+                  }, 'data');//data是默认值
+                }
+              });
+    }
+
+    //监听弹出框表单提交，massage是修改界面的表单数据'submit(edit-vip),是修改按钮的绑定
+    function setFormValue(obj,data){
+      $('input[name="vipId"]').val(data.vipId);
+      $('input[name="vipName"]').val(data.vipName);
+      $('input[name="age"]').val(data.age);
+      $('input[name="phone"]').val(data.phone);
+      $('input[name="email"]').val(data.email);
+      // $('input[name="type"]').val(data.type);
+      // $('#createTime').val(data.createTime);
+      // $('#expireTime').val(data.expireTime);
+      $('textarea[name="remarks"]').text(data.remarks);
+
+      form.on('submit(edit-vip)', function() {
+        var vip = {};
+
+        // 获取缩略图文件流
+        var vipImg = $('input[name="profileImg"]')[0].files[0];
+        vip.vipId = $('input[name="vipId"]').val();
+        vip.vipName = $('input[name="vipName"]').val();
+        vip.gender = $('input[name="gender"]:checked').val();
+        vip.age = $('input[name="age"]').val();
+        vip.phone = $('input[name="phone"]').val();
+        vip.email = $('input[name="email"]').val();
+        // vip.type = $('input[name="type"]:checked').val();
+        // vip.createTime = $('#createTime').val();
+        // vip.expireTime = $('#expireTime').val();
+        vip.remarks = $('textarea[name="remarks"]').val();
+
+        var formData = new FormData();
+        formData.append('vipImg', vipImg);
+        formData.append('vipStr',JSON.stringify(vip));
+
+        $.ajax({
+          url:'/admin/modifyVip',
+          type:'post',
+          data:formData,
+          contentType : false,
+          processData : false,
+          cache : false,
+          success:function(res){
+            if (res.success){
+              layer.msg("修改会员信息成功");
+              table.reload('vipTable', {//vipTable是组件名称,表格名
+                page: {//page参数是指重新刷新后从第几页开始
+                  curr: 1 //重新从第 1 页开始
+                }
+              }, 'data');//data是默认值
+            }else {
+              layer.msg("修改会员信息失败" + res.errMsg);
+            }
+          }
+        })
+        return false;
+      })
+    }
+  });
+  </script>
+
+
+<!--这里是弹出层的表单信息-->
+<!--style是在本页隐藏，只有点击编辑才会弹出-->
+  <div class="layui-row" id="popUpdateVip" style="display:none;">
+    <div class="layui-col-md10">
+      <form class="layui-form layui-from-pane" action="" style="margin-top:20px" lay-filter="modify-vip">
+        <div class="layui-form-item">
+          <div class="layui-inline">
+            <label class="layui-form-label">会员头像</label>
+            <input type="file" name="profileImg">
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <div class="layui-inline">
+            <label class="layui-form-label">会员ID</label>
+            <div class="layui-input-inline">
+              <input type="text" name="vipId" class="layui-input" readonly>
+            </div>
+          </div>
+          <div class="layui-inline">
+            <label class="layui-form-label">会员姓名</label>
+            <div class="layui-input-inline">
+              <input type="text" name="vipName" lay-verify="required|vipName" class="layui-input">
+            </div>
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <label class="layui-form-label">性别</label>
+          <div class="layui-input-block">
+            <input type="radio" name="gender" value="男" title="男">
+            <input type="radio" name="gender" value="女" title="女">
+          </div>
+        </div>
+
+        <div class="layui-form-item">
+          <label class="layui-form-label">年龄</label>
+          <div class="layui-input-block">
+            <input type="text" name="age" lay-verify="age" placeholder="" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+
+        <div class="layui-form-item">
+          <label class="layui-form-label">电话</label>
+          <div class="layui-input-block">
+            <input type="text" name="phone" lay-verify="phone" placeholder="" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+
+        <div class="layui-form-item">
+          <label class="layui-form-label">邮箱</label>
+          <div class="layui-input-block">
+            <input type="text" name="email" lay-verify="email" placeholder="" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+
+        <!--<div class="layui-form-item">-->
+        <!--  <label class="layui-form-label">会员卡种类</label>-->
+        <!--  <div class="layui-input-block">-->
+        <!--    <input type="radio" name="type" value="年卡" title="年卡">-->
+        <!--    <input type="radio" name="type" value="季卡" title="季卡">-->
+        <!--    <input type="radio" name="type" value="月卡" title="月卡">-->
+        <!--  </div>-->
+        <!--</div>-->
+
+        <!--<div class="layui-form-item">-->
+        <!--  <label class="layui-form-label">激活时间</label>-->
+        <!--  <div class="layui-input-inline">-->
+        <!--    <input type="text" class="layui-input" id="createTime" placeholder="yyyy年M月d日H时">-->
+        <!--  </div>-->
+        <!--</div>-->
+
+        <!--<div class="layui-form-item">-->
+        <!--  <label class="layui-form-label">到期时间</label>-->
+        <!--  <div class="layui-input-inline">-->
+        <!--    <input type="text" class="layui-input" id="expireTime" placeholder="yyyy年M月d日H时">-->
+        <!--  </div>-->
+        <!--</div>-->
+
+        <div class="layui-form-item layui-form-text">
+          <label class="layui-form-label">备注</label>
+          <div class="layui-input-block">
+            <textarea name="remarks" placeholder="请输入内容" class="layui-textarea"></textarea>
+          </div>
+        </div>
+
+        <div class="layui-form-item layui-layout-admin">
+          <div class="layui-input-block">
+            <div class="layui-footer" style="left: 0;">
+              <button class="layui-btn" lay-submit="" lay-filter="edit-vip">立即提交</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</body>
+</html>

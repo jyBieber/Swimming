@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>添加上课记录信息</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="../../../resources/layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../../../resources/layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+
+  <div class="layui-fluid">
+    <div class="layui-card">
+      <div class="layui-card-header">添加上课记录信息</div>
+      <div class="layui-card-body" style="padding: 15px;">
+        <form class="layui-form" action="" lay-filter="add-courseRecordInfo">
+
+          <div class="layui-form-item">
+            <label class="layui-form-label">课程缴费列表</label>
+            <div class="layui-input-block">
+              <div class="layui-col-md6">
+                <select id="coursePay">
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="layui-form-item">
+            <label class="layui-form-label">教练列表</label>
+            <div class="layui-input-block">
+              <div class="layui-col-md6">
+                <select id="coach">
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="layui-form-item">
+            <label class="layui-form-label">上课时间</label>
+            <div class="layui-input-inline">
+              <input type="text" class="layui-input" id="createTime" placeholder="yyyy-MM-dd HH:mm:ss">
+            </div>
+          </div>
+
+          <div class="layui-form-item">
+            <label class="layui-form-label">上课状态</label>
+            <div class="layui-input-block">
+              <input type="radio" name="isAttend" value="0" title="未上课">
+              <input type="radio" name="isAttend" value="1" title="已上课">
+            </div>
+          </div>
+
+          <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">备注</label>
+            <div class="layui-input-block">
+              <textarea name="remarks" placeholder="请输入内容" class="layui-textarea"></textarea>
+            </div>
+          </div>
+
+          <div class="layui-form-item layui-layout-admin">
+            <div class="layui-input-block">
+              <div class="layui-footer" style="left: 0;">
+                <button class="layui-btn" lay-submit="" lay-filter="add-courseRecord">立即提交</button>
+              </div>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+
+    
+  <script src="../../../resources/layuiadmin/layui/layui.js"></script>
+  <script src="../../../resources/js/common.js"></script>
+  <script>
+    layui.use('form',function(){
+      var form = layui.form;
+      //刷新界面 所有元素
+      form.render();
+
+    });
+    layui.use('laydate', function(){
+      var laydate = layui.laydate;
+      //日期时间选择器，#expireTime为时间选择标签的Id
+      laydate.render({
+        elem: '#createTime'
+        ,type: 'datetime'
+        ,format: 'yyyy-MM-dd HH:mm:ss'
+      });
+    });
+  layui.config({
+    base: '../../../resources/layuiadmin/' //静态资源所在路径
+  }).extend({
+    index: 'lib/index' //主入口模块
+  }).use(['index', 'form'], function(){
+    var $ = layui.$
+    ,layer = layui.layer
+    ,form = layui.form;
+
+    form.render(null, 'add-courseRecordInfo');
+
+    getCoursePayList();
+    getCoachList();
+
+    // 获取课程缴费列表
+    function getCoursePayList(){
+      $.get('/admin/listCoursePayMap', function(res) {
+        if (res.success){
+          var tempHtml = '';
+          //根据课程缴费列表动态拼接html
+          res.coursePayList.map(function (item, index) {
+            tempHtml += '<option data-id="' + item.coursePayId + '">'
+                    + ' — 会员：' + item.vip.vipName + '（会员ID：'+ item.vip.vipId +'）'
+                    + ' — 课程类别：' + item.type + '</option>';
+          });
+          $('#coursePay').html(tempHtml);
+          form.render('select');
+        }
+      });
+    }
+
+    // 获取教练列表
+    function getCoachList(){
+      $.get('/admin/listCoachMap', function(res) {
+        if (res.success){
+          var tempHtml = '';
+          // 若访问成功，则依据后台传递过来的教练信息为表单元素赋值
+          res.coachList.map(function (item, index) {
+            tempHtml += '<option data-id="' + item.coachId + '">'
+                    + item.coachName + '</option>';
+          });
+          $('#coach').html(tempHtml);
+          form.render('select');
+        }
+      });
+    }
+
+    var courseRecord = {};
+    
+    /* 监听提交 */
+    form.on('submit(add-courseRecord)', function(){
+      courseRecord.createTime = $('#createTime').val();
+      courseRecord.isAttend = $('input[name="isAttend"]:checked').val();
+      courseRecord.remark = $('textarea[name="remark"]').val();
+      courseRecord.coursePay = {
+        coursePayId : $('#coursePay').find('option').not(function () {
+          return !this.selected;
+        }).data('id')
+      };
+      courseRecord.coach = {
+        coachId : $('#coach').find('option').not(function () {
+          return !this.selected;
+        }).data('id')
+      };
+
+      var formData = new FormData();
+      formData.append('courseRecordStr',JSON.stringify(courseRecord));
+
+      //用ajax时需要注意你的url接口、采用哪一种方式type获取，它的使用的哪种数据类型datatype
+      $.ajax({
+        url:'/admin/addCourseRecord',
+        type:'post',
+        data:formData,
+        contentType : false,
+        processData : false,
+        success:function(res){
+          if (res.success){
+            layer.msg("添加上课记录信息成功");
+          }else {
+            layer.msg("添加上课记录信息失败" + res.errMsg);
+          }
+        }
+      })
+      return false;
+    });
+
+  });
+  </script>
+</body>
+</html>

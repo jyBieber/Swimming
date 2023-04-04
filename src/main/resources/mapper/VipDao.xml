@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.it.swim.dao.VipDao">
+    <resultMap id="vipMap" type="com.it.swim.entity.Vip">
+        <id column="vip_id" property="vipId"/>
+        <result column="password" property="password"/>
+        <result column="vip_name" property="vipName"/>
+        <result column="profile_img" property="profileImg"/>
+        <result column="gender" property="gender"/>
+        <result column="age" property="age"/>
+        <result column="phone" property="phone"/>
+        <result column="email" property="email"/>
+        <result column="remarks" property="remarks"/>
+    </resultMap>
+
+    <select id="queryVip" resultMap="vipMap">
+        SELECT vip_id, password, vip_name, profile_img, gender, age, phone, email, remarks
+        FROM vip
+    </select>
+
+    <select id="queryVipById" resultMap="vipMap" parameterType="Long">
+        SELECT vip_id, password, vip_name, profile_img, gender, age, phone, email, remarks
+        FROM vip WHERE vip_id = #{vipId}
+    </select>
+
+    <insert id="addVip" useGeneratedKeys="true" keyColumn="vip_id" keyProperty="vipId">
+        INSERT INTO
+            vip
+        (vip_id, vip_name, profile_img, gender, age, phone, email, remarks)
+        VALUES
+        (#{vipId},#{vipName},#{profileImg},#{gender},#{age},#{phone},#{email},#{remarks})
+    </insert>
+
+    <update id="modifyVip" parameterType="com.it.swim.entity.Vip">
+        UPDATE vip
+        <set>
+            <if test="password != null">password=#{password},</if>
+            <if test="vipName != null">vip_name=#{vipName},</if>
+            <if test="profileImg != null">profile_img=#{profileImg},</if>
+            <if test="gender != null">gender=#{gender},</if>
+            <if test="age != null">age=#{age},</if>
+            <if test="phone != null">phone=#{phone},</if>
+            <if test="email != null">email=#{email},</if>
+            <if test="remarks != null">remarks=#{remarks},</if>
+        </set>
+        where vip_id=#{vipId}
+    </update>
+
+    <delete id="deleteVip">
+        DELETE FROM
+            vip
+        WHERE
+            vip_id = #{vipId}
+    </delete>
+</mapper>

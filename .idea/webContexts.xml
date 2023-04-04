@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebContextManager">
+    <option name="state">
+      <map>
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/html/admin/add_coach.html" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/html/admin" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/html/admin/clazz_list.html" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/html/admin" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/html/admin/coach_list.html" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/html/admin" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/html/coach/add_goods.html" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/html/coach" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/html/coach/coach_index.html" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/html/coach" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/html/coach/set.html" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/html/coach" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/html/coach/vipGoods_info.html" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/html/coach" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/html/coach/vipGoods_list.html" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/html/coach" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/html/coach/vip_info.html" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/html/coach" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/html/vip/vipGoods_info.html" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/html/vip" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/html/vip/vipGoods_list.html" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/html/vip" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/login.html" value="file://$PROJECT_DIR$/src/main/webapp" />
+      </map>
+    </option>
+  </component>
+</project>

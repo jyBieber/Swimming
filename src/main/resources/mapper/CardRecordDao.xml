@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.it.swim.dao.CardRecordDao">
+    <resultMap id="cardRecordMap" type="com.it.swim.entity.CardRecord">
+        <id column=" card_record_id" property="cardRecordId"/>
+        <result column="create_time" property="createTime"/>
+        <result column="remarks" property="remarks"/>
+
+        <association property="vipCard" column="vip_card_id" javaType="com.it.swim.entity.VipCard">
+            <id column="vip_card_id" property="vipCardId"/>
+            <result column="vip_id" property="vip.vipId"/>
+            <result column="vip_name" property="vip.vipName"/>
+            <result column="type" property="type"/>
+        </association>
+    </resultMap>
+    <select id="queryCardRecord" resultType="com.it.swim.entity.CardRecord" resultMap="cardRecordMap">
+        SELECT
+            cr.card_record_id, cr.vip_card_id, vc.vip_id, v.vip_name, vc.type,cr.create_time, cr.remarks
+        FROM
+            card_record cr, vip v, vip_card vc
+        WHERE
+            vc.vip_id = v.vip_id AND cr.vip_card_id = vc.vip_card_id
+    </select>
+
+    <select id="queryCardRecordById" resultType="com.it.swim.entity.CardRecord" resultMap="cardRecordMap">
+        SELECT
+            cr.card_record_id, cr.vip_card_id, vc.vip_id, v.vip_name, vc.type,cr.create_time, cr.remarks
+        FROM
+            card_record cr, vip v, vip_card vc
+        WHERE
+            card_record_id = #{cardRecordId} AND vc.vip_id = v.vip_id AND cr.vip_card_id = vc.vip_card_id
+    </select>
+
+    <select id="queryCardRecordByVipCardId" resultMap="cardRecordMap">
+        SELECT
+            cr.card_record_id, cr.vip_card_id, vc.vip_id, v.vip_name, vc.type,cr.create_time, cr.remarks
+        FROM
+            card_record cr, vip v, vip_card vc
+        WHERE
+            vip_card_id = #{vipCard.vipCardId} AND vc.vip_id = v.vip_id AND cr.vip_card_id = vc.vip_card_id
+    </select>
+
+    <select id="queryCardRecordByVipId" resultMap="cardRecordMap">
+        SELECT
+            cr.card_record_id, cr.vip_card_id, vc.vip_id, v.vip_name, vc.type,cr.create_time, cr.remarks
+        FROM
+            card_record cr, vip v, vip_card vc
+        WHERE
+            vc.vip_id = #{vipCard.vip.vipId} AND vc.vip_id = v.vip_id AND cr.vip_card_id = vc.vip_card_id
+    </select>
+
+    <insert id="addCardRecord" useGeneratedKeys="true" keyColumn="card_record_id" keyProperty="cardRecordId">
+        INSERT INTO
+            card_record( card_record_id, vip_card_id, create_time, remarks)
+        VALUES
+        (#{cardRecordId},#{vipCard.vipCardId},#{createTime},#{remarks})
+    </insert>
+
+    <update id="modifyCardRecord" parameterType="com.it.swim.entity.CardRecord"
+            keyProperty=" card_record_id" useGeneratedKeys="true">
+        UPDATE card_record
+        <set>
+            <if test="vipCard != null">vip_card_id=#{vipCard.vipCardId},</if>
+            <if test="createTime != null">create_time=#{createTime},</if>
+            <if test="remarks != null">remarks=#{remarks},</if>
+        </set>
+        WHERE  card_record_id = #{cardRecordId}
+    </update>
+
+    <delete id="deleteCardRecord">
+        DELETE FROM
+            cardRecocard_recordrd
+        WHERE
+             card_record_id = #{cardRecordId}
+    </delete>
+</mapper>

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>预约课程</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../../resources/layuiadmin/layui/css/layui.css">
+    <link rel="stylesheet" href="../../../resources/css/global.css">
+</head>
+<body>
+
+<div class="fly-header layui-bg-black">
+    <div class="layui-container">
+        <a class="fly-logo">
+            <img src="../../../resources/img/logo.png" alt="layui">
+        </a>
+        <ul class="layui-nav fly-nav layui-hide-xs">
+            <li class="layui-nav-item layui-this">
+                <a class="vip-index"><i class="iconfont icon-jiaoliu"></i>未来水世界游泳馆会员管理系统-会员界面</a>
+            </li>
+        </ul>
+        <ul class="layui-nav fly-nav-user">
+            <li class="layui-nav-item">
+                <a class="fly-nav-avatar" href="javascript:;">
+                    <cite class="layui-hide-xs" id="cite-name1"></cite>
+                    <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：会员"></i>
+                    <img src="" alt="" id="profileImg1">
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="/vip/set"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
+                    <dd><a class="vip-index"><i class="layui-icon" style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a></dd>
+                    <hr style="margin: 5px 0;">
+                    <dd><a href="/home/logout" style="text-align: center;">退出</a></dd>
+                </dl>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="layui-hide-xs">
+    <div class="fly-panel fly-column">
+        <div class="layui-container">
+            <ul class="layui-clear">
+                <li class="layui-this"><a class="vip-index">首页</a></li>
+                <li><a id="listVipCard">会员卡管理</a></li>
+                <li><a id="listCardRecord">游泳记录管理</a></li>
+                <li><a id="listCoursePay">课程缴费管理</a></li>
+                <li><a id="listCourseRecord">课程管理</a></li>
+                <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><span class="fly-mid"></span></li>
+            </ul>
+
+            <div class="fly-column-right layui-hide-xs">
+                <a href="" class="layui-btn">预约课程</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="layui-container fly-marginTop">
+    <div class="fly-panel" pad20 style="padding-top: 5px;">
+        <div class="layui-form layui-form-pane">
+            <div class="layui-tab layui-tab-brief">
+                <ul class="layui-tab-title">
+                    <li class="layui-this">预约课程</li>
+                </ul>
+                <div class="layui-form layui-tab-content" style="padding: 20px 0;">
+                    <div class="layui-tab-item layui-show">
+                        <form action="" lay-filter="add-courseRecordInfo">
+
+                            <div class="layui-form-item layui-col-md9">
+                                <label class="layui-form-label">课程缴费记录</label>
+                                <div class="layui-input-block">
+                                    <select id="coursePay">
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">教练列表</label>
+                                <div class="layui-input-block">
+                                    <div class="layui-col-md6">
+                                        <select id="coach">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">上课时间</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" id="createTime" placeholder="yyyy-MM-dd HH:mm:ss">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">上课状态</label>
+                                <div class="layui-input-block">
+                                    <input type="radio" name="isAttend" value="0" title="未上课">
+                                    <input type="radio" name="isAttend" value="1" title="已上课">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <button class="layui-btn" lay-submit="" lay-filter="add-courseRecord">立即预约</button>
+                                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="fly-footer">
+    <p>未来水世界游泳馆会员管理系统 2023 &copy;</p>
+</div>
+
+<script src="../../../resources/layuiadmin/layui/layui.js"></script>
+<script src="../../../resources/js/common.js"></script>
+<script>
+    layui.use(['element', 'form', 'laydate'], function(){
+        var $ = layui.jquery
+            ,form = layui.form
+            ,layer = layui.layer
+            ,laydate = layui.laydate;
+
+        //访问后台，获取会员信息
+        $.getJSON('/vip/getVipInfo', function(data) {
+            if (data.success) {
+                var vip = data.vip;
+
+                //判断从后台传入的图片流是否为空，
+                //如果为空，给img标签添加noImage的图片路径
+                //如果不为空，给img标签添加后台传入的图片路径
+                if (vip.profileImg != null){
+                    $('#profileImg').attr('src', vip.profileImg);
+                }else {
+                    $('#profileImg').attr('src', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1597852452753&di=a753cb97410d9e6d3e312f303c326fdb&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F38%2F98%2F25573ca2525d341.jpg');
+                }
+
+                //根据name、Id或Class名称为相应标签里的内容添加值
+                //html-替换标签里的内容
+                //append-在标签原有内容的末尾添加新的内容
+                //attr-给标签添加新的属性值
+                $('#cite-name').html(vip.vipName);
+                $('.vip-index').attr('href', '/vip/index?vipId=' + vip.vipId);
+                $('#listVipCard').attr('href','/vip/vipCard?vipId=' + vip.vipId);
+                $('#listCardRecord').attr('href','/vip/cardRecord?vipId=' + vip.vipId);
+                $('#listCoursePay').attr('href','/vip/coursePay?vipId=' + vip.vipId);
+                $('#listCourseRecord').attr('href','/vip/courseRecord?vipId=' + vip.vipId);
+            }
+        });
+
+        //日期时间选择器，#submitTime为时间选择标签的Id
+        laydate.render({
+            elem: '#createTime'
+            ,type: 'datetime'
+            ,min: 0
+            ,format: 'yyyy-MM-dd HH:mm:ss'
+        });
+
+        //表单渲染（必需的操作），需要在form标签里面添加lay-filter=''
+        form.render(null, 'add-courseRecordInfo');
+
+        getCoursePayList();
+        getCoachList();
+
+        // 获取课程缴费列表
+        function getCoursePayList(){
+            $.get('/vip/listCoursePayMap', function(res) {
+                if (res.success){
+                    var tempHtml = '';
+                    res.coursePayList.map(function (item, index) {
+                        tempHtml += '<option data-id="' + item.coursePayId + '">'
+                            + ' — ID：' + item.coursePayId
+                            + ' — 课程类别：' + item.type + '</option>';
+                    });
+                    $('#coursePay').html(tempHtml);
+                    form.render('select');
+                }
+            });
+        }
+
+        // 获取教练列表
+        function getCoachList(){
+            $.get('/vip/listCoachMap', function(res) {
+                if (res.success){
+                    var tempHtml = '';
+                    // 若访问成功，则依据后台传递过来的教练信息为表单元素赋值
+                    res.coachList.map(function (item, index) {
+                        tempHtml += '<option data-id="' + item.coachId + '">'
+                            + item.coachName + '</option>';
+                    });
+                    $('#coach').html(tempHtml);
+                    form.render('select');
+                }
+            });
+        }
+
+        //定义courseRecord对象（Object）
+        var courseRecord = {};
+
+        //监听表单提交
+        form.on('submit(add-courseRecord)', function(data){
+            //获取表单内所有标签的值
+            courseRecord.createTime = $('#createTime').val();
+            courseRecord.isAttend = $('input[name="isAttend"]:checked').val();
+            courseRecord.remark = $('textarea[name="remark"]').val();
+            courseRecord.coursePay = {
+                coursePayId : $('#coursePay').find('option').not(function () {
+                    return !this.selected;
+                }).data('id')
+            };
+            courseRecord.coach = {
+                coachId : $('#coach').find('option').not(function () {
+                    return !this.selected;
+                }).data('id')
+            };
+
+            var formData = new FormData();
+            formData.append('courseRecordStr',JSON.stringify(courseRecord));
+
+            //用ajax时需要注意你的url接口、采用哪一种方式type获取，它的使用的哪种数据类型datatype
+            $.ajax({
+                url:'/vip/addCourseRecord',
+                type:'post',
+                data:formData,
+                contentType : false,
+                processData : false,
+                success:function(res){
+                    if (res.success){
+                        layer.msg("预约课程成功");
+                    }else {
+                        layer.msg("预约课程失败" + res.errMsg);
+                    }
+                }
+            })
+            return false;
+        });
+
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>用户主页</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="../../../resources/layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../../../resources/css/global.css" media="all">
+</head>
+<body style="margin-top: 65px;">
+
+<div class="fly-header layui-bg-black">
+  <div class="layui-container">
+    <a class="fly-logo">
+      <img src="../../../resources/img/logo.png" alt="layui">
+    </a>
+    <ul class="layui-nav fly-nav layui-hide-xs">
+      <li class="layui-nav-item layui-this">
+        <a class="vip-index"><i class="iconfont icon-jiaoliu"></i>未来水世界游泳馆会员管理系统-会员界面</a>
+      </li>
+    </ul>
+    <ul class="layui-nav fly-nav-user">
+      <li class="layui-nav-item">
+        <a class="fly-nav-avatar" href="javascript:;">
+          <cite class="layui-hide-xs" id="cite-name1"></cite>
+          <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：会员"></i>
+          <img src="" alt="" id="profileImg1">
+        </a>
+        <dl class="layui-nav-child">
+          <dd><a href="/vip/set"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
+          <dd><a class="vip-index"><i class="layui-icon" style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a></dd>
+          <hr style="margin: 5px 0;">
+          <dd><a href="/home/logout" style="text-align: center;">退出</a></dd>
+        </dl>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="layui-hide-xs">
+  <div class="fly-panel fly-column">
+    <div class="layui-container">
+      <ul class="layui-clear">
+        <li class="layui-this"><a class="vip-index">首页</a></li>
+        <li><a id="listVipCard">会员卡管理</a></li>
+        <li><a id="listCardRecord">游泳记录管理</a></li>
+        <li><a id="listCoursePay">课程缴费管理</a></li>
+        <li><a id="listCourseRecord">课程管理</a></li>
+        <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><span class="fly-mid"></span></li>
+      </ul>
+
+      <div class="fly-column-right layui-hide-xs">
+        <a href="/vip/add" class="layui-btn">预约课程</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="fly-home fly-panel">
+  <img src="" alt="" id="profileImg2">
+  <i class="iconfont icon-renzheng" title="认证信息：会员"></i>
+  <h1 id="cite-name2">
+  </h1>
+
+  <p style="padding: 10px 0; color: #5FB878;">认证信息：会员</p>
+
+  <p style="padding: 10px 0; color: #00CBFF;" id="cardRecord-info"></p>
+
+  <p class="fly-home-info">
+    <i class="iconfont layui-icon-release"></i><span id="emailInfo"></span>
+  </p>
+
+  <p class="fly-home-sign" id="remarks"></p>
+</div>
+
+<!--<div class="layui-container">
+  <div class="layui-row layui-col-space15">
+    <div class="layui-col-md6 fly-home-jie">
+      <div class="fly-panel">
+        <h3 class="fly-panel-title">我的课程缴费</h3>
+        <ul class="jie-row" id="coursePay-list">
+        </ul>
+      </div>
+    </div>
+    
+    <div class="layui-col-md6 fly-home-da">
+      <div class="fly-panel">
+        <h3 class="fly-panel-title">教练发布游泳记录情况</h3>
+        <ul class="home-jieda" id="cardRecord-list">
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>-->
+
+<div class="fly-footer">
+    <p>未来水世界游泳馆会员管理系统 2023 &copy; </p>
+</div>
+
+<script src="../../../resources/layuiadmin/layui/layui.js"></script>
+<script src="../../../resources/layuiadmin/modules/timeago.js"></script>
+<script src="../../../resources/js/common.js"></script>
+<script>
+  layui.use(['element', 'util'], function(){
+    var $ = layui.jquery
+        ,util = layui.util;
+
+    //获取一段url中的字段
+    //如loacalhost:8080?coursePayId=1，getQueryString('coursePayId')则获取url中coursePayId的值
+    var vipId = getQueryString('vipId');
+
+    $('#order-course').attr('href','/vip/order?vipId='+vipId);
+
+    //访问后台，获取会员信息
+    $.getJSON('/vip/getVipInfo', function(data) {
+      if (data.success) {
+        //获取后台传递过来的会员信息
+        var vip = data.vip;
+
+        //判断从后台传入的图片流是否为空，
+        //如果为空，给img标签添加noImage的图片路径
+        //如果不为空，给img标签添加后台传入的图片路径
+        if (vip.profileImg != null){
+          $('#profileImg1').attr('src', vip.profileImg);
+          //$('#profileImg2').attr('src', "/resources/imageUpload/item/vip/11/01.jpg")
+          $('#profileImg2').attr('src', vip.profileImg);
+        }else {
+          $('#profileImg1').attr('src', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1597852452753&di=a753cb97410d9e6d3e312f303c326fdb&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F38%2F98%2F25573ca2525d341.jpg');
+          $('#profileImg2').attr('src', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1597852452753&di=a753cb97410d9e6d3e312f303c326fdb&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F38%2F98%2F25573ca2525d341.jpg');
+        }
+
+        //根据name、Id或Class名称为相应标签里的内容添加值
+        //html-替换标签里的内容
+        //append-在标签原有内容的末尾添加新的内容
+        //attr-给标签添加新的属性值
+        $('#cite-name1').html(vip.vipName);
+        $('#emailInfo').html(vip.email);
+        $('#remarks').html(vip.remarks);
+        if (vip.gender === '男'){
+          $('#cite-name2').html(vip.vipName+'<i class="iconfont icon-nan"></i>');
+        }
+        if (vip.gender === '女'){
+          $('#cite-name2').html(vip.vipName+'<i class="iconfont icon-nv"></i>');
+        }
+        $('.vip-index').attr('href', '/vip/index?vipId=' + vip.vipId);
+        $('#listVipCard').attr('href','/vip/vipCard?vipId=' + vip.vipId);
+        $('#listCardRecord').attr('href','/vip/cardRecord?vipId=' + vip.vipId);
+        $('#listCoursePay').attr('href','/vip/coursePay?vipId=' + vip.vipId);
+        $('#listCourseRecord').attr('href','/vip/courseRecord?vipId=' + vip.vipId);
+      }
+    });
+
+    //访问后台，获取会员卡列表
+    // $.getJSON('/vip/listVipCardMap?vipId=' + vipId, function(res) {
+    //   if (res.success){
+    //     var tempHtml = '';
+    //     res.vipCardList.map(function (item) {
+    //       tempHtml += ''
+    //               + '<li>'
+    //               + '<p>'
+    //               + '发布了游泳记录 '
+    //               + '<a href="">'
+    //               + item.cardRecordName
+    //               + '</a>'
+    //               + '</p>'
+    //               + '</li>'
+    //               + '<hr class="layui-bg-blue">'
+    //     });
+    //     $('#vipCard-list').append(tempHtml);
+    //   }
+    // });
+
+    //访问后台，获取课程缴费列表
+    // $.getJSON('/vip/listCoursePayMap', function(res) {
+    //   if (res.success){
+    //     var tempHtml = '';
+    //     res.courseRecordList.map(function (item) {
+    //       tempHtml += ''
+    //               + '<li>'
+    //               + '<a href="/vip/coursePayInfo?coursePayId='
+    //               + item.coursePay.coursePayId
+    //               + '" class="jie-title">'
+    //               + item.coursePay.coursePayName
+    //               + '</a>'
+    //               + '<i>'
+    //               + item.coursePay.coursePaySize
+    //               + ' 人'
+    //               + '</i>'
+    //               + '</li>'
+    //     });
+    //     $('#coursePay-list').append(tempHtml);
+    //   }
+    // });
+
+
+
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.it.swim.dao.VipCardDao">
+    <resultMap id="vipCardMap" type="com.it.swim.entity.VipCard">
+        <id column="vip_card_id" property="vipCardId"/>
+        <result column="type" property="type"/>
+        <result column="amount" property="amount"/>
+        <result column="num" property="num"/>
+        <result column="state" property="state"/>
+        <result column="create_time" property="createTime"/>
+        <result column="expire_time" property="expireTime"/>
+        <result column="remarks" property="remarks"/>
+        
+        <association property="vip" column="vip_id" javaType="com.it.swim.entity.Vip">
+            <id column="vip_id" property="vipId"/>
+            <result column="vip_name" property="vipName"/>
+        </association>
+    </resultMap>
+
+    <select id="queryVipCard" resultMap="vipCardMap">
+        SELECT
+            vc.vip_card_id, vc.vip_id, v.vip_name, vc.type, vc.amount, vc.num, vc.state, vc.create_time, vc.expire_time,vc.remarks
+        FROM
+            vip_card vc, vip v
+        WHERE
+            vc.vip_id = v.vip_id
+    </select>
+
+    <select id="queryVipCardById" resultMap="vipCardMap" parameterType="Long">
+        SELECT
+            vc.vip_card_id, vc.vip_id, v.vip_name, vc.type, vc.amount, vc.num, vc.state, vc.create_time, vc.expire_time,vc.remarks
+        FROM
+            vip_card vc ,   vip v
+        WHERE
+            vc.vip_card_id = #{vipCardId} AND vc.vip_id = v.vip_id
+    </select>
+
+    <select id="queryVipCardByVipId" resultMap="vipCardMap" parameterType="Long">
+        SELECT
+            vc.vip_card_id, vc.vip_id, v.vip_name, vc.type, vc.amount, vc.num, vc.state, vc.create_time, vc.expire_time,vc.remarks
+        FROM
+            vip_card vc ,  vip v
+        WHERE
+            vc.vip_id = #{vipId} AND vc.vip_id = v.vip_id
+    </select>
+
+    <insert id="addVipCard" useGeneratedKeys="true" keyColumn="vip_card_id" keyProperty="vipCardId">
+        INSERT INTO
+            vip_card
+        (vip_card_id, vip_id, type, amount, num, state, create_time, expire_time, remarks)
+        VALUES
+        (#{vipCardId},#{vip.vipId},#{type}, #{amount}, #{num},#{state},#{createTime},#{expireTime},#{remarks})
+    </insert>
+
+    <update id="modifyVipCard" parameterType="com.it.swim.entity.VipCard">
+        UPDATE vip_card
+        <set>
+            <if test="vip != null">vip_id=#{vip.vipId},</if>
+            <if test="type != null">type=#{type},</if>
+            <if test="amount != null">amount=#{amount},</if>
+            <if test="num != null">num=#{num},</if>
+            <if test="state != null">state=#{state},</if>
+            <if test="createTime != null">create_time=#{createTime},</if>
+            <if test="expireTime != null">expire_time=#{expireTime},</if>
+            <if test="remarks != null">remarks=#{remarks},</if>
+        </set>
+        where vip_card_id=#{vipCardId}
+    </update>
+
+    <delete id="deleteVipCard">
+        DELETE FROM
+            vip_card
+        WHERE
+            vip_card_id = #{vipCardId}
+    </delete>
+</mapper>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>未来水世界游泳馆会员管理系统-管理员界面</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="../../../resources/layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../../../resources/layuiadmin/style/admin.css" media="all">
+</head>
+<body class="layui-layout-body">
+  
+  <div id="LAY_app">
+    <div class="layui-layout layui-layout-admin">
+      <div class="layui-header">
+        <!-- 头部区域 -->
+        <ul class="layui-nav layui-layout-left">
+          <li class="layui-nav-item layadmin-flexible" lay-unselect>
+            <a href="javascript:;" layadmin-event="flexible" title="侧边伸缩">
+              <i class="layui-icon layui-icon-shrink-right" id="LAY_app_flexible"></i>
+            </a>
+          </li>
+          <li class="layui-nav-item" lay-unselect>
+            <a href="javascript:;" layadmin-event="refresh" title="刷新">
+              <i class="layui-icon layui-icon-refresh-3"></i>
+            </a>
+          </li>
+        </ul>
+        <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
+
+          <li class="layui-nav-item" lay-unselect>
+            <a href="javascript:;">
+              <cite class="cite-name"></cite>
+            </a>
+            <dl class="layui-nav-child">
+              <dd><a lay-href="/admin/adminInfo">基本资料</a></dd>
+              <dd><a lay-href="/admin/passwordModify">修改密码</a></dd>
+              <hr>
+              <dd layadmin-event="logout" style="text-align: center;"><a href="/home/logout">退出</a></dd>
+            </dl>
+          </li>
+          <li class="layui-nav-item layui-hide-xs" lay-unselect>
+            <a href="javascript:;" layadmin-event="fullscreen">
+              <i class="layui-icon layui-icon-screen-full"></i>
+            </a>
+          </li>
+          
+        </ul>
+      </div>
+      
+      <!-- 侧边菜单 -->
+      <div class="layui-side layui-side-menu">
+        <div class="layui-side-scroll">
+          <div class="layui-logo">
+            <span>未来水世界游泳馆会员管理系统-管理员界面</span>
+          </div>
+          
+          <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
+
+            <li data-name="vipManagement" class="layui-nav-item">
+              <a href="javascript:;" lay-tips="会员信息管理" lay-direction="2">
+                <i class="layui-icon layui-icon-username"></i>
+                <cite>会员信息管理</cite>
+              </a>
+              <dl class="layui-nav-child">
+                <dd data-name="addVip">
+                  <a lay-href="/admin/vipAdd">添加会员</a>
+                </dd>
+                <dd data-name="vipList">
+                  <a lay-href="/admin/vipList">会员列表</a>
+                </dd>
+              </dl>
+            </li>
+
+            <li data-name="vipCardManagement" class="layui-nav-item">
+              <a href="javascript:;" lay-tips="会员信息管理" lay-direction="2">
+                <i class="layui-icon layui-icon-username"></i>
+                <cite>办卡记录管理</cite>
+              </a>
+              <dl class="layui-nav-child">
+                <dd data-name="addVipCard">
+                  <a lay-href="/admin/vipCardAdd">添加会员卡</a>
+                </dd>
+                <dd data-name="vipCardList">
+                  <a lay-href="/admin/vipCardList">会员卡列表</a>
+                </dd>
+              </dl>
+            </li>
+
+            <li data-name="cardRecordManagement" class="layui-nav-item">
+              <a href="javascript:;" lay-tips="游泳记录信息管理" lay-direction="2">
+                <i class="layui-icon layui-icon-component"></i>
+                <cite>游泳记录信息管理</cite>
+              </a>
+              <dl class="layui-nav-child">
+                <dd data-name="addCardRecord">
+                  <a lay-href="/admin/cardRecordAdd">添加游泳记录</a>
+                </dd>
+                <dd data-name="cardRecordList">
+                  <a lay-href="/admin/cardRecordList">游泳记录列表</a>
+                </dd>
+              </dl>
+            </li>
+
+            <li data-name="coachMnagement" class="layui-nav-item">
+              <a href="javascript:;" lay-tips="教练信息管理" lay-direction="2">
+                <i class="layui-icon layui-icon-friends"></i>
+                <cite>教练信息管理</cite>
+              </a>
+              <dl class="layui-nav-child">
+                <dd data-name="addCoach">
+                  <a lay-href="/admin/coachAdd">添加教练</a>
+                </dd>
+                <dd data-name="coachList">
+                  <a lay-href="/admin/coachList">教练列表</a>
+                </dd>
+              </dl>
+            </li>
+
+            <li data-name="coursePayManagement" class="layui-nav-item">
+              <a href="javascript:;" lay-tips="课程缴费信息管理" lay-direction="2">
+                <i class="layui-icon layui-icon-component"></i>
+                <cite>课程缴费信息管理</cite>
+              </a>
+              <dl class="layui-nav-child">
+                <dd data-name="addCoursePay">
+                  <a lay-href="/admin/coursePayAdd">添加课程缴费记录</a>
+                </dd>
+                <dd data-name="coursePayList">
+                  <a lay-href="/admin/coursePayList">课程缴费列表</a>
+                </dd>
+              </dl>
+            </li>
+
+            <li data-name="courseRecordManagement" class="layui-nav-item">
+              <a href="javascript:;" lay-tips="上课记录信息管理" lay-direction="2">
+                <i class="layui-icon layui-icon-component"></i>
+                <cite>上课记录信息管理</cite>
+              </a>
+              <dl class="layui-nav-child">
+                <dd data-name="addCourseRecord">
+                  <a lay-href="/admin/courseRecordAdd">添加上课记录</a>
+                </dd>
+                <dd data-name="courseRecordList">
+                  <a lay-href="/admin/courseRecordList">上课记录列表</a>
+                </dd>
+              </dl>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+
+      <!-- 页面标签 -->
+      <div class="layadmin-pagetabs" id="LAY_app_tabs">
+        <div class="layui-icon layadmin-tabs-control layui-icon-prev" layadmin-event="leftPage"></div>
+        <div class="layui-icon layadmin-tabs-control layui-icon-next" layadmin-event="rightPage"></div>
+        <div class="layui-icon layadmin-tabs-control layui-icon-down">
+          <ul class="layui-nav layadmin-tabs-select" lay-filter="layadmin-pagetabs-nav">
+            <li class="layui-nav-item" lay-unselect>
+              <a href="javascript:;"></a>
+              <dl class="layui-nav-child layui-anim-fadein">
+                <dd layadmin-event="closeThisTabs"><a href="javascript:;">关闭当前标签页</a></dd>
+                <dd layadmin-event="closeOtherTabs"><a href="javascript:;">关闭其它标签页</a></dd>
+                <dd layadmin-event="closeAllTabs"><a href="javascript:;">关闭全部标签页</a></dd>
+              </dl>
+            </li>
+          </ul>
+        </div>
+        <div class="layui-tab" lay-unauto lay-allowClose="true" lay-filter="layadmin-layout-tabs">
+          <ul class="layui-tab-title" id="LAY_app_tabsheader">
+            <li lay-id="" lay-attr="" class="layui-this"><i class="layui-icon layui-icon-home"></i></li>
+          </ul>
+        </div>
+      </div>
+      
+      
+      <!-- 主体内容 -->
+      <div class="layui-body" id="LAY_app_body">
+        <div class="layadmin-tabsbody-item layui-show">
+        </div>
+      </div>
+      
+      <!-- 辅助元素，一般用于移动设备下遮罩 -->
+      <div class="layadmin-body-shade" layadmin-event="shade"></div>
+    </div>
+  </div>
+
+  <script src="../../../resources/layuiadmin/layui/layui.js"></script>
+  <script src="../../../resources/js/common.js"></script>
+  <script>
+  layui.config({
+    base: '../../../resources/layuiadmin/' //静态资源所在路径
+  }).extend({
+    index: 'lib/index' //主入口模块
+  }).use('index',function (){
+    var $ = layui.jquery;
+    var adminName = getQueryString('adminName');
+    $('.cite-name').html(adminName);
+  });
+  </script>
+  
+  <!-- 百度统计 -->
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?d214947968792b839fd669a4decaaffc";
+    var s = document.getElementsByTagName("script")[0]; 
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+
+</body>
+</html>
+
+

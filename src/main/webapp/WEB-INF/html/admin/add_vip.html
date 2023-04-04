@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>添加会员</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="../../../resources/layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../../../resources/layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+
+  <div class="layui-fluid">
+    <div class="layui-card">
+      <div class="layui-card-header">添加会员信息</div>
+      <div class="layui-card-body" style="padding: 15px;">
+        <form class="layui-form" action="" lay-filter="add-vipInfo">
+
+          <div class="layui-form-item">
+            <div class="layui-inline">
+              <label class="layui-form-label">会员头像</label>
+              <input type="file" name="profileImg">
+            </div>
+          </div>
+
+          <div class="layui-form-item">
+            <div class="layui-inline">
+              <label class="layui-form-label">会员号</label>
+              <div class="layui-input-inline">
+                <input type="text" name="vipId" lay-verify="required|vipId" autocomplete="off" class="layui-input">
+              </div>
+            </div>
+
+            <div class="layui-inline">
+              <label class="layui-form-label">会员姓名</label>
+              <div class="layui-input-inline">
+                <input type="text" name="vipName" lay-verify="required|vipName" autocomplete="off" class="layui-input">
+              </div>
+            </div>
+          </div>
+
+          <div class="layui-form-item">
+            <label class="layui-form-label">性别</label>
+            <div class="layui-input-block">
+              <input type="radio" name="gender" value="男" title="男">
+              <input type="radio" name="gender" value="女" title="女">
+            </div>
+          </div>
+
+          <div class="layui-form-item">
+            <label class="layui-form-label">年龄</label>
+            <div class="layui-input-block">
+              <input type="text" name="age" lay-verify="age" placeholder="" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+
+          <div class="layui-form-item">
+            <label class="layui-form-label">电话</label>
+            <div class="layui-input-block">
+              <input type="text" name="phone" lay-verify="phone" placeholder="" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+
+          <div class="layui-form-item">
+            <label class="layui-form-label">邮箱</label>
+            <div class="layui-input-block">
+              <input type="text" name="email" lay-verify="email" placeholder="" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+
+          <!--<div class="layui-form-item">
+            <label class="layui-form-label">会员卡种类</label>
+            <div class="layui-input-block">
+              <input type="radio" name="type" value="年卡" title="年卡">
+              <input type="radio" name="type" value="季卡" title="季卡">
+              <input type="radio" name="type" value="月卡" title="月卡">
+            </div>
+          </div>
+
+          <div class="layui-form-item">
+            <label class="layui-form-label">激活时间</label>
+            <div class="layui-input-inline">
+              <input type="text" class="layui-input" id="createTime" placeholder="yyyy-MM-dd">
+            </div>
+          </div>
+
+          <div class="layui-form-item">
+            <label class="layui-form-label">到期时间</label>
+            <div class="layui-input-inline">
+              <input type="text" class="layui-input" id="expireTime" placeholder="yyyy-MM-dd">
+            </div>
+          </div>-->
+
+          <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">备注</label>
+            <div class="layui-input-block">
+              <textarea name="remarks" placeholder="请输入内容" class="layui-textarea"></textarea>
+            </div>
+          </div>
+
+          <div class="layui-form-item layui-layout-admin">
+            <div class="layui-input-block">
+              <div class="layui-footer" style="left: 0;">
+                <button class="layui-btn" lay-submit="" lay-filter="add-vip">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+              </div>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="../../../resources/layuiadmin/layui/layui.js"></script>
+  <script src="../../../resources/js/common.js"></script>
+  <script>
+    layui.use('form',function(){
+      var form = layui.form;
+      //刷新界面 所有元素
+      form.render();
+
+    });
+    /*layui.use('laydate', function(){
+      var laydate = layui.laydate;
+
+      //日期时间选择器，#expireTime为时间选择标签的Id
+      laydate.render({
+        elem: '#createTime'
+        ,format: 'yyyy-MM-dd'
+      });
+      laydate.render({
+        elem: '#expireTime'
+        ,min: 0
+        ,max: 366
+        ,format: 'yyyy-MM-dd'
+      });
+    });*/
+
+
+  layui.config({
+    base: '../../../resources/layuiadmin/' //静态资源所在路径
+  }).extend({
+    index: 'lib/index' //主入口模块
+  }).use(['index', 'form'], function(){
+    var $ = layui.$
+    ,layer = layui.layer
+    ,form = layui.form;
+
+    form.render(null, 'add-vipInfo');
+
+    /* 自定义验证规则 */
+    form.verify({
+      vipId: function(value){
+        if(hasLetter(value) === true || isChina(value) === true){
+          return '会员号不能含有中文';
+        }
+      }
+      ,vipName: function(value){
+        if(containsNumber(value) === true){
+          return '会员姓名不能含有数字';
+        }
+      }
+    });
+
+    var vip = {};
+    
+    /* 监听提交 */
+    form.on('submit(add-vip)', function(data){
+      // 获取缩略图文件流
+      var vipImg = $('input[name="profileImg"]')[0].files[0];
+
+      vip.vipId = $('input[name="vipId"]').val();
+      vip.vipName = $('input[name="vipName"]').val();
+      vip.gender = $('input[name="gender"]:checked').val();
+      vip.age = $('input[name="age"]').val();
+      vip.phone = $('input[name="phone"]').val();
+      vip.email = $('input[name="email"]').val();
+      /*vip.type = $('input[name="type"]').val();
+      vip.createTime = $('#createTime').val();
+      vip.expireTime = $('#expireTime').val();*/
+      vip.remark = $('textarea[name="remark"]').val();
+
+      var formData = new FormData();
+      formData.append('vipImg', vipImg);
+      formData.append('vipStr',JSON.stringify(vip));
+
+      //用ajax时需要注意你的url接口、采用哪一种方式type获取，它的使用的哪种数据类型datatype
+      $.ajax({
+        url:'/admin/addVip',
+        type:'post',
+        data:formData,
+        contentType : false,
+        processData : false,
+        success:function(res){
+          if (res.success){
+            layer.msg("添加会员信息成功");
+          }else {
+            layer.msg("添加会员信息失败" + res.errMsg);
+          }
+        }
+      })
+      return false;
+    });
+
+  });
+  </script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.it.swim.dao.CoursePayDao">
+    <resultMap id="coursePayMap" type="com.it.swim.entity.CoursePay">
+        <id column="course_pay_id" property="coursePayId"/>
+        <result column="type" property="type"/>
+        <result column="amount" property="amount"/>
+        <result column="num" property="num"/>
+        <result column="points" property="points"/>
+        <result column="is_redeem" property="isRedeem"/>
+        <result column="redeem_num" property="redeemNum"/>
+        <result column="create_time" property="createTime"/>
+        <result column="expire_time" property="expireTime"/>
+        <result column="remarks" property="remarks"/>
+
+        <association property="vip" column="vip_id" javaType="com.it.swim.entity.Vip">
+            <id column="vip_id" property="vipId"/>
+            <result column="vip_name" property="vipName"/>
+        </association>
+    </resultMap>
+
+    <select id="queryCoursePay" resultMap="coursePayMap">
+        SELECT
+            cp.course_pay_id, cp.vip_id, v.vip_name, cp.type, cp.amount, cp.num, cp.points, cp.is_redeem, cp.redeem_num, cp.create_time, cp.expire_time, cp.remarks
+        FROM
+            course_pay cp , vip v
+        WHERE
+            cp.vip_id = v.vip_id
+    </select>
+
+    <select id="queryCoursePayById" resultMap="coursePayMap" parameterType="Long">
+        SELECT
+            cp.course_pay_id, cp.vip_id, v.vip_name, cp.type, cp.amount, cp.num, cp.points, cp.is_redeem, cp.redeem_num, cp.create_time, cp.expire_time, cp.remarks
+        FROM
+            course_pay cp , vip v
+        WHERE
+            cp.course_pay_id = #{coursePayId} AND cp.vip_id = v.vip_id
+    </select>
+
+    <select id="queryCoursePayByVipId" resultMap="coursePayMap">
+        SELECT
+            cp.course_pay_id, cp.vip_id, v.vip_name, cp.type, cp.amount, cp.num, cp.points, cp.is_redeem, cp.redeem_num, cp.create_time, cp.expire_time, cp.remarks
+        FROM
+            course_pay cp , vip v
+        WHERE
+            cp.vip_id = #{vip.vipId} AND cp.vip_id = v.vip_id
+    </select>
+
+    <insert id="addCoursePay" useGeneratedKeys="true" keyColumn="course_pay_id" keyProperty="coursePayId">
+        INSERT INTO
+            course_pay
+        (course_pay_id, vip_id, type, amount, num, points, is_redeem, redeem_num, create_time, expire_time, remarks)
+        VALUES
+        (#{coursePayId},#{vip.vipId}, #{type}, #{amount}, #{num}, #{points}, #{isRedeem}, #{redeemNum}, #{createTime}, #{expireTime,},#{remarks})
+    </insert>
+
+    <update id="modifyCoursePay" parameterType="com.it.swim.entity.CoursePay">
+        UPDATE course_pay
+        <set>
+            <if test="coursePayName != null">coursePay_name=#{coursePayName},</if>
+            <if test="type != null">type=#{type},</if>
+            <if test="amount != null">amount=#{amount},</if>
+            <if test="num != null">numb=#{num},</if>
+            <if test="points != null">points=#{points},</if>
+            <if test="isRedeem != null">is_redeem=#{isRedeem},</if>
+            <if test="redeemNum != null">redeem_num=#{redeemNum},</if>
+            <if test="createTime != null">create_time=#{createTime},</if>
+            <if test="expireTime != null">expire_time=#{expireTime},</if>
+            <if test="remarks != null">remarks=#{remarks},</if>
+        </set>
+        where course_pay_id=#{coursePayId}
+    </update>
+
+    <delete id="deleteCoursePay">
+        DELETE FROM
+            course_pay
+        WHERE
+            course_pay_id = #{coursePayId}
+    </delete>
+</mapper>
