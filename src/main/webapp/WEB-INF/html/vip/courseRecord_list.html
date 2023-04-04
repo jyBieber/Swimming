@@ -129,29 +129,14 @@
       ,title: '会员卡信息列表'
       ,cols: [[
         {field:'courseRecordId', title:'上课记录ID', width:120, fixed: 'left', unresize: true, sort: true},
-        {title:'课程缴费ID', width:120, sort: true, templet: function(data){
-            return data.coursePay.coursePayId;
-          }},
-        {title:'会员ID', width:120, sort: true, templet: function(data){
-            return data.coursePay.vip.vipId;
-          }},
-        {title:'会员姓名', width:120, sort: true, templet: function(data){
-            return data.coursePay.vip.vipName;
-          }},
-        {title:'教练ID', width:150, sort: true, templet: function(data){
-            return data.coach.coachId;
-          }},
         {title:'教练姓名', width:120, sort: true, templet: function(data){
-            return data.coach.coachName;
+            return data.course.coach.coachName;
           }},
-        {title:'课程类型', width:120, sort: true, templet: function(data){
-            return data.coursePay.type;
-          }},
-        {title:'上课时间', width:120, templet: function(res){
-            return new Date(res.createTime).Format("yyyy-MM-dd");
+        {title:'上课时间', width:120, sort: true, templet: function(data){
+            return data.course.createTime;
           }},
         {field:'isAttend', title:'上课状态', width:80},
-        {field:'remarks', title:'备注', width:250}
+        {field:'remarks', title:'评价', width:250}
       ]]
       ,page: true
     });
@@ -163,7 +148,7 @@
         layer.open({
           //layer提供了5种层类型。可传入的值有：0（信息框，默认）1（页面层）2（iframe层）3（加载层）4（tips层）
           type: 1,
-          title: "修改上课记录信息",
+          title: "评价",
           area: ['600px', '400px'],
           content: $("#popUpdateCourseRecord")//引用的弹出层的页面层的方式加载修改界面表单
         });
@@ -175,20 +160,14 @@
     //给表单里的元素赋值
     function setFormValue(obj,data){
       $('input[name="courseRecordId"]').val(data.courseRecordId);
-      $('#createTime').val(data.createTime);
       $('input[name="isAttend"]').val(data.isAttend);
       $('textarea[name="remarks"]').text(data.remarks);
 
       form.on('submit(edit-courseRecord)', function() {
         var courseRecord = {};
         courseRecord.courseRecordId = $('input[name="courseRecordId"]').val();
-        courseRecord.coach = {
-          coachId : $('#coach').find('option').not(function () {
-            return !this.selected;
-          }).data('id')
-        };
+        courseRecord.course = $('input[name="course.coach.coachName"]').val();
         courseRecord.remarks = $('textarea[name="remarks"]').val();
-
 
         var formData = new FormData();
         formData.append('courseRecordStr',JSON.stringify(courseRecord));
@@ -235,13 +214,13 @@
         <label class="layui-form-label">教练列表</label>
         <div class="layui-input-block">
           <div class="layui-col-md6">
-            <input type="text" name="coach.coachName" autocomplete="off" class="layui-input" readonly>
+            <input type="text" name="course.coach.coachName" autocomplete="off" class="layui-input" readonly>
           </div>
         </div>
       </div>
 
       <div class="layui-form-item layui-form-text">
-        <label class="layui-form-label">备注</label>
+        <label class="layui-form-label">评价</label>
         <div class="layui-input-block">
           <textarea name="remarks" placeholder="请输入内容" class="layui-textarea"></textarea>
         </div>

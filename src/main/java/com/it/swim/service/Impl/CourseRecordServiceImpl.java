@@ -72,6 +72,16 @@ public class CourseRecordServiceImpl implements CourseRecordService {
     }
 
     /*
+     * @param courseId
+     * @return   CourseRecord
+     * @description: 通过courseId查询上课记录信息列表
+     */
+    @Override
+    public List<CourseRecord> getCourseRecordByCourseId(long courseId) {
+        return courseRecordDao.queryCourseRecordByCourseId(courseId);
+    }
+
+    /*
      * @param courseRecordId
      * @return   CourseRecord
      * @description: 通过courseRecord查询缴费信息列表

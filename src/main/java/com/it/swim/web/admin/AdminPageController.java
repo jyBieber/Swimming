@@ -71,6 +71,18 @@ public class AdminPageController {
     private String coursePayList() { return "admin/coursePay_list"; }
 
     /*
+     * 添加课程信息界面路由
+     */
+    @RequestMapping(value = "/courseAdd",method = RequestMethod.GET)
+    private String courseAdd() { return "admin/add_course"; }
+
+    /*
+     * 课程列表界面路由
+     */
+    @RequestMapping(value = "/courseList",method = RequestMethod.GET)
+    private String courseList() { return "admin/course_list"; }
+
+    /*
      * 添加上课记录信息界面路由
      */
     @RequestMapping(value = "/courseRecordAdd",method = RequestMethod.GET)
@@ -81,10 +93,6 @@ public class AdminPageController {
      */
     @RequestMapping(value = "/courseRecordList",method = RequestMethod.GET)
     private String courseRecordList() { return "admin/courseRecord_list"; }
-
-
-
-
 
     /*
      * 个人信息界面路由

@@ -28,15 +28,6 @@
           </div>
 
           <div class="layui-form-item">
-            <label class="layui-form-label">课程种类</label>
-            <div class="layui-input-block">
-              <input type="radio" name="type" value="1" title="一对一">
-              <input type="radio" name="type" value="2" title="一对二">
-              <input type="radio" name="type" value="3" title="一对多">
-            </div>
-          </div>
-
-          <div class="layui-form-item">
             <label class="layui-form-label">充值金额</label>
             <div class="layui-input-block">
               <input type="text" name="amount" lay-verify="amount" placeholder="" autocomplete="off" class="layui-input">
@@ -171,7 +162,6 @@
     
     /* 监听提交 */
     form.on('submit(add-coursePay)', function(){
-      coursePay.type = $('input[name="type"]:checked').val();
       coursePay.amount = $('input[name="amount"]').val();
       coursePay.num = $('input[name="num"]').val();
       coursePay.points = $('input[name="points"]').val();

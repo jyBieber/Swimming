@@ -47,14 +47,14 @@
       form.render();
 
     });
-    layui.use('laydate', function(){
-      var laydate = layui.laydate;
-      //日期时间选择器，#expireTime为时间选择标签的Id
-      laydate.render({
-        elem: '#createTime'
-        ,format: 'yyyy-MM-dd HH:mm:ss'
-      });
-    });
+    // layui.use('laydate', function(){
+    //   var laydate = layui.laydate;
+    //   //日期时间选择器，#expireTime为时间选择标签的Id
+    //   laydate.render({
+    //     elem: '#createTime'
+    //     ,format: 'yyyy-MM-dd HH:mm:ss'
+    //   });
+    // });
     
   layui.config({
     base: '../../../resources/layuiadmin/' //静态资源所在路径
@@ -73,9 +73,9 @@
       ,title: '上课记录信息列表'
       ,cols: [[
          {field:'courseRecordId', title:'上课记录ID', width:120, fixed: 'left', unresize: true, sort: true},
-         {title:'课程缴费ID', width:120, sort: true, templet: function(data){
-             return data.coursePay.coursePayId;
-           }},
+         // {title:'课程缴费ID', width:120, sort: true, templet: function(data){
+         //     return data.coursePay.coursePayId;
+         //   }},
         {title:'会员ID', width:120, sort: true, templet: function(data){
             return data.coursePay.vip.vipId;
           }},
@@ -83,16 +83,13 @@
              return data.coursePay.vip.vipName;
            }},
         {title:'教练ID', width:150, sort: true, templet: function(data){
-            return data.coach.coachId;
+            return data.course.coach.coachId;
           }},
         {title:'教练姓名', width:120, sort: true, templet: function(data){
-            return data.coach.coachName;
+            return data.course.coach.coachName;
           }},
-        {title:'课程类型', width:120, sort: true, templet: function(data){
-            return data.coursePay.type;
-          }},
-        {title:'上课时间', width:120, templet: function(res){
-            return new Date(res.createTime).Format("yyyy-MM-dd");
+        {title:'上课时间', width:120, sort: true, templet: function(data){
+            return data.course.createTime;
           }},
         {field:'isAttend', title:'上课状态', width:80},
         {field:'remarks', title:'备注', width:250},
@@ -140,9 +137,8 @@
     //监听弹出框表单提交，massage是修改界面的表单数据'submit(edit-courseRecord),是修改按钮的绑定
     function setFormValue(obj,data){
       getCoursePayList();
-      getCoachList();
+      getCourseList();
       $('input[name="courseRecordId"]').val(data.courseRecordId);
-      $('#createTime').val(data.createTime);
       $('input[name="isAttend"]').val(data.isAttend);
       $('textarea[name="remarks"]').text(data.remarks);
 
@@ -154,12 +150,11 @@
             return !this.selected;
           }).data('id')
         };
-        courseRecord.coach = {
-          coachId : $('#coach').find('option').not(function () {
+        courseRecord.Course = {
+          courseId : $('#course').find('option').not(function () {
             return !this.selected;
           }).data('id')
         };
-        courseRecord.createTime = $('#createTime').val();
         courseRecord.isAttend = $('input[name="isAttend"]:checked').val();
         courseRecord.remarks = $('textarea[name="remarks"]').val();
 
@@ -208,17 +203,17 @@
       });
     }
 
-    // 获取教练列表
-    function getCoachList(){
-      $.get('/admin/listCoachMap', function(res) {
+    // 获取课程列表
+    function getCourseList(){
+      $.get('/admin/listCourseMap', function(res) {
         if (res.success){
           var tempHtml = '';
-          // 若访问成功，则依据后台传递过来的教练信息为表单元素赋值
-          res.coachList.map(function (item, index) {
-            tempHtml += '<option data-id="' + item.coachId + '">'
-                    + item.coachName + '</option>';
+          //根据课程列表动态拼接html
+          res.courseList.map(function (item, index) {
+            tempHtml += '<option data-id="' + item.courseId + '">'
+                    + ' — 会员：' + item.coach.coachName +  ' — 上课时间：' + item.createTime + '</option>';
           });
-          $('#coach').html(tempHtml);
+          $('#course').html(tempHtml);
           form.render('select');
         }
       });
@@ -249,19 +244,12 @@
         </div>
 
         <div class="layui-form-item">
-          <label class="layui-form-label">教练列表</label>
+          <label class="layui-form-label">课程列表</label>
           <div class="layui-input-block">
             <div class="layui-col-md6">
-              <select id="coach">
+              <select id="course">
               </select>
             </div>
-          </div>
-        </div>
-
-        <div class="layui-form-item">
-          <label class="layui-form-label">上课时间</label>
-          <div class="layui-input-inline">
-            <input type="text" class="layui-input" id="required|createTime" placeholder="yyyy-MM-dd HH:mm:ss">
           </div>
         </div>
 
@@ -274,7 +262,7 @@
         </div>
 
         <div class="layui-form-item layui-form-text">
-          <label class="layui-form-label">备注</label>
+          <label class="layui-form-label">评价</label>
           <div class="layui-input-block">
             <textarea name="remarks" placeholder="请输入内容" class="layui-textarea"></textarea>
           </div>

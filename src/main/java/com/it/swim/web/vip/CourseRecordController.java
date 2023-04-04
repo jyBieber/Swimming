@@ -68,6 +68,17 @@ public class CourseRecordController {
     }
 
     /*
+     * @description: 根据coursePayId返回游泳记录列表-返回为Layui类型
+     * @param coursePayId
+     * @return Layui
+     */
+    @RequestMapping(value = "/listCourseRecordByCourseId",method = RequestMethod.GET)
+    @ResponseBody
+    private Layui listCourseRecordByCourseId(@RequestParam("courseId") Long courseId){
+        List<CourseRecord> courseRecordList = courseRecordService.getCourseRecordByCourseId(courseId);
+        return Layui.data(courseRecordList.size(),courseRecordList);
+    }
+    /*
      * @description: 根据vipId返回游泳记录列表-返回为Layui类型
      * @param vipId
      * @return Layui
@@ -83,7 +94,7 @@ public class CourseRecordController {
      * @description: 列出所有教练列表-返回为Layui类型
      * @param
      * @return   Layui
-     */
+     *//*
     @RequestMapping(value = "/listCoach",method = RequestMethod.GET)
     @ResponseBody
     public Layui listCoach(){
@@ -92,11 +103,11 @@ public class CourseRecordController {
         return Layui.data(coachList.size(), coachList);
     }
 
-    /*
+    *//*
      * @description: 列出所有教练列表-返回为Map类型
      * @param
      * @return java.util.Map<java.lang.String,java.lang.Object>
-     */
+     *//*
     @RequestMapping(value = "/listCoachMap",method = RequestMethod.GET)
     @ResponseBody
     public Map<String,Object> listCoachMap(){
@@ -106,25 +117,25 @@ public class CourseRecordController {
         modelMap.put("success",true);
         modelMap.put("coachList",coachList);
         return modelMap;
-    }
+    }*/
 
     /*
-     * @description: 添加作业信息
+     * @description: 添加上课记录信息
      * @param request
      * @return java.util.Map<java.lang.String,java.lang.Object>
      */
-    //获取前端ajax传递的字符串，解析字符串为相应的courseRecord实体，根据解析好的数据添加作业信息
+    //获取前端ajax传递的字符串，解析字符串为相应的courseRecord实体，根据解析好的数据添加上课记录信息
     @RequestMapping(value = "/addCourseRecord",method = RequestMethod.POST)
     @ResponseBody
     private Map<String,Object> addCourseRecord(HttpServletRequest request){
         Map<String,Object> modelMap = new HashMap<>();
 
         //1.接受并转化相应的参数
-        //获取前端传过来的作业信息，并将它转换成实体类；
+        //获取前端传过来的上课记录信息，并将它转换成实体类；
         String courseRecordStr = HttpServletRequestUtil.getString(request,"courseRecordStr");
         if (courseRecordStr == null){
             modelMap.put("success",false);
-            modelMap.put("errMsg","请输入作业信息");
+            modelMap.put("errMsg","请输入上课记录信息");
             return modelMap;
         }
         ObjectMapper mapper = new ObjectMapper();
@@ -144,7 +155,7 @@ public class CourseRecordController {
                 );
         MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
 
-        //2.添加作业信息
+        //2.添加上课记录信息
         CourseRecordExecution courseRecordExecution;
         courseRecordExecution = courseRecordService.addCourseRecord(courseRecord);
         if (courseRecordExecution.getState() == CourseRecordStateEnum.SUCCESS.getState()){

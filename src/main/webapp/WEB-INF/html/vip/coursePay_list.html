@@ -132,7 +132,6 @@
         {title:'会员姓名', width:160, sort: true, templet: function(data){
             return data.vip.vipName;
           }},
-        {field:'type', title:'课程类型', width:80},
         {field:'amount', title:'充值金额', width:80},
         {field:'num', title:'次数', width:80},
         {field:'points', title:'积分', width:80},
@@ -148,7 +147,6 @@
     //给表单里的元素赋值
     function setFormValue(obj,data){
       $('input[name="coursePayId"]').val(data.coursePayId);
-      $('input[name="type"]').val(data.type);
       $('input[name="amount"]').val(data.amount);
       $('input[name="num"]').val(data.num);
       $('input[name="points"]').val(data.points);

@@ -44,7 +44,6 @@ public class CoursePayDaoTest extends BaseTest {
         Vip vip = new Vip();
         vip.setVipId(10002L);
         coursePay.setVip(vip);
-        coursePay.setType(4);
         coursePay.setAmount(5000);
         coursePay.setNum(10);
         coursePay.setPoints(0);

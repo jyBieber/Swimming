@@ -76,27 +76,12 @@
                             </div>
 
                             <div class="layui-form-item">
-                                <label class="layui-form-label">教练列表</label>
+                                <label class="layui-form-label">课程列表</label>
                                 <div class="layui-input-block">
                                     <div class="layui-col-md6">
-                                        <select id="coach">
+                                        <select id="course">
                                         </select>
                                     </div>
-                                </div>
-                            </div>
-
-                            <div class="layui-form-item">
-                                <label class="layui-form-label">上课时间</label>
-                                <div class="layui-input-inline">
-                                    <input type="text" class="layui-input" id="createTime" placeholder="yyyy-MM-dd HH:mm:ss">
-                                </div>
-                            </div>
-
-                            <div class="layui-form-item">
-                                <label class="layui-form-label">上课状态</label>
-                                <div class="layui-input-block">
-                                    <input type="radio" name="isAttend" value="0" title="未上课">
-                                    <input type="radio" name="isAttend" value="1" title="已上课">
                                 </div>
                             </div>
 
@@ -152,19 +137,11 @@
             }
         });
 
-        //日期时间选择器，#submitTime为时间选择标签的Id
-        laydate.render({
-            elem: '#createTime'
-            ,type: 'datetime'
-            ,min: 0
-            ,format: 'yyyy-MM-dd HH:mm:ss'
-        });
-
         //表单渲染（必需的操作），需要在form标签里面添加lay-filter=''
         form.render(null, 'add-courseRecordInfo');
 
         getCoursePayList();
-        getCoachList();
+        getCourseList();
 
         // 获取课程缴费列表
         function getCoursePayList(){
@@ -173,8 +150,7 @@
                     var tempHtml = '';
                     res.coursePayList.map(function (item, index) {
                         tempHtml += '<option data-id="' + item.coursePayId + '">'
-                            + ' — ID：' + item.coursePayId
-                            + ' — 课程类别：' + item.type + '</option>';
+                            + ' — ID：' + item.coursePayId + '</option>';
                     });
                     $('#coursePay').html(tempHtml);
                     form.render('select');
@@ -182,17 +158,17 @@
             });
         }
 
-        // 获取教练列表
-        function getCoachList(){
-            $.get('/vip/listCoachMap', function(res) {
+        // 获取课程列表
+        function getCourseList(){
+            $.get('/vip/listCourseMap', function(res) {
                 if (res.success){
                     var tempHtml = '';
-                    // 若访问成功，则依据后台传递过来的教练信息为表单元素赋值
-                    res.coachList.map(function (item, index) {
-                        tempHtml += '<option data-id="' + item.coachId + '">'
-                            + item.coachName + '</option>';
+                    //根据课程列表动态拼接html
+                    res.courseList.map(function (item, index) {
+                        tempHtml += '<option data-id="' + item.courseId + '">'
+                            + ' — 会员：' + item.coach.coachName +  ' — 上课时间：' + item.createTime + '</option>';
                     });
-                    $('#coach').html(tempHtml);
+                    $('#course').html(tempHtml);
                     form.render('select');
                 }
             });
@@ -204,7 +180,6 @@
         //监听表单提交
         form.on('submit(add-courseRecord)', function(data){
             //获取表单内所有标签的值
-            courseRecord.createTime = $('#createTime').val();
             courseRecord.isAttend = $('input[name="isAttend"]:checked').val();
             courseRecord.remark = $('textarea[name="remark"]').val();
             courseRecord.coursePay = {
@@ -212,8 +187,8 @@
                     return !this.selected;
                 }).data('id')
             };
-            courseRecord.coach = {
-                coachId : $('#coach').find('option').not(function () {
+            courseRecord.course = {
+                courseId : $('#course').find('option').not(function () {
                     return !this.selected;
                 }).data('id')
             };

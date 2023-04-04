@@ -45,6 +45,13 @@ public interface CourseRecordDao {
     List<CourseRecord> queryCourseRecordByCoursePayId(long coursePayId);
 
     /*
+     * @description: 通过courseId查询上课记录信息列表
+     * @param courseId
+     * @return  CourseRecord
+     */
+    List<CourseRecord> queryCourseRecordByCourseId(long courseId);
+
+    /*
      * @description: 通过courseRecord查询缴费信息列表
      * @param courseRecord
      * @return  CourseRecord

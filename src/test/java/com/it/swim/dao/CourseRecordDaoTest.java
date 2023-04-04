@@ -1,7 +1,7 @@
 package com.it.swim.dao;
 
 import com.it.swim.BaseTest;
-import com.it.swim.entity.Coach;
+import com.it.swim.entity.Course;
 import com.it.swim.entity.CoursePay;
 import com.it.swim.entity.CourseRecord;
 import com.it.swim.entity.Vip;
@@ -43,10 +43,9 @@ public class CourseRecordDaoTest extends BaseTest {
         CoursePay coursePay = new CoursePay();
         coursePay.setCoursePayId(2L);
         courseRecord.setCoursePay(coursePay);
-        Coach coach = new Coach();
-        coach.setCoachId(30003L);
-        courseRecord.setCoach(coach);
-        coursePay.setCreateTime(new Date());
+        Course course = new Course();
+        course.setCourseId(1L);
+        courseRecord.setCourse(course);
         courseRecord.setIsAttend(0);
 
         /*courseRecord.setCreateTime(new Date());*/

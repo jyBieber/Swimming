@@ -94,7 +94,6 @@
          {title:'会员姓名', width:160, sort: true, templet: function(data){
              return data.vip.vipName;
            }},
-        {field:'type', title:'课程类型', width:80},
         {field:'amount', title:'充值金额', width:80},
         {field:'num', title:'次数', width:80},
         {field:'points', title:'积分', width:80},
@@ -148,7 +147,6 @@
     function setFormValue(obj,data){
       getVipList();
       $('input[name="coursePayId"]').val(data.coursePayId);
-      $('input[name="type"]').val(data.type);
       $('input[name="amount"]').val(data.amount);
       $('input[name="num"]').val(data.num);
       $('input[name="points"]').val(data.points);
@@ -167,7 +165,6 @@
             return !this.selected;
           }).data('id')
         };
-        coursePay.type = $('input[name="type"]:checked').val();
         coursePay.amount = $('input[name="amount"]').val();
         coursePay.num = $('input[name="num"]').val();
         coursePay.points = $('input[name="points"]').val();
@@ -251,15 +248,6 @@
             <div class="layui-col-md6">
               <input type="text" name="vipName" lay-verify="vipName" autocomplete="off" class="layui-input" readonly>
             </div>
-          </div>
-        </div>
-
-        <div class="layui-form-item">
-          <label class="layui-form-label">课程类型</label>
-          <div class="layui-input-block">
-            <input type="radio" name="type" value="1" title="一对一">
-            <input type="radio" name="type" value="2" title="一对二">
-            <input type="radio" name="type" value="3" title="一对三">
           </div>
         </div>
 

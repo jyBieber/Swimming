@@ -11,10 +11,6 @@ import java.util.Date;
 public class CourseRecord {
     //会员上课记录ID
     private Long courseRecordId;
-    //上课时间
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+08:00")
-    private Date createTime;
     //是否上课
     private Integer isAttend;
     //备注
@@ -22,8 +18,8 @@ public class CourseRecord {
 
     //缴费记录
     private CoursePay coursePay;
-    //教练
-    private Coach coach;
+    //课程
+    private Course course;
 
     public Long getCourseRecordId() {
         return courseRecordId;
@@ -31,14 +27,6 @@ public class CourseRecord {
 
     public void setCourseRecordId(Long courseRecordId) {
         this.courseRecordId = courseRecordId;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
     }
 
     public Integer getIsAttend() {
@@ -57,12 +45,12 @@ public class CourseRecord {
         this.remarks = remarks;
     }
 
-    public Coach getCoach() {
-        return coach;
+    public Course getCourse() {
+        return course;
     }
 
-    public void setCoach(Coach coach) {
-        this.coach = coach;
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
     public CoursePay getCoursePay() {

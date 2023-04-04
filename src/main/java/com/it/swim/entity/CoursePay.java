@@ -11,8 +11,6 @@ import java.util.Date;
 public class CoursePay {
     //会员卡号
     private Long coursePayId;
-    //课程缴费类型
-    private Integer type;
     //缴费金额
     private Integer amount;
     //充值次数
@@ -42,14 +40,6 @@ public class CoursePay {
 
     public void setCoursePayId(Long coursePayId) {
         this.coursePayId = coursePayId;
-    }
-
-    public Integer getType() {
-        return type;
-    }
-
-    public void setType(Integer type) {
-        this.type = type;
     }
 
     public Integer getAmount() {

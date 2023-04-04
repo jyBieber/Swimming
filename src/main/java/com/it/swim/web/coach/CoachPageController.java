@@ -23,6 +23,12 @@ public class CoachPageController {
     private String set() { return "coach/set"; }
 
     /*
+     * 课程信息界面路由
+     */
+    @RequestMapping(value = "/course",method = RequestMethod.GET)
+    private String course() { return "coach/course_list"; }
+
+    /*
      * 上课记录界面路由
      */
     @RequestMapping(value = "/courseRecord",method = RequestMethod.GET)
