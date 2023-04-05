@@ -8,3 +8,4 @@ public class CourseRecordOperationException extends RuntimeException{
 
     public CourseRecordOperationException(String msg){super(msg);}
 }
+

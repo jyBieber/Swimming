@@ -9,7 +9,7 @@ public enum VipCardStateEnum {
      */
     SUCCESS(1, "创建成功"),
     INNER_ERROR(-1001, "操作失败"),
-    EMPTY(-1002, "会员卡内容为空");
+    EMPTY(-1002, "会员卡信息为空");
 
     private int state;
     private String stateInfo;

@@ -30,27 +30,26 @@ public class CourseRecordManagementController {
     private CourseRecordService courseRecordService;
 
     /*
-     * @description: 列出所有上课记录列表-返回为Layui类型
-     * @param
-     * @return com.it.swim.util.Layui
+     * @description: 列出所有选课列表-返回为Layui类型
+     * @return com.bjtu.edu.util.Layui
      */
     @RequestMapping(value = "/listCourseRecord",method = RequestMethod.GET)
     @ResponseBody
     public Layui listCourseRecord(){
-        //查询上课记录列表数据
+        //查询选课列表数据
         List<CourseRecord> courseRecordList = courseRecordService.getCourseRecordList();
         return Layui.data(courseRecordList.size(),courseRecordList);
     }
 
     /*
-     * @description: 根据courseRecordId返回唯一的上课记录信息-返回为Map类型
+     * @description: 根据courseRecordId返回唯一的选课信息-返回为Map类型
      * @param courseRecordId
      * @return java.util.Map<java.lang.String,java.lang.Object>
      */
     @RequestMapping(value = "/listCourseRecordById",method = RequestMethod.GET)
     @ResponseBody
     public Map<String,Object> listCourseRecordById(@RequestParam("courseRecordId") Long courseRecordId){
-          CourseRecord courseRecord = courseRecordService.getCourseRecordById(courseRecordId);
+        CourseRecord courseRecord = courseRecordService.getCourseRecordById(courseRecordId);
         Map<String,Object> modelMap = new HashMap<>();
         modelMap.put("success",true);
         modelMap.put("courseRecord",courseRecord);
@@ -58,11 +57,11 @@ public class CourseRecordManagementController {
     }
 
     /*
-     * @description: 添加上课记录信息
+     * @description: 添加选课信息
      * @param request
      * @return java.util.Map<java.lang.String,java.lang.Object>
      */
-    //获取前端ajax传递的字符串，解析字符串为相应的courseRecord实体，根据解析好的数据添加上课记录信息
+    //获取前端ajax传递的字符串，解析字符串为相应的courseRecord实体，根据解析好的数据添加选课信息
     @RequestMapping(value = "/addCourseRecord", method = RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> addCourseRecord(HttpServletRequest request){
@@ -70,13 +69,13 @@ public class CourseRecordManagementController {
         String courseRecordStr = HttpServletRequestUtil.getString(request,"courseRecordStr");
         if (courseRecordStr == null){
             modelMap.put("success",false);
-            modelMap.put("errMsg","请输入上课记录信息");
+            modelMap.put("errMsg","请输入选课信息");
             return modelMap;
         }
         ObjectMapper mapper = new ObjectMapper();
-          CourseRecord courseRecord;
+        CourseRecord courseRecord;
         try {
-            courseRecord = mapper.readValue(courseRecordStr,   CourseRecord.class);
+            courseRecord = mapper.readValue(courseRecordStr, CourseRecord.class);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
             modelMap.put("success",false);
@@ -95,11 +94,11 @@ public class CourseRecordManagementController {
     }
 
     /*
-     * @description: 修改上课记录信息
+     * @description: 修改选课信息
      * @param request
      * @return java.util.Map<java.lang.String,java.lang.Object>
      */
-    //获取前端ajax传递的字符串，解析字符串为相应的courseRecord实体，根据解析好的数据修改上课记录信息
+    //获取前端ajax传递的字符串，解析字符串为相应的courseRecord实体，根据解析好的数据修改选课信息
     @RequestMapping(value = "/modifyCourseRecord", method = RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> modifyCourseRecord(HttpServletRequest request){
@@ -107,13 +106,13 @@ public class CourseRecordManagementController {
         String courseRecordStr = HttpServletRequestUtil.getString(request,"courseRecordStr");
         if (courseRecordStr == null){
             modelMap.put("success",false);
-            modelMap.put("errMsg","请输入上课记录信息");
+            modelMap.put("errMsg","请输入选课信息");
             return modelMap;
         }
         ObjectMapper mapper = new ObjectMapper();
-          CourseRecord courseRecord;
+        CourseRecord courseRecord;
         try {
-            courseRecord = mapper.readValue(courseRecordStr,   CourseRecord.class);
+            courseRecord = mapper.readValue(courseRecordStr, CourseRecord.class);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
             modelMap.put("success",false);
@@ -132,17 +131,17 @@ public class CourseRecordManagementController {
             return modelMap;
         }else {
             modelMap.put("success",false);
-            modelMap.put("errMsg","请输入要修改的上课记录信息Id号");
+            modelMap.put("errMsg","请输入要修改的选课信息Id号");
             return modelMap;
         }
     }
 
     /*
-     * @description: 删除上课记录信息
+     * @description: 删除选课信息
      * @param courseRecordId
      * @return java.util.Map<java.lang.String,java.lang.Object>
      */
-    //根据前端路由路径中传递的courseRecordId值删除指定上课记录信息
+    //根据前端路由路径中传递的courseRecordId值删除指定选课信息
     @RequestMapping(value = "/deleteCourseRecord", method = RequestMethod.GET)
     @ResponseBody
     private Map<String, Object> deleteCourseRecord(@RequestParam("courseRecordId") Long courseRecordId) {
@@ -157,7 +156,7 @@ public class CourseRecordManagementController {
             }
         } else {
             modelMap.put("success", false);
-            modelMap.put("errMsg", "未选择要删除的上课记录信息");
+            modelMap.put("errMsg", "未选择要删除的选课信息");
         }
         return modelMap;
     }

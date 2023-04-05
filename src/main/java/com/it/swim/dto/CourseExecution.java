@@ -45,7 +45,7 @@ public class CourseExecution {
 
     public List< Course> getCourseList() { return courseList; }
 
-    public void setCourseList(List< Course> courseList) { this.courseList = courseList; }
+    public void setCourseList(List<Course> courseList) { this.courseList = courseList; }
 
     // 空的构造器
     public CourseExecution() {
@@ -65,7 +65,7 @@ public class CourseExecution {
     }
 
     // 成功的构造器
-    public CourseExecution(CourseStateEnum courseStateEnum, List< Course> courseList) {
+    public CourseExecution(CourseStateEnum courseStateEnum, List<Course> courseList) {
         this.state = courseStateEnum.getState();
         this.stateInfo = courseStateEnum.getStateInfo();
         this.courseList = courseList;

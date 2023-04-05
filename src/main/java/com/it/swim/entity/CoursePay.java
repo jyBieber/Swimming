@@ -18,7 +18,7 @@ public class CoursePay {
     //积分
     private Integer points;
     //是否兑换
-    private Integer isRedeem;
+    private String isRedeem;
     //兑换次数
     private Integer redeemNum;
 
@@ -66,11 +66,11 @@ public class CoursePay {
         this.points = points;
     }
 
-    public Integer getIsRedeem() {
+    public String getIsRedeem() {
         return isRedeem;
     }
 
-    public void setIsRedeem(Integer isRedeem) {
+    public void setIsRedeem(String isRedeem) {
         this.isRedeem = isRedeem;
     }
 

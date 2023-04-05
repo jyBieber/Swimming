@@ -51,8 +51,8 @@
           <div class="layui-form-item">
             <label class="layui-form-label">是否兑换</label>
             <div class="layui-input-block">
-              <input type="radio" name="isRedeem" value="1" title="已兑换">
-              <input type="radio" name="isRedeem" value="0" title="未兑换" checked>
+              <input type="radio" name="isRedeem" value="已兑换" title="已兑换">
+              <input type="radio" name="isRedeem" value="未兑换" title="未兑换" checked>
             </div>
           </div>
 
@@ -133,13 +133,13 @@
     form.render(null, 'add-coursePayInfo');
 
     /* 自定义验证规则 */
-    form.verify({
+    /*form.verify({
       coursePayName: function(value){
         if(containsNumber(value) === true){
           return '课程缴费名不能含有数字';
         }
       }
-    });
+    });*/
 
     getVipList();
     // 获取会员列表

@@ -125,20 +125,20 @@
       ,url: '/vip/listVipCardByVipId?vipId='+vipId
       ,title: '会员卡信息列表'
       ,cols: [[
-        {field: 'vipCardId', width: 120, title: '会员卡ID', sort: true, fixed: 'left'},
-        {title: '会员ID', width: 120, sort: true, templet: function(data){
+        {field: 'vipCardId', title: '会员卡ID', sort: true, fixed: 'left'},
+        {title: '会员ID', sort: true, templet: function(data){
             return data.vip.vipId;
           }},
-        {title: '会员姓名', width: 120, sort: true, templet: function(data){
+        {title: '会员姓名', sort: true, templet: function(data){
             return data.vip.vipName;
           }},
-        {field:'type', title:'会员卡类型', width:80},
-        {field:'amount', title:'充值金额', width:80},
-        {field:'num', title:'充值次数', width:80},
-        {field:'state', title:'会员卡状态', width:80},
-        {field: 'createTime', title: '激活时间', width: 200, sort: true},
-        {field: 'expireTime', title: '到期时间', width: 200, sort: true},
-        {field:'remarks', title:'备注', width:250}
+        {field:'type', title:'会员卡类型'},
+        {field:'amount', title:'充值金额'},
+        {field:'num', title:'充值次数'},
+        {field:'state', title:'会员卡状态'},
+        {field: 'createTime', title: '激活时间', sort: true},
+        {field: 'expireTime', title: '到期时间', sort: true},
+        {field:'remarks', title:'备注'}
       ]]
       ,page: true
     });

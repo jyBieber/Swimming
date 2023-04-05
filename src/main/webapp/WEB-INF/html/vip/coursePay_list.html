@@ -125,21 +125,21 @@
       ,url: '/vip/listCoursePayByVipId?vipId='+vipId
       ,title: '课程缴费信息列表'
       ,cols: [[
-        {field:'coursePayId', title:'课程缴费ID', width:120, fixed: 'left', unresize: true, sort: true},
-        {title:'会员ID', width:160, sort: true, templet: function(data){
+        {field:'coursePayId', title:'ID', fixed: 'left', unresize: true, sort: true,width:80},
+        {title:'会员ID',width:100,sort: true, templet: function(data){
             return data.vip.vipId;
           }},
-        {title:'会员姓名', width:160, sort: true, templet: function(data){
+        {title:'会员姓名',width:120, sort: true, templet: function(data){
             return data.vip.vipName;
           }},
-        {field:'amount', title:'充值金额', width:80},
-        {field:'num', title:'次数', width:80},
-        {field:'points', title:'积分', width:80},
-        {field:'isRedeem', title:'是否兑换', width:80},
-        {field:'redeemNum', title:'兑换课程次数', width:80},
-        {field: 'createTime', title: '激活时间', width: 200, sort: true},
-        {field: 'expireTime', title: '到期时间', width: 200, sort: true},
-        {field:'remarks', title:'备注', width:250},
+        {field:'amount', title:'充值金额',width:120},
+        {field:'num', title:'次数',width:80},
+        {field:'points', title:'积分',width:100},
+        {field:'isRedeem', title:'是否兑换',width:120},
+        {field:'redeemNum', title:'兑换课程次数', width:120},
+        {field: 'createTime', title: '激活时间', sort: true, width:120},
+        {field: 'expireTime', title: '到期时间', sort: true, width:120},
+        {field:'remarks', title:'备注',width:150},
       ]]
       ,page: true
     });

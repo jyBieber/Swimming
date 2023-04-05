@@ -27,13 +27,6 @@ public interface CourseService {
     List<Course> getCourseByCoachId(long coachId);
 
     /*
-     * @description: 通过CourseId查询教练信息列表
-     * @param coachId
-     * @return java.util.List<Course>
-     */
-    /*List<Course> getCoachByCourseId(long CourseId);*/
-
-    /*
      * @description: 新增课程信息
      * @param course
      * @param fileHolder

@@ -29,6 +29,7 @@
             course_record cr, vip v, course co, coach c,course_pay cp
         WHERE
             cr.course_id = co.course_id AND cr.course_pay_id = cp.course_pay_id AND cp.vip_id = v.vip_id AND co.coach_id = c.coach_id
+        ORDER BY cr.course_record_id
     </select>
 
     <select id="queryCourseRecordById" resultMap="courseRecordMap" parameterType="Long">
@@ -38,15 +39,17 @@
             course_record cr, vip v, course co, coach c,course_pay cp
         WHERE
             cr.course_record_id = #{courseRecordId} AND cr.course_id = co.course_id AND cr.course_pay_id = cp.course_pay_id AND cp.vip_id = v.vip_id AND co.coach_id = c.coach_id
+        ORDER BY cr.course_record_id
     </select>
 
-    <select id="queryCourseRecordByCoachId" resultMap="courseRecordMap">
+    <select id="queryCourseRecordByCourseId" resultMap="courseRecordMap">
         SELECT
             cr.course_record_id,cr.course_pay_id, cp.vip_id, v.vip_name, cr.course_id, co.coach_id, c.coach_name, co.create_time, cr.is_attend, cr.remarks
         FROM
             course_record cr, vip v, course co, coach c,course_pay cp
         WHERE
             cr.course_id = #{course.courseId} AND cr.course_id = co.course_id AND cr.course_pay_id = cp.course_pay_id AND cp.vip_id = v.vip_id AND co.coach_id = c.coach_id
+        ORDER BY cr.course_record_id
     </select>
 
     <select id="queryCourseRecordByCoursePayId" resultMap="courseRecordMap">
@@ -56,6 +59,7 @@
             course_record cr, vip v, course co, coach c,course_pay cp
         WHERE
             cr.course_pay_id = #{coursePay.coursePayId} AND cr.course_id = co.course_id AND cr.course_pay_id = cp.course_pay_id AND cp.vip_id = v.vip_id AND co.coach_id = c.coach_id
+        ORDER BY cr.course_record_id
     </select>
 
     <select id="queryCourseRecordByVipId" resultMap="courseRecordMap">
@@ -64,7 +68,8 @@
         FROM
             course_record cr, vip v, course co, coach c,course_pay cp
         WHERE
-            cp.vip_id = #{coursePay.vip.vipId} AND cp.vip_id = v.vip_id AND cr.course_pay_id = cp.course_pay_id AND cr.course_id = co.course_id
+            cp.vip_id = #{coursePay.vip.vipId} AND cp.vip_id = v.vip_id AND cr.course_pay_id = cp.course_pay_id AND cr.course_id = co.course_id AND co.coach_id = c.coach_id
+        ORDER BY cr.course_record_id
     </select>
 
     <select id="queryCourseRecordByCoachId" resultMap="courseRecordMap">
@@ -74,20 +79,21 @@
             course_record cr, vip v, course co, coach c,course_pay cp
         WHERE
             co.coach_id = #{course.coach.coachId} AND cp.vip_id = v.vip_id AND cr.course_pay_id = cp.course_pay_id AND cr.course_id = co.course_id
+        ORDER BY cr.course_record_id
     </select>
 
     <insert id="addCourseRecord" useGeneratedKeys="true" keyColumn="course_record_id" keyProperty="courseRecordId">
         INSERT INTO
             course_record
-        (course_record_id, course_pay_id, course_id, is_attend, remarks)
+        (course_record_id, course_pay_id, course_id)
         VALUES
-        (#{courseRecordId},#{coursePay.coursePayId},#{course.courseId},#{isAttend},#{remarks})
+        (#{courseRecordId},#{coursePay.coursePayId},#{course.courseId})
     </insert>
 
     <update id="modifyCourseRecord" parameterType="com.it.swim.entity.CourseRecord">
         UPDATE course_record
         <set>
-            <if test="coursePay != null">course_pay_id=#{coursePay.course_payId},</if>
+            <if test="coursePay != null">course_pay_id=#{coursePay.coursePayId},</if>
             <if test="course != null">course_id=#{course.courseId},</if>
             <if test="isAttend != null">is_attend=#{isAttend},</if>
             <if test="remarks != null">remarks=#{remarks},</if>

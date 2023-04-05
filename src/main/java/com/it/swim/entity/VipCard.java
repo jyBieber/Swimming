@@ -12,13 +12,13 @@ public class VipCard {
     //会员卡号
     private Long vipCardId;
     //会员卡类型
-    private Integer type;
+    private String type;
     //充值金额
     private Integer amount;
     //充值次数
     private Integer num;
     //会员卡状态
-    private Integer state;
+    private String state;
 
     //激活时间
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -40,11 +40,11 @@ public class VipCard {
         this.vipCardId = vipCardId;
     }
 
-    public Integer getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(Integer type) {
+    public void setType(String type) {
         this.type = type;
     }
 
@@ -64,11 +64,11 @@ public class VipCard {
         this.num = num;
     }
 
-    public Integer getState() {
+    public String getState() {
         return state;
     }
 
-    public void setState(Integer state) {
+    public void setState(String state) {
         this.state = state;
     }
 

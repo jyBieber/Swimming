@@ -129,25 +129,25 @@
       ,url: '/vip/listVipByCoursePayId?coursePayId='+coursePayId
       ,title: '会员信息列表'
       ,cols: [[
-        {title:'会员ID号', width:120, fixed: 'left', unresize: true, sort: true, templet: function(data){
+        {title:'会员ID号', fixed: 'left', unresize: true, sort: true, templet: function(data){
             return data.vip.vipId;
           }},
-        {title:'会员姓名', width:120, sort: true, templet: function(data){
+        {title:'会员姓名', sort: true, templet: function(data){
             return data.vip.vipName;
           }},
-        {title:'性别', width:80, templet: function(data){
+        {title:'性别', templet: function(data){
             return data.vip.gender;
           }},
-        {title:'年龄', width:80, templet: function(data){
+        {title:'年龄', templet: function(data){
             return '<em>'+ data.vip.age +'</em>'
           }},
-        {title:'电话', width:150, templet: function(data){
+        {title:'电话', templet: function(data){
             return '<em>'+ data.vip.phone +'</em>'
           }},
-        {title:'邮箱', width:150, templet: function(data){
+        {title:'邮箱', templet: function(data){
             return '<em>'+ data.vip.email +'</em>'
           }},
-        {title:'备注', width:250, templet: function(data){
+        {title:'备注', templet: function(data){
             return data.vip.remarks;
           }}
         ]]

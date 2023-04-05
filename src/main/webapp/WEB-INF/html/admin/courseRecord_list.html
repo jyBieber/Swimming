@@ -11,60 +11,55 @@
 </head>
 <body>
 
-  <div class="layui-card layadmin-header">
-    <div class="layui-breadcrumb" lay-filter="breadcrumb">
-      <a lay-href="">主页</a>
-      <a><cite>组件</cite></a>
-      <a><cite>数据表格</cite></a>
-      <a><cite>开启头部工具栏</cite></a>
-    </div>
+<div class="layui-card layadmin-header">
+  <div class="layui-breadcrumb" lay-filter="breadcrumb">
+    <a lay-href="">主页</a>
+    <a><cite>组件</cite></a>
+    <a><cite>数据表格</cite></a>
+    <a><cite>开启头部工具栏</cite></a>
   </div>
-  
-  <div class="layui-fluid">
-    <div class="layui-row layui-col-space15">
-      <div class="layui-col-md12">
-        <div class="layui-card">
-          <div class="layui-card-header">上课记录信息列表</div>
-          <div class="layui-card-body">
-            <table class="layui-hide" id="courseRecord-list" lay-filter="courseRecord-list"></table>
-             
-            <script type="text/html" id="operation">
-              <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-              <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-            </script>
-          </div>
+</div>
+
+<div class="layui-fluid">
+  <div class="layui-row layui-col-space15">
+    <div class="layui-col-md12">
+      <div class="layui-card">
+        <div class="layui-card-header">上课记录信息列表</div>
+        <div class="layui-card-body">
+          <table class="layui-hide" id="courseRecord-list" lay-filter="courseRecord-list"></table>
+
+          <script type="text/html" id="operation">
+            <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+          </script>
         </div>
       </div>
     </div>
   </div>
-  
-  <script src="../../../resources/layuiadmin/layui/layui.js"></script>
-  <script src="../../../resources/js/common.js"></script>
-  <script>
-    layui.use('form',function(){
-      var form = layui.form;
-      //刷新界面 所有元素
-      form.render();
+</div>
 
-    });
-    // layui.use('laydate', function(){
-    //   var laydate = layui.laydate;
-    //   //日期时间选择器，#expireTime为时间选择标签的Id
-    //   laydate.render({
-    //     elem: '#createTime'
-    //     ,format: 'yyyy-MM-dd HH:mm:ss'
-    //   });
-    // });
-    
+<script src="../../../resources/layuiadmin/layui/layui.js"></script>
+<script src="../../../resources/js/common.js"></script>
+<script>
   layui.config({
     base: '../../../resources/layuiadmin/' //静态资源所在路径
   }).extend({
     index: 'lib/index' //主入口模块
-  }).use(['index', 'table'], function(){
+  }).use(['index', 'table', 'form'], function(){
     var table = layui.table
-    ,$ = layui.$
-    ,layer = layui.layer;
-  
+            ,$ = layui.$
+            ,form = layui.form
+            ,layer = layui.layer;
+
+    /* 自定义验证规则 */
+    // form.verify({
+    //   courseRecordName: function(value){
+    //     if(containsNumber(value) === true){
+    //       return '上课记录名不能含有数字';
+    //     }
+    //   }
+    // });
+
     table.render({
       elem: '#courseRecord-list'
       ,id: 'courseRecordTable'
@@ -72,32 +67,29 @@
       ,toolbar: '#operation'
       ,title: '上课记录信息列表'
       ,cols: [[
-         {field:'courseRecordId', title:'上课记录ID', width:120, fixed: 'left', unresize: true, sort: true},
-         // {title:'课程缴费ID', width:120, sort: true, templet: function(data){
-         //     return data.coursePay.coursePayId;
-         //   }},
-        {title:'会员ID', width:120, sort: true, templet: function(data){
+        {field:'courseRecordId', title:'上课记录ID号', fixed: 'left', unresize: true, sort: true},
+        {title:'会员ID', sort: true, templet: function(data){
             return data.coursePay.vip.vipId;
           }},
-         {title:'会员姓名', width:120, sort: true, templet: function(data){
-             return data.coursePay.vip.vipName;
-           }},
-        {title:'教练ID', width:150, sort: true, templet: function(data){
+        {title:'会员姓名', sort: true, templet: function(data){
+            return data.coursePay.vip.vipName;
+          }},
+        {title:'教练ID', sort: true, templet: function(data){
             return data.course.coach.coachId;
           }},
-        {title:'教练姓名', width:120, sort: true, templet: function(data){
+        {title:'教练姓名', sort: true, templet: function(data){
             return data.course.coach.coachName;
           }},
-        {title:'上课时间', width:120, sort: true, templet: function(data){
-            return data.course.createTime;
+        {title:'上课时间', templet: function(res){
+            return new Date(res.course.createTime).Format("yyyy-MM-dd hh:mm:ss");
           }},
-        {field:'isAttend', title:'上课状态', width:80},
-        {field:'remarks', title:'备注', width:250},
-         {fixed: 'right', title:'操作', toolbar: '#operation', width:150}
+        {field:'isAttend', title:'上课状态'},
+        {field:'remarks', title:'评价'},
+        {fixed: 'right', title:'操作', toolbar: '#operation'}
       ]]
       ,page: true
     });
-    
+
     //监听行工具事件
     table.on('tool(courseRecord-list)', function(obj){
       var data = obj.data;
@@ -106,7 +98,7 @@
           delCourseRecordById(data.courseRecordId);
           layer.close(index);
         });
-      }else if(obj.event === 'edit'){
+      } else if(obj.event === 'edit'){
         layer.open({
           //layer提供了5种层类型。可传入的值有：0（信息框，默认）1（页面层）2（iframe层）3（加载层）4（tips层）
           type: 1,
@@ -139,25 +131,25 @@
       getCoursePayList();
       getCourseList();
       $('input[name="courseRecordId"]').val(data.courseRecordId);
-      $('input[name="isAttend"]').val(data.isAttend);
+      //$('input[name="isAttend"]').val(data.isAttend);
       $('textarea[name="remarks"]').text(data.remarks);
 
       form.on('submit(edit-courseRecord)', function() {
         var courseRecord = {};
+
         courseRecord.courseRecordId = $('input[name="courseRecordId"]').val();
+        courseRecord.isAttend = $('input[name="isAttend"]:checked').val();
+        courseRecord.remarks = $('textarea[name="remarks"]').val();
         courseRecord.coursePay = {
           coursePayId : $('#coursePay').find('option').not(function () {
             return !this.selected;
           }).data('id')
         };
-        courseRecord.Course = {
+        courseRecord.course = {
           courseId : $('#course').find('option').not(function () {
             return !this.selected;
           }).data('id')
         };
-        courseRecord.isAttend = $('input[name="isAttend"]:checked').val();
-        courseRecord.remarks = $('textarea[name="remarks"]').val();
-
 
         var formData = new FormData();
         formData.append('courseRecordStr',JSON.stringify(courseRecord));
@@ -194,8 +186,7 @@
           //根据课程缴费列表动态拼接html
           res.coursePayList.map(function (item, index) {
             tempHtml += '<option data-id="' + item.coursePayId + '">'
-                    + ' — 会员：' + item.vip.vipName + '（会员ID：'+ item.vip.vipId +'）'
-                    + ' — 课程类别：' + item.type + '</option>';
+                    + ' — 会员：' + item.vip.vipName + '（会员ID：'+ item.vip.vipId +'）' + '</option>';
           });
           $('#coursePay').html(tempHtml);
           form.render('select');
@@ -208,76 +199,72 @@
       $.get('/admin/listCourseMap', function(res) {
         if (res.success){
           var tempHtml = '';
-          //根据课程列表动态拼接html
+          //根据课程缴费列表动态拼接html
           res.courseList.map(function (item, index) {
             tempHtml += '<option data-id="' + item.courseId + '">'
-                    + ' — 会员：' + item.coach.coachName +  ' — 上课时间：' + item.createTime + '</option>';
+                    + ' — 教练：' + item.coach.coachName + ' — 上课时间：' + item.createTime
+                    + '</option>';
           });
           $('#course').html(tempHtml);
           form.render('select');
         }
       });
     }
+
   });
-  </script>
+</script>
 
-  <!--这里是弹出层的表单信息-->
-  <!--style是在本页隐藏，只有点击编辑才会弹出-->
-  <div class="layui-row" id="popUpdateCourseRecord" style="display:none;">
-    <div class="layui-col-md10">
-      <form class="layui-form layui-from-pane" action="" style="margin-top:20px" lay-filter="modify-CourseRecord">
-        <div class="layui-form-item">
-          <label class="layui-form-label">上课记录ID</label>
-          <div class="layui-input-block">
-            <input type="text" name="courseRecordId" autocomplete="off" class="layui-input" readonly>
+
+<!--这里是弹出层的表单信息-->
+<!--style是在本页隐藏，只有点击编辑才会弹出-->
+<div class="layui-row" id="popUpdateCourseRecord" style="display:none;">
+  <div class="layui-col-md10">
+    <form class="layui-form layui-from-pane" action="" style="margin-top:20px" lay-filter="modify-courseRecord">
+      <div class="layui-form-item">
+        <label class="layui-form-label">上课记录ID</label>
+        <div class="layui-input-block">
+          <input type="text" name="courseRecordId" autocomplete="off" class="layui-input" readonly>
+        </div>
+      </div>
+
+      <div class="layui-form-item">
+        <label class="layui-form-label">会员列表</label>
+        <div class="layui-input-block">
+          <div class="layui-col-md6">
+            <select id="coursePay">
+            </select>
           </div>
         </div>
+      </div>
 
-        <div class="layui-form-item">
-          <label class="layui-form-label">课程缴费列表</label>
-          <div class="layui-input-block">
-            <div class="layui-col-md6">
-              <select id="coursePay">
-              </select>
-            </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">课程列表</label>
+        <div class="layui-input-block">
+          <div class="layui-col-md6">
+            <select id="course">
+            </select>
           </div>
         </div>
+      </div>
 
-        <div class="layui-form-item">
-          <label class="layui-form-label">课程列表</label>
-          <div class="layui-input-block">
-            <div class="layui-col-md6">
-              <select id="course">
-              </select>
-            </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">上课状态</label>
+        <div class="layui-input-block">
+          <input type="radio" name="isAttend" value="未上课" title="未上课">
+          <input type="radio" name="isAttend" value="已上课" title="已上课">
+        </div>
+      </div>
+
+      <div class="layui-form-item layui-layout-admin">
+        <div class="layui-input-block">
+          <div class="layui-footer" style="left: 0;">
+            <button class="layui-btn" lay-submit="" lay-filter="edit-courseRecord">立即提交</button>
           </div>
         </div>
-
-        <div class="layui-form-item">
-          <label class="layui-form-label">上课状态</label>
-          <div class="layui-input-block">
-            <input type="radio" name="isAttend" value="0" title="未上课">
-            <input type="radio" name="isAttend" value="1" title="已上课">
-          </div>
-        </div>
-
-        <div class="layui-form-item layui-form-text">
-          <label class="layui-form-label">评价</label>
-          <div class="layui-input-block">
-            <textarea name="remarks" placeholder="请输入内容" class="layui-textarea"></textarea>
-          </div>
-        </div>
-
-
-        <div class="layui-form-item layui-layout-admin">
-          <div class="layui-input-block">
-            <div class="layui-footer" style="left: 0;">
-              <button class="layui-btn" lay-submit="" lay-filter="edit-courseRecord">立即提交</button>
-            </div>
-          </div>
-        </div>
-      </form>
-    </div>
+      </div>
+    </form>
   </div>
+</div>
+
 </body>
 </html>

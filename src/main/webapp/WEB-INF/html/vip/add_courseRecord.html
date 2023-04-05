@@ -150,7 +150,8 @@
                     var tempHtml = '';
                     res.coursePayList.map(function (item, index) {
                         tempHtml += '<option data-id="' + item.coursePayId + '">'
-                            + ' — ID：' + item.coursePayId + '</option>';
+                            + ' — ID：' + item.coursePayId + ' — 次数：' + item.num
+                            + '</option>';
                     });
                     $('#coursePay').html(tempHtml);
                     form.render('select');
@@ -160,13 +161,14 @@
 
         // 获取课程列表
         function getCourseList(){
-            $.get('/vip/listCourseMap', function(res) {
+            $.get('/admin/listCourseMap', function(res) {
                 if (res.success){
                     var tempHtml = '';
-                    //根据课程列表动态拼接html
+                    //根据课程缴费列表动态拼接html
                     res.courseList.map(function (item, index) {
                         tempHtml += '<option data-id="' + item.courseId + '">'
-                            + ' — 会员：' + item.coach.coachName +  ' — 上课时间：' + item.createTime + '</option>';
+                            + ' — 教练：' + item.coach.coachName + ' — 上课时间：' + item.createTime
+                            + '</option>';
                     });
                     $('#course').html(tempHtml);
                     form.render('select');

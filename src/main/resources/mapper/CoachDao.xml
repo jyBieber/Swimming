@@ -6,12 +6,14 @@
     <select id="queryCoach" resultType="com.it.swim.entity.Coach">
         SELECT coach_id, password, coach_name, profile_img, gender, age, phone, email, remarks
         FROM coach
+        ORDER BY coach_id
     </select>
 
     <select id="queryCoachById" resultType="com.it.swim.entity.Coach">
         SELECT coach_id, password, coach_name, profile_img, gender, age, phone, email, remarks
         FROM coach
         WHERE coach_id = #{coachId}
+        ORDER BY coach_id
     </select>
 
     <insert id="addCoach" useGeneratedKeys="true" keyColumn="cardRecord_id" keyProperty="cardRecordId">

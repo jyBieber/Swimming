@@ -125,14 +125,14 @@
       ,url: '/vip/listCardRecordByVipId?vipId='+vipId
       ,title: '会员卡信息列表'
       ,cols: [[
-        {field: 'cardRecordId', width: 120, title: '游泳记录ID', sort: true, fixed: 'left'},
-        {title:'会员卡ID', width:120, sort: true, templet: function(data){
-            return data.vipCard.vipCardId;
+        {field: 'cardRecordId', title: '游泳记录ID', sort: true, fixed: 'left'},
+        {title:'会员卡种类', sort: true, templet: function(data){
+            return data.vipCard.type;
           }},
-        {title:'游泳时间', width:120, templet: function(res){
+        {title:'游泳时间', templet: function(res){
             return new Date(res.createTime).Format("yyyy-MM-dd");
           }},
-        {field:'remarks', title:'备注', width:250}
+        {field:'remarks', title:'备注'}
       ]]
       ,page: true
     });

@@ -50,7 +50,7 @@ public class CourseRecordServiceTest extends BaseTest {
         Course course = new Course();
         course.setCourseId(1L);
         courseRecord.setCourse(course);
-        courseRecord.setIsAttend(0);
+        courseRecord.setIsAttend("未上课");
 
         CourseRecordExecution courseRecordExecution = courseRecordService.addCourseRecord(courseRecord);
         assertEquals(CourseRecordStateEnum.SUCCESS.getState(),courseRecordExecution.getState());
@@ -61,7 +61,7 @@ public class CourseRecordServiceTest extends BaseTest {
     public void testDModifyCourseRecord(){
         CourseRecord courseRecord = new CourseRecord();
         courseRecord.setCourseRecordId(14L);
-        courseRecord.setIsAttend(1);
+        courseRecord.setIsAttend("未上课");
 
         CourseRecordExecution courseRecordExecution = courseRecordService.modifyCourseRecord(courseRecord);
         assertEquals(CourseRecordStateEnum.SUCCESS.getState(),courseRecordExecution.getState());

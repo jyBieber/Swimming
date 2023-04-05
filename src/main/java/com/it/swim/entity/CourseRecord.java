@@ -1,6 +1,7 @@
 package com.it.swim.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
@@ -8,11 +9,12 @@ import java.util.Date;
 /*
  * @description: 会员上课记录实体类
  */
+// @JsonIgnoreProperties(ignoreUnknown = true)
 public class CourseRecord {
     //会员上课记录ID
     private Long courseRecordId;
     //是否上课
-    private Integer isAttend;
+    private String isAttend;
     //备注
     private String remarks;
 
@@ -29,11 +31,11 @@ public class CourseRecord {
         this.courseRecordId = courseRecordId;
     }
 
-    public Integer getIsAttend() {
+    public String getIsAttend() {
         return isAttend;
     }
 
-    public void setIsAttend(Integer isAttend) {
+    public void setIsAttend(String isAttend) {
         this.isAttend = isAttend;
     }
 
@@ -45,19 +47,19 @@ public class CourseRecord {
         this.remarks = remarks;
     }
 
-    public Course getCourse() {
-        return course;
-    }
-
-    public void setCourse(Course course) {
-        this.course = course;
-    }
-
     public CoursePay getCoursePay() {
         return coursePay;
     }
 
     public void setCoursePay(CoursePay coursePay) {
         this.coursePay = coursePay;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
     }
 }

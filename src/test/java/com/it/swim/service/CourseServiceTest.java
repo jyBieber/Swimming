@@ -41,12 +41,11 @@ public class CourseServiceTest extends BaseTest {
     @Test
     public void testCAddCourse(){
         Course course = new Course();
-        course.setCourseId(14L);
+        course.setCourseId(53L);
         Coach coach = new Coach();
         coach.setCoachId(30003L);
         course.setCoach(coach);
         course.setCreateTime(new Date());
-
 
         CourseExecution courseExecution = courseService.addCourse(course);
         assertEquals(CourseStateEnum.SUCCESS.getState(),courseExecution.getState());

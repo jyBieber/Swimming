@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>添加游泳记录</title>
+  <title>添加游泳记录信息</title>
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -11,113 +11,97 @@
 </head>
 <body>
 
-  <div class="layui-fluid">
-    <div class="layui-card">
-      <div class="layui-card-header">添加游泳记录信息</div>
-      <div class="layui-card-body" style="padding: 15px;">
-        <form class="layui-form" action="" lay-filter="add-cardRecordInfo">
+<div class="layui-fluid">
+  <div class="layui-card">
+    <div class="layui-card-header">添加游泳记录信息</div>
+    <div class="layui-card-body" style="padding: 15px;">
+      <form class="layui-form" action="" lay-filter="add-cardRecordInfo">
 
-          <!--<div class="layui-form-item">-->
-          <!--  <label class="layui-form-label">游泳记录号</label>-->
-          <!--  <div class="layui-input-inline">-->
-          <!--    <input type="text" name="cardRecordId" lay-verify="required|cardRecordId" autocomplete="off" class="layui-input">-->
-          <!--  </div>-->
-          <!--</div>-->
-
-          <div class="layui-form-item">
-            <label class="layui-form-label">会员卡列表</label>
-            <div class="layui-input-block">
-              <div class="layui-col-md6">
-                <select id="vipCard">
-                </select>
-              </div>
+        <div class="layui-form-item">
+          <label class="layui-form-label">会员卡列表</label>
+          <div class="layui-input-block">
+            <div class="layui-col-md6">
+              <select id="vipCard">
+              </select>
             </div>
           </div>
+        </div>
 
-          <div class="layui-form-item">
-            <label class="layui-form-label">游泳时间</label>
-            <div class="layui-input-inline">
-              <input type="text" class="layui-input" id="createTime" placeholder="yyyy-MM-dd HH:mm:ss">
+        <div class="layui-form-item">
+          <label class="layui-form-label">游泳时间</label>
+          <div class="layui-input-inline">
+            <input type="text" class="layui-input" id="createTime" placeholder="yyyy-MM-dd HH:mm:ss">
+          </div>
+        </div>
+
+        <div class="layui-form-item layui-form-text">
+          <label class="layui-form-label">备注</label>
+          <div class="layui-input-block">
+            <textarea name="remarks" placeholder="请输入内容" class="layui-textarea"></textarea>
+          </div>
+        </div>
+
+        <div class="layui-form-item layui-layout-admin">
+          <div class="layui-input-block">
+            <div class="layui-footer" style="left: 0;">
+              <button class="layui-btn" lay-submit="" lay-filter="add-cardRecord">立即提交</button>
             </div>
           </div>
+        </div>
 
-          <div class="layui-form-item layui-form-text">
-            <label class="layui-form-label">备注</label>
-            <div class="layui-input-block">
-              <textarea name="remarks" placeholder="请输入内容" class="layui-textarea"></textarea>
-            </div>
-          </div>
-
-          <div class="layui-form-item layui-layout-admin">
-            <div class="layui-input-block">
-              <div class="layui-footer" style="left: 0;">
-                <button class="layui-btn" lay-submit="" lay-filter="add-cardRecord">立即提交</button>
-                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-              </div>
-            </div>
-          </div>
-
-        </form>
-      </div>
+      </form>
     </div>
   </div>
+</div>
 
-    
-  <script src="../../../resources/layuiadmin/layui/layui.js"></script>
-  <script src="../../../resources/js/common.js"></script>
-  <script>
-    layui.use('form',function(){
-      var form = layui.form;
-      //刷新界面 所有元素
-      form.render();
-    });
-    layui.use('laydate', function(){
-      var laydate = layui.laydate;
-      //日期时间选择器，#expireTime为时间选择标签的Id
-      laydate.render({
-        elem: '#createTime'
-        ,type: 'datetime'
-      });
-    });
 
+<script src="../../../resources/layuiadmin/layui/layui.js"></script>
+<script src="../../../resources/js/common.js"></script>
+<script>
+  layui.use('form',function(){
+    var form = layui.form;
+    //刷新界面 所有元素
+    form.render();
+  });
+  layui.use('laydate', function(){
+    var laydate = layui.laydate;
+    //日期时间选择器，#expireTime为时间选择标签的Id
+    laydate.render({
+      elem: '#createTime'
+      ,type: 'datetime'
+    });
+  });
   layui.config({
     base: '../../../resources/layuiadmin/' //静态资源所在路径
   }).extend({
     index: 'lib/index' //主入口模块
   }).use(['index', 'form'], function(){
     var $ = layui.$
-    ,layer = layui.layer
-    ,form = layui.form;
+            ,layer = layui.layer
+            ,form = layui.form;
 
     form.render(null, 'add-cardRecordInfo');
 
-    /* 自定义验证规则 */
-    form.verify({
-      cardRecordName: function(value){
-        if(containsNumber(value) === true){
-          return '游泳记录名不能含有数字';
-        }
-      }
-    });
     getVipCardList();
 
-    // 获取课程列表
+    // 获取会员卡列表
     function getVipCardList(){
       $.get('/admin/listVipCardMap', function(res) {
         if (res.success){
           var tempHtml = '';
-          //根据课程列表动态拼接html
+          //根据会员卡列表动态拼接html
           res.vipCardList.map(function (item, index) {
             tempHtml += '<option data-id="' + item.vipCardId + '">'
-                     + ' — 会员：' + item.vip.vipName + '（会员ID：'+ item.vip.vipId +'）' + '</option>';
+                    + item.type + ' — 会员：' + item.vip.vipName + '（会员号：'+ item.vip.vipId +'）' + '</option>';
           });
-          $('#course').html(tempHtml);
+          $('#vipCard').html(tempHtml);
           form.render('select');
         }
       });
     }
+
     var cardRecord = {};
-    
+
     /* 监听提交 */
     form.on('submit(add-cardRecord)', function(){
       cardRecord.vipCard = {
@@ -150,6 +134,6 @@
     });
 
   });
-  </script>
+</script>
 </body>
 </html>

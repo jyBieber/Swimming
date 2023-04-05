@@ -50,7 +50,7 @@ public class CoursePayServiceTest extends BaseTest {
         coursePay.setAmount(5000);
         coursePay.setNum(10);
         coursePay.setPoints(0);
-        coursePay.setIsRedeem(0);
+        coursePay.setIsRedeem("未兑换");
         coursePay.setRedeemNum(0);
         coursePay.setCreateTime(new Date());
         coursePay.setExpireTime(new Date());
@@ -65,7 +65,7 @@ public class CoursePayServiceTest extends BaseTest {
         CoursePay coursePay = new CoursePay();
         coursePay.setCoursePayId(6L);
         coursePay.setNum(12);
-        coursePay.setIsRedeem(1);
+        coursePay.setIsRedeem("已兑换");
         coursePay.setRedeemNum(2);
 
         CoursePayExecution coursePayExecution = coursePayService.modifyCoursePay(coursePay);

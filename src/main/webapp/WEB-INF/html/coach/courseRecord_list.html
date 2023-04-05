@@ -127,16 +127,15 @@
       ,url: '/coach/listCourseRecordByCoachId?coachId='+coachId
       ,title: '会员上课记录信息列表'
       ,cols: [[
-        {field: 'courseRecordId', width: 120, title: '会员上课记录ID', sort: true, fixed: 'left'},
-        {title: '会员名', width: 150, sort: true, templet: function(data){
+        {field: 'courseRecordId',  title: '会员上课记录ID', sort: true, fixed: 'left'},
+        {title: '会员名', sort: true, templet: function(data){
             return data.coursePay.vip.vipName;
           }},
-        {title: '上课时间', width: 150, sort: true, templet: function(data){
+        {title: '上课时间', sort: true, templet: function(data){
             return data.course.createTime;
           }},
-        {field: 'isAttend', width: 150, title: '是否上课', sort: true},
-        {field: 'remarks', width: 250, title: '评价'},
-        {fixed: 'right', title: '操作', toolbar: '#operation', width: 160}
+        {field: 'isAttend', title: '是否上课', sort: true},
+        {field: 'remarks', title: '评价'}
       ]]
       ,page: true
     });

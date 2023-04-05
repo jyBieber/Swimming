@@ -1,6 +1,7 @@
 package com.it.swim.service;
 
 import com.it.swim.dto.CourseRecordExecution;
+import com.it.swim.entity.Course;
 import com.it.swim.entity.CourseRecord;
 import java.util.List;
 
@@ -38,21 +39,21 @@ public interface CourseRecordService {
      * @param coursePayId
      * @return  CourseRecord
      */
-    List<CourseRecord> getCourseRecordByCoursePayId(long coursePayId);
+    // List<CourseRecord> getCourseRecordByCoursePayId(long coursePayId);
 
     /*
      * @description: 通过courseId查询上课记录信息列表
      * @param courseId
      * @return  CourseRecord
      */
-    List<CourseRecord> getCourseRecordByCourseId(long courseId);
+    // List<CourseRecord> getCourseRecordByCourseId(long courseId);
 
     /*
      * @description: 通过courseRecord查询缴费信息列表
      * @param coursePayId
      * @return  CourseRecord
      */
-    List<CourseRecord> getCoursePayByCourseRecordId(long CourseRecordId);
+    // List<CourseRecord> getCoursePayByCourseRecordId(long CourseRecordId);
 
     /*
      * @description: 新增上课记录信息

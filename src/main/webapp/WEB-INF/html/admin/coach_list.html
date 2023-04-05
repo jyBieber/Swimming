@@ -72,17 +72,17 @@
       ,toolbar: '#operation'
       ,title: '教练信息列表'
       ,cols: [[
-         {field:'coachId', title:'教练ID号', width:120, fixed: 'left', unresize: true, sort: true},
-         {field:'password', title:'密码', width:150},
-         {field:'coachName', title:'教练姓名', width:120, sort: true},
-         {field:'gender', title:'性别', width:80},
-         {field:'age', title:'年龄', width:80},
-         {field:'phone', title:'手机号', width:150},
-         {field:'email', title:'邮箱', width:150, templet: function(res){
+         {field:'coachId', title:'教练ID号', fixed: 'left', unresize: true, sort: true},
+         {field:'password', title:'密码'},
+         {field:'coachName', title:'教练姓名', sort: true},
+         {field:'gender', title:'性别'},
+         {field:'age', title:'年龄'},
+         {field:'phone', title:'手机号'},
+         {field:'email', title:'邮箱', templet: function(res){
           return '<em>'+ res.email +'</em>'
         }},
-         {field:'remarks', title:'备注', width:250},
-         {fixed: 'right', title:'操作', toolbar: '#operation', width:150}
+         {field:'remarks', title:'备注'},
+         {fixed: 'right', title:'操作', toolbar: '#operation'}
       ]]
       ,page: true
     });

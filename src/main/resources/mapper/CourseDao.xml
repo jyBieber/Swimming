@@ -20,6 +20,7 @@
             course co, coach c 
         WHERE
             co.coach_id = c.coach_id
+        ORDER BY co.course_id
     </select>
 
     <select id="queryCourseById" resultMap="courseMap" parameterType="Long">
@@ -29,6 +30,7 @@
             course co, coach c 
         WHERE
             co.course_id = #{courseId} AND co.coach_id = c.coach_id
+        ORDER BY co.course_id
     </select>
 
     <select id="queryCourseByCoachId" resultMap="courseMap">
@@ -38,6 +40,7 @@
             course co, coach c 
         WHERE
             co.coach_id = #{coach.coachId} AND co.coach_id = c.coach_id
+        ORDER BY co.course_id
     </select>
 
     <insert id="addCourse" useGeneratedKeys="true" keyColumn="course_id" keyProperty="courseId">

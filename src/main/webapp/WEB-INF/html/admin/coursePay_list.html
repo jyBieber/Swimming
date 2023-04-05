@@ -72,13 +72,13 @@
     ,layer = layui.layer;
 
     /* 自定义验证规则 */
-    form.verify({
+    /*form.verify({
       coursePayName: function(value){
         if(containsNumber(value) === true){
           return '课程缴费名不能含有数字';
         }
       }
-    });
+    });*/
   
     table.render({
       elem: '#coursePay-list'
@@ -87,22 +87,22 @@
       ,toolbar: '#operation'
       ,title: '课程缴费信息列表'
       ,cols: [[
-         {field:'coursePayId', title:'课程缴费ID', width:120, fixed: 'left', unresize: true, sort: true},
-         {title:'会员ID', width:160, sort: true, templet: function(data){
+         {field:'coursePayId', title:'ID', fixed: 'left', unresize: true, sort: true,width:60},
+         {title:'会员ID',width:120, sort: true, templet: function(data){
              return data.vip.vipId;
            }},
-         {title:'会员姓名', width:160, sort: true, templet: function(data){
+         {title:'会员姓名',width:120, sort: true, templet: function(data){
              return data.vip.vipName;
            }},
-        {field:'amount', title:'充值金额', width:80},
-        {field:'num', title:'次数', width:80},
-        {field:'points', title:'积分', width:80},
-        {field:'isRedeem', title:'是否兑换', width:80},
-        {field:'redeemNum', title:'兑换课程次数', width:80},
-        {field: 'createTime', title: '激活时间', width: 200, sort: true},
-        {field: 'expireTime', title: '到期时间', width: 200, sort: true},
-        {field:'remarks', title:'备注', width:250},
-         {fixed: 'right', title:'操作', toolbar: '#operation', width:150}
+        {field:'amount', title:'充值金额',width:120},
+        {field:'num', title:'次数',width:80},
+        {field:'points', title:'积分',width:80},
+        {field:'isRedeem', title:'是否兑换',width:120},
+        {field:'redeemNum', title:'兑换课程次数',width:150},
+        {field: 'createTime', title: '激活时间', sort: true,width:200},
+        {field: 'expireTime', title: '到期时间', sort: true,width:200},
+        {field:'remarks', title:'备注',width:150},
+         {fixed: 'right', title:'操作', toolbar: '#operation',width:150}
       ]]
       ,page: true
     });
@@ -246,7 +246,8 @@
           <label class="layui-form-label">会员</label>
           <div class="layui-input-block">
             <div class="layui-col-md6">
-              <input type="text" name="vipName" lay-verify="vipName" autocomplete="off" class="layui-input" readonly>
+              <select id="vip">
+              </select>
             </div>
           </div>
         </div>
@@ -275,8 +276,8 @@
         <div class="layui-form-item">
           <label class="layui-form-label">是否兑换</label>
           <div class="layui-input-block">
-            <input type="radio" name="isRedeem" value="1" title="已兑换">
-            <input type="radio" name="isRedeem" value="0" title="未兑换">
+            <input type="radio" name="isRedeem" value="已兑换" title="已兑换">
+            <input type="radio" name="isRedeem" value="未兑换" title="未兑换">
           </div>
         </div>
 
@@ -290,14 +291,14 @@
         <div class="layui-form-item">
           <label class="layui-form-label">激活时间</label>
           <div class="layui-input-inline">
-            <input type="text" class="layui-input" id="required|createTime" placeholder="yyyy年M月d日H时">
+            <input type="text" class="layui-input" id="createTime" placeholder="yyyy年M月d日H时">
           </div>
         </div>
 
         <div class="layui-form-item">
           <label class="layui-form-label">到期时间</label>
           <div class="layui-input-inline">
-            <input type="text" class="layui-input" id="required|expireTime" placeholder="yyyy年M月d日H时">
+            <input type="text" class="layui-input" id="expireTime" placeholder="yyyy年M月d日H时">
           </div>
         </div>
 

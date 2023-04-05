@@ -5,84 +5,121 @@
   <title>会员卡列表</title>
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <link rel="stylesheet" href="../../../resources/layuiadmin/layui/css/layui.css" media="all">
   <link rel="stylesheet" href="../../../resources/layuiadmin/style/admin.css" media="all">
 </head>
 <body>
 
-  <div class="layui-card layadmin-header">
-    <div class="layui-breadcrumb" lay-filter="breadcrumb">
-      <a lay-href="">主页</a>
-      <a><cite>组件</cite></a>
-      <a><cite>数据表格</cite></a>
-      <a><cite>数据操作</cite></a>
-    </div>
+<div class="layui-card layadmin-header">
+  <div class="layui-breadcrumb" lay-filter="breadcrumb">
+    <a lay-href="">主页</a>
+    <a><cite>组件</cite></a>
+    <a><cite>数据表格</cite></a>
+    <a><cite>开启头部工具栏</cite></a>
   </div>
-  
-  <div class="layui-fluid">
-    <div class="layui-row layui-col-space15">
-      <div class="layui-col-md12">
-        <div class="layui-card">
-          <div class="layui-card-header">会员卡列表</div>
-          <div class="layui-card-body">
-            <table class="layui-hide" id="vipCard-list" lay-filter="vipCard-list"></table>
-            
-            <script type="text/html" id="operation">
-              <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-              <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-            </script>
-          </div>
+</div>
+
+<div class="layui-fluid">
+  <div class="layui-row layui-col-space15">
+    <div class="layui-col-md12">
+      <div class="layui-card">
+        <div class="layui-card-header">会员卡信息列表</div>
+        <div class="layui-card-body">
+          <table class="layui-hide" id="vipCard-list" lay-filter="vipCard-list"></table>
+
+          <script type="text/html" id="operation">
+            <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+          </script>
         </div>
       </div>
     </div>
   </div>
+</div>
 
-  <script src="../../../resources/layuiadmin/layui/layui.js"></script>
-  <script src="../../../resources/js/common.js"></script>
-  <script>
+<script src="../../../resources/layuiadmin/layui/layui.js"></script>
+<script src="../../../resources/js/common.js"></script>
+<script>
+  layui.use('form',function(){
+    var form = layui.form;
+    //刷新界面 所有元素
+    form.render();
+  });
+  layui.use('laydate', function(){
+    var laydate = layui.laydate;
+    //日期时间选择器，#expireTime为时间选择标签的Id
+    laydate.render({
+      elem: '#createTime'
+      ,format: 'yyyy-MM-dd'
+    });
+    laydate.render({
+      elem: '#expireTime'
+      ,min: 0
+      ,max: 366
+      ,format: 'yyyy-MM-dd'
+    });
+  });
   layui.config({
     base: '../../../resources/layuiadmin/' //静态资源所在路径
   }).extend({
     index: 'lib/index' //主入口模块
-  }).use(['index', 'table'], function(){
+  }).use(['index', 'table', 'form'], function(){
     var table = layui.table
-    ,$ = layui.$
-    ,layer = layui.layer;
+            ,$ = layui.$
+            ,form = layui.form
+            ,layer = layui.layer;
+
+    /* 自定义验证规则 */
+    // form.verify({
+    //   vipCardName: function(value){
+    //     if(containsNumber(value) === true){
+    //       return '会员卡名不能含有数字';
+    //     }
+    //   }
+    // });
 
     table.render({
       elem: '#vipCard-list'
       ,id: 'vipCardTable'
       ,url: '/admin/listVipCard'
+      ,toolbar: '#operation'
+      ,title: '会员卡信息列表'
       ,cols: [[
-         {field: 'vipCardId', width: 120, title: '会员卡ID', sort: true, fixed: 'left'},
-        {title: '会员ID', width: 120, sort: true, templet: function(data){
+        {field:'vipCardId', title:'ID', fixed: 'left', unresize: true, sort: true},
+        {title:'会员ID', sort: true, templet: function(data){
             return data.vip.vipId;
           }},
-        {title: '会员姓名', width: 120, sort: true, templet: function(data){
+        {title:'会员姓名', sort: true, templet: function(data){
             return data.vip.vipName;
           }},
-        {field:'type', title:'会员卡类型', width:80},
-        {field:'amount', title:'充值金额', width:80},
-        {field:'num', title:'充值次数', width:80},
-        {field:'state', title:'会员卡状态', width:80},
-        {field: 'createTime', title: '激活时间', width: 200, sort: true},
-        {field: 'expireTime', title: '到期时间', width: 200, sort: true},
-        {field:'remarks', title:'备注', width:250},
-        {fixed: 'right', title: '操作', toolbar: '#operation', width: 150}
+        {field:'type', title:'会员卡类型'},
+        {field:'amount', title:'充值金额'},
+        {field:'num', title:'充值次数'},
+        {field:'state', title:'会员卡状态'},
+        // {field: 'createTime', title: '激活时间', sort: true},
+        // {field: 'expireTime', title: '到期时间', sort: true},
+        {title:'激活时间', templet: function(res){
+            return new Date(res.createTime).Format("yyyy-MM-dd");
+          }},
+        {title:'失效时间', templet: function(res){
+            return new Date(res.expireTime).Format("yyyy-MM-dd");
+          }},
+        {field:'remarks', title:'备注'},
+        {fixed: 'right', title:'操作', toolbar: '#operation'}
       ]]
       ,page: true
     });
 
-    //监听工具条
+    //监听行工具事件
     table.on('tool(vipCard-list)', function(obj){
       var data = obj.data;
       if(obj.event === 'del'){
-        layer.confirm('真的删除行么', function(index){
+        layer.confirm('确定要删除吗', function(index){
           delVipCardById(data.vipCardId);
           layer.close(index);
         });
-      }else if(obj.event === 'edit'){
+      } else if(obj.event === 'edit'){
         layer.open({
           //layer提供了5种层类型。可传入的值有：0（信息框，默认）1（页面层）2（iframe层）3（加载层）4（tips层）
           type: 1,
@@ -93,26 +130,6 @@
         //动态向表传递赋值可以参看文章进行修改界面的更新前数据的显示，当然也是异步请求的要数据的修改数据的获取
         setFormValue(obj,data);
       }
-    });
-
-    layui.use('form',function(){
-      var form = layui.form;
-      //刷新界面 所有元素
-      form.render();
-    });
-    layui.use('laydate', function(){
-      var laydate = layui.laydate;
-      //日期时间选择器，#expireTime为时间选择标签的Id
-      laydate.render({
-        elem: '#createTime'
-        ,format: 'yyyy-MM-dd'
-      });
-      laydate.render({
-        elem: '#expireTime'
-        ,min: 0
-        ,max: 366
-        ,format: 'yyyy-MM-dd'
-      });
     });
 
     //删除记录
@@ -134,22 +151,18 @@
     function setFormValue(obj,data){
       getVipList();
       $('input[name="vipCardId"]').val(data.vipCardId);
-      $('input[name="type"]').val(data.type);
+      //$('input[name="type"]').val(data.type);
       $('input[name="amount"]').val(data.amount);
       $('input[name="num"]').val(data.num);
-      $('input[name="state"]').val(data.state);
+      //$('input[name="state"]').val(data.state);
       $('#createTime').val(data.createTime);
       $('#expireTime').val(data.expireTime);
       $('textarea[name="remarks"]').text(data.remarks);
 
       form.on('submit(edit-vipCard)', function() {
         var vipCard = {};
+
         vipCard.vipCardId = $('input[name="vipCardId"]').val();
-        vipCard.vip = {
-          vipId : $('#vip').find('option').not(function () {
-            return !this.selected;
-          }).data('id')
-        };
         vipCard.type = $('input[name="type"]:checked').val();
         vipCard.amount = $('input[name="amount"]').val();
         vipCard.num = $('input[name="num"]').val();
@@ -157,7 +170,11 @@
         vipCard.createTime = $('#createTime').val();
         vipCard.expireTime = $('#expireTime').val();
         vipCard.remarks = $('textarea[name="remarks"]').val();
-
+        vipCard.vip = {
+          vipId : $('#vip').find('option').not(function () {
+            return !this.selected;
+          }).data('id')
+        };
 
         var formData = new FormData();
         formData.append('vipCardStr',JSON.stringify(vipCard));
@@ -171,14 +188,14 @@
           cache : false,
           success:function(res){
             if (res.success){
-              layer.msg("修改课程缴费信息成功");
+              layer.msg("修改会员卡信息成功");
               table.reload('vipCardTable', {//vipCardTable是组件名称,表格名
                 page: {//page参数是指重新刷新后从第几页开始
                   curr: 1 //重新从第 1 页开始
                 }
               }, 'data');//data是默认值
             }else {
-              layer.msg("修改课程缴费信息失败" + res.errMsg);
+              layer.msg("修改会员卡信息失败" + res.errMsg);
             }
           }
         })
@@ -191,7 +208,7 @@
       $.get('/admin/listVipMap', function(res) {
         if (res.success){
           var tempHtml = '';
-          //根据教练列表动态拼接html
+          //根据会员列表动态拼接html
           res.vipList.map(function (item, index) {
             tempHtml += '<option data-id="' + item.vipId + '">'
                     + item.vipName + '</option>';
@@ -201,95 +218,96 @@
         }
       });
     }
-    
+
   });
-  </script>
+</script>
 
-  <!--这里是弹出层的表单信息-->
-  <!--style是在本页隐藏，只有点击编辑才会弹出-->
-  <div class="layui-row" id="popUpdateVipCard" style="display:none;">
-    <div class="layui-col-md10">
-      <form class="layui-form layui-from-pane" action="" style="margin-top:20px" lay-filter="modify-VipCard">
-        <div class="layui-form-item">
-          <label class="layui-form-label">会员卡ID</label>
-          <div class="layui-input-block">
-            <input type="text" name="vipCardId" autocomplete="off" class="layui-input" readonly>
+
+<!--这里是弹出层的表单信息-->
+<!--style是在本页隐藏，只有点击编辑才会弹出-->
+<div class="layui-row" id="popUpdateVipCard" style="display:none;">
+  <div class="layui-col-md10">
+    <form class="layui-form layui-from-pane" action="" style="margin-top:20px" lay-filter="modify-vipCard">
+      <div class="layui-form-item">
+        <label class="layui-form-label">会员卡号</label>
+        <div class="layui-input-block">
+          <input type="text" name="vipCardId" autocomplete="off" class="layui-input" readonly>
+        </div>
+      </div>
+
+      <div class="layui-form-item">
+        <label class="layui-form-label">会员</label>
+        <div class="layui-input-block">
+          <div class="layui-col-md6">
+            <select id="vip">
+            </select>
           </div>
         </div>
+      </div>
 
-        <div class="layui-form-item">
-          <label class="layui-form-label">会员列表</label>
-          <div class="layui-input-block">
-            <div class="layui-col-md6">
-              <select id="vip">
-              </select>
-            </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">会员卡种类</label>
+        <div class="layui-input-block">
+          <input type="radio" name="type" value="次卡" title="次卡">
+          <input type="radio" name="type" value="10次卡" title="10次卡">
+          <input type="radio" name="type" value="50次卡" title="50次卡">
+          <input type="radio" name="type" value="年卡" title="年卡">
+        </div>
+      </div>
+
+      <div class="layui-form-item">
+        <label class="layui-form-label">充值金额</label>
+        <div class="layui-input-block">
+          <input type="text" name="amount" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+        </div>
+      </div>
+
+      <div class="layui-form-item">
+        <label class="layui-form-label">充值次数</label>
+        <div class="layui-input-block">
+          <input type="text" name="num" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+        </div>
+      </div>
+
+      <div class="layui-form-item">
+        <label class="layui-form-label">会员卡状态</label>
+        <div class="layui-input-block">
+          <input type="radio" name="state" value="已激活" title="已激活">
+          <input type="radio" name="state" value="已失效" title="已失效">
+        </div>
+      </div>
+
+      <div class="layui-form-item">
+        <label class="layui-form-label">激活时间</label>
+        <div class="layui-input-inline">
+          <input type="text" class="layui-input" id="createTime" placeholder="yyyy年M月d日H时">
+        </div>
+      </div>
+
+      <div class="layui-form-item">
+        <label class="layui-form-label">到期时间</label>
+        <div class="layui-input-inline">
+          <input type="text" class="layui-input" id="expireTime" placeholder="yyyy年M月d日H时">
+        </div>
+      </div>
+
+      <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">备注</label>
+        <div class="layui-input-block">
+          <textarea name="remarks" placeholder="请输入内容" class="layui-textarea"></textarea>
+        </div>
+      </div>
+
+      <div class="layui-form-item layui-layout-admin">
+        <div class="layui-input-block">
+          <div class="layui-footer" style="left: 0;">
+            <button class="layui-btn" lay-submit="" lay-filter="edit-vipCard">立即提交</button>
           </div>
         </div>
-
-        <div class="layui-form-item">
-          <label class="layui-form-label">会员卡类型</label>
-          <div class="layui-input-block">
-            <input type="radio" name="type" value="1" title="次卡">
-            <input type="radio" name="type" value="2" title="10次卡">
-            <input type="radio" name="type" value="3" title="50次卡">
-            <input type="radio" name="type" value="4" title="年卡">
-          </div>
-        </div>
-
-        <div class="layui-form-item">
-          <label class="layui-form-label">充值金额</label>
-          <div class="layui-input-block">
-            <input type="text" name="amount" lay-verify="required|amount" placeholder="" autocomplete="off" class="layui-input">
-          </div>
-        </div>
-
-        <div class="layui-form-item">
-          <label class="layui-form-label">充值次数</label>
-          <div class="layui-input-block">
-            <input type="text" name="num" lay-verify="required|num" placeholder="" autocomplete="off" class="layui-input">
-          </div>
-        </div>
-
-        <div class="layui-form-item">
-          <label class="layui-form-label">会员卡状态</label>
-          <div class="layui-input-block">
-            <input type="radio" name="state" value="1" title="已激活">
-            <input type="radio" name="state" value="0" title="已失效">
-          </div>
-        </div>
-
-        <div class="layui-form-item">
-          <label class="layui-form-label">激活时间</label>
-          <div class="layui-input-inline">
-            <input type="text" class="layui-input" id="required|createTime" placeholder="yyyy-MM-dd">
-          </div>
-        </div>
-
-        <div class="layui-form-item">
-          <label class="layui-form-label">到期时间</label>
-          <div class="layui-input-inline">
-            <input type="text" class="layui-input" id="required|expireTime" placeholder="yyyy-MM-dd">
-          </div>
-        </div>
-
-        <div class="layui-form-item layui-form-text">
-          <label class="layui-form-label">备注</label>
-          <div class="layui-input-block">
-            <textarea name="remarks" placeholder="请输入内容" class="layui-textarea"></textarea>
-          </div>
-        </div>
-
-
-        <div class="layui-form-item layui-layout-admin">
-          <div class="layui-input-block">
-            <div class="layui-footer" style="left: 0;">
-              <button class="layui-btn" lay-submit="" lay-filter="edit-VipCard">立即提交</button>
-            </div>
-          </div>
-        </div>
-      </form>
-    </div>
+      </div>
+    </form>
   </div>
+</div>
+
 </body>
 </html>

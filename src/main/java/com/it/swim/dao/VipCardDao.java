@@ -10,46 +10,40 @@ import java.util.List;
 public interface VipCardDao {
     /*
      * @description: 查询所有会员卡列表
-     * @param
-     * @return java.util.List< VipCard>
+     * @return java.util.List<com.it.swim.entity.VipCard>
      */
     List<VipCard> queryVipCard();
 
     /*
      * @description: 通过vipCardId查询指定会员卡信息
      * @param vipCardId
-     * @return  VipCard
+     * @return com.it.swim.entity.VipCard
      */
     VipCard queryVipCardById(long vipCardId);
+
     /*
      * @description: 通过vipId查询会员卡信息列表
      * @param vipId
-     * @return java.util.List< VipCard>
+     * @return java.util.List<com.it.swim.entity.VipCard>
      */
     List<VipCard> queryVipCardByVipId(long vipId);
 
-    /*
-     * @description: 通过cardId查询会员信息列表
-     * @param cardId
-     * @return  VipCard
-     */
-    /*List<VipCard> queryVipByCardId(long cardId);*/
     /*
      * @description: 新增会员卡信息
      * @param vipCard
      * @return int
      */
-    int addVipCard( VipCard vipCard);
+    int addVipCard(VipCard vipCard);
 
     /*
      * @description: 修改会员卡信息
      * @param vipCard
      * @return int
      */
-    int modifyVipCard( VipCard vipCard);
+    int modifyVipCard(VipCard vipCard);
 
     /*
-     * @description: 通过vipCardId删除会员卡信息
+     * @description: 通过vipCardId删除指定会员卡信息
      * @param vipCardId
      * @return int
      */

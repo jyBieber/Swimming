@@ -18,11 +18,13 @@
     <select id="queryVip" resultMap="vipMap">
         SELECT vip_id, password, vip_name, profile_img, gender, age, phone, email, remarks
         FROM vip
+        ORDER BY vip_id
     </select>
 
     <select id="queryVipById" resultMap="vipMap" parameterType="Long">
         SELECT vip_id, password, vip_name, profile_img, gender, age, phone, email, remarks
         FROM vip WHERE vip_id = #{vipId}
+        ORDER BY vip_id
     </select>
 
     <insert id="addVip" useGeneratedKeys="true" keyColumn="vip_id" keyProperty="vipId">

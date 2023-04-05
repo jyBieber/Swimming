@@ -29,12 +29,6 @@ public interface CourseDao {
     List<Course> queryCourseByCoachId(long coachId);
 
     /*
-     * @description: 通过courseId查询教练信息列表
-     * @param courseId
-     * @return  Course
-     */
-    /*List<Course> queryCoachByCourseId(long courseId);*/
-    /*
      * @description: 新增课程信息
      * @param course
      * @return int

@@ -2,7 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>会员卡情况</title>
+  <title>上课记录</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <link rel="stylesheet" href="../../../resources/layuiadmin/layui/css/layui.css">
   <link rel="stylesheet" href="../../../resources/css/global.css">
@@ -56,22 +58,38 @@
   </div>
 </div>
 
+<!--<div class="layui-fluid">
+  <div class="layui-row layui-col-space15">
+    <div class="layui-col-md12">
+      <div class="layui-card">
+        <div class="layui-card-header">上课记录信息列表</div>
+        <div class="layui-card-body">
+          <table class="layui-hide" id="courseRecord-list" lay-filter="courseRecord-list"></table>
+
+          <script type="text/html" id="operation">
+            <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+          </script>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>-->
 <div class="layui-container fly-marginTop">
   <div class="layui-row layui-col-space15">
-
     <div class="layui-col-md12">
       <div class="fly-panel detail-box">
         <fieldset class="layui-elem-field layui-field-title" style="text-align: center;">
-          <legend>我的上课记录统计</legend>
+          <legend>我的课程缴费情况统计</legend>
         </fieldset>
-        <div class="layui-collapse" lay-accordion id="courseRecord-list">
+        <div class="layui-card-body">
+          <table class="layui-hide" id="courseRecord-list" lay-filter="courseRecord-list"></table>
+          <script type="text/html" id="operation">
+            <a class="layui-btn layui-btn-xs" lay-event="edit">评价</a>
+          </script>
         </div>
-        <script type="text/html" id="operation">
-          <a class="layui-btn layui-btn-xs" lay-event="edit">评价</a>
-        </script>
       </div>
     </div>
-
   </div>
 </div>
 
@@ -82,12 +100,15 @@
 <script src="../../../resources/layuiadmin/layui/layui.js"></script>
 <script src="../../../resources/js/common.js"></script>
 <script>
-  layui.use(['element', 'table', 'laydate', 'form', 'util'], function(){
-    var $ = layui.jquery,
-            table = layui.table,
-            laydate = layui.laydate,
-            form = layui.form,
-            util = layui.util;
+  layui.config({
+    base: '../../../resources/layuiadmin/' //静态资源所在路径
+  }).extend({
+    index: 'lib/index' //主入口模块
+  }).use(['index', 'table', 'form'], function(){
+    var table = layui.table
+            ,$ = layui.$
+            ,form = layui.form
+            ,layer = layui.layer;
 
     //获取一段url中的字段，
     //如loacalhost:8080?courseId=1，getQueryString('courseId')则获取url中courseId的值
@@ -126,17 +147,19 @@
       elem: '#courseRecord-list'
       ,id: 'courseRecordTable'
       ,url: '/vip/listCourseRecordByVipId?vipId='+vipId
+      ,toolbar: '#operation'
       ,title: '会员卡信息列表'
       ,cols: [[
-        {field:'courseRecordId', title:'上课记录ID', width:120, fixed: 'left', unresize: true, sort: true},
-        {title:'教练姓名', width:120, sort: true, templet: function(data){
+        {field:'courseRecordId', title:'上课记录ID', fixed: 'left', unresize: true, sort: true},
+        {title:'教练姓名', sort: true, templet: function(data){
             return data.course.coach.coachName;
           }},
-        {title:'上课时间', width:120, sort: true, templet: function(data){
+        {title:'上课时间', sort: true, templet: function(data){
             return data.course.createTime;
           }},
-        {field:'isAttend', title:'上课状态', width:80},
-        {field:'remarks', title:'评价', width:250}
+        {field:'isAttend', title:'上课状态'},
+        {field:'remarks', title:'评价'},
+        {fixed: 'right', title:'操作', toolbar: '#operation'}
       ]]
       ,page: true
     });
@@ -157,7 +180,7 @@
       }
     });
 
-    //给表单里的元素赋值
+    ////监听弹出框表单提交，massage是修改界面的表单数据'submit(edit-courseRecord),是修改按钮的绑定
     function setFormValue(obj,data){
       $('input[name="courseRecordId"]').val(data.courseRecordId);
       $('input[name="isAttend"]').val(data.isAttend);
@@ -181,14 +204,14 @@
           cache : false,
           success:function(res){
             if (res.success){
-              layer.msg("修改课程缴费信息成功");
+              layer.msg("评价成功");
               table.reload('courseRecordTable', {//courseRecordTable是组件名称,表格名
                 page: {//page参数是指重新刷新后从第几页开始
                   curr: 1 //重新从第 1 页开始
                 }
               }, 'data');//data是默认值
             }else {
-              layer.msg("修改课程缴费信息失败" + res.errMsg);
+              layer.msg("评价失败" + res.errMsg);
             }
           }
         })
@@ -210,15 +233,6 @@
         </div>
       </div>
 
-      <div class="layui-form-item">
-        <label class="layui-form-label">教练列表</label>
-        <div class="layui-input-block">
-          <div class="layui-col-md6">
-            <input type="text" name="course.coach.coachName" autocomplete="off" class="layui-input" readonly>
-          </div>
-        </div>
-      </div>
-
       <div class="layui-form-item layui-form-text">
         <label class="layui-form-label">评价</label>
         <div class="layui-input-block">
@@ -226,12 +240,16 @@
         </div>
       </div>
 
-      <div class="layui-form-item layui-layout-admin">
+      <!--<div class="layui-form-item layui-layout-admin">
         <div class="layui-input-block">
           <div class="layui-footer" style="left: 0;">
             <button class="layui-btn" lay-submit="" lay-filter="edit-courseRecord">立即提交</button>
           </div>
         </div>
+      </div>-->
+      <div class="layui-layer-btn layui-layer-btn-">
+        <a class="layui-layer-btn0" lay-submit="" lay-filter="edit-courseRecord">确定</a>
+        <a class="layui-layer-btn1">取消</a>
       </div>
     </form>
   </div>

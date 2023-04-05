@@ -18,7 +18,7 @@
         <form class="layui-form" action="" lay-filter="add-courseRecordInfo">
 
           <div class="layui-form-item">
-            <label class="layui-form-label">课程缴费列表</label>
+            <label class="layui-form-label">会员列表</label>
             <div class="layui-input-block">
               <div class="layui-col-md6">
                 <select id="coursePay">
@@ -36,20 +36,20 @@
             </div>
           </div>
 
-          <div class="layui-form-item">
+          <!--<div class="layui-form-item">
             <label class="layui-form-label">上课状态</label>
             <div class="layui-input-block">
-              <input type="radio" name="isAttend" value="0" title="未上课" checked="">
-              <input type="radio" name="isAttend" value="1" title="已上课">
+              <input type="radio" name="isAttend" value="未上课" title="未上课" checked="">
+              <input type="radio" name="isAttend" value="已上课" title="已上课">
             </div>
-          </div>
+          </div>-->
 
-          <div class="layui-form-item layui-form-text">
+          <!--<div class="layui-form-item layui-form-text">
             <label class="layui-form-label">评价</label>
             <div class="layui-input-block">
               <textarea name="remarks" placeholder="请输入内容" class="layui-textarea"></textarea>
             </div>
-          </div>
+          </div>-->
 
           <div class="layui-form-item layui-layout-admin">
             <div class="layui-input-block">
@@ -105,8 +105,7 @@
           //根据课程缴费列表动态拼接html
           res.coursePayList.map(function (item, index) {
             tempHtml += '<option data-id="' + item.coursePayId + '">'
-                    + ' — 会员：' + item.vip.vipName + '（会员ID：'+ item.vip.vipId +'）'
-                    + ' — 课程类别：' + item.type + '</option>';
+                    + ' — 会员：' + item.vip.vipName + '（会员ID：'+ item.vip.vipId +'）' + '</option>';
           });
           $('#coursePay').html(tempHtml);
           form.render('select');
@@ -122,7 +121,8 @@
           //根据课程缴费列表动态拼接html
           res.courseList.map(function (item, index) {
             tempHtml += '<option data-id="' + item.courseId + '">'
-                    + ' — 会员：' + item.coach.coachName + '</option>';
+                    + ' — 教练：' + item.coach.coachName + ' — 上课时间：' + item.createTime
+                    + '</option>';
           });
           $('#course').html(tempHtml);
           form.render('select');
@@ -135,8 +135,8 @@
     /* 监听提交 */
     form.on('submit(add-courseRecord)', function(){
       // courseRecord.createTime = $('#createTime').val();
-      courseRecord.isAttend = $('input[name="isAttend"]:checked').val();
-      courseRecord.remark = $('textarea[name="remark"]').val();
+      /*courseRecord.isAttend = $('input[name="isAttend"]:checked').val();
+      courseRecord.remark = $('textarea[name="remark"]').val();*/
       courseRecord.coursePay = {
         coursePayId : $('#coursePay').find('option').not(function () {
           return !this.selected;

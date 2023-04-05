@@ -26,6 +26,7 @@
             vip_card vc, vip v
         WHERE
             vc.vip_id = v.vip_id
+        ORDER BY vc.vip_card_id
     </select>
 
     <select id="queryVipCardById" resultMap="vipCardMap" parameterType="Long">
@@ -35,6 +36,7 @@
             vip_card vc ,   vip v
         WHERE
             vc.vip_card_id = #{vipCardId} AND vc.vip_id = v.vip_id
+        ORDER BY vc.vip_card_id
     </select>
 
     <select id="queryVipCardByVipId" resultMap="vipCardMap" parameterType="Long">
@@ -44,6 +46,7 @@
             vip_card vc ,  vip v
         WHERE
             vc.vip_id = #{vipId} AND vc.vip_id = v.vip_id
+        ORDER BY vc.vip_card_id
     </select>
 
     <insert id="addVipCard" useGeneratedKeys="true" keyColumn="vip_card_id" keyProperty="vipCardId">

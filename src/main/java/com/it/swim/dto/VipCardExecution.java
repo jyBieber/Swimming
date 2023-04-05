@@ -19,7 +19,7 @@ public class VipCardExecution {
     private VipCard vipCard;
 
     // 获取的vipCard列表
-    private List< VipCard> vipCardList;
+    private List<VipCard> vipCardList;
 
     public int getState() {
         return state;
@@ -37,15 +37,17 @@ public class VipCardExecution {
         this.stateInfo = stateInfo;
     }
 
-    public  VipCard getVipCard() { return vipCard; }
+    public VipCard getVipCard() { return vipCard; }
 
-    public void setVipCard( VipCard vipCard) {
+    public void setVipCard(VipCard vipCard) {
         this.vipCard = vipCard;
     }
 
-    public List< VipCard> getVipCardList() { return vipCardList; }
+    public List<VipCard> getVipCardList() { return vipCardList; }
 
-    public void setVipCardList(List< VipCard> vipCardList) { this.vipCardList = vipCardList; }
+    public void setVipCardList(List<VipCard> vipCardList) {
+        this.vipCardList = vipCardList;
+    }
 
     // 空的构造器
     public VipCardExecution() {
@@ -65,7 +67,7 @@ public class VipCardExecution {
     }
 
     // 成功的构造器
-    public VipCardExecution(VipCardStateEnum vipCardStateEnum, List< VipCard> vipCardList) {
+    public VipCardExecution(VipCardStateEnum vipCardStateEnum, List<VipCard> vipCardList) {
         this.state = vipCardStateEnum.getState();
         this.stateInfo = vipCardStateEnum.getStateInfo();
         this.vipCardList = vipCardList;

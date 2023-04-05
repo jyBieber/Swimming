@@ -57,13 +57,13 @@ public interface CourseRecordDao {
      * @return  CourseRecord
      */
     List<CourseRecord> queryCoursePayByCourseRecordId(long courseRecordId);
-    
+
     /*
      * @description: 新增上课记录信息
      * @param courseRecord
      * @return int
      */
-    int addCourseRecord( CourseRecord courseRecord);
+    int addCourseRecord(CourseRecord courseRecord);
     
     /*
      * @description: 修改上课记录信息

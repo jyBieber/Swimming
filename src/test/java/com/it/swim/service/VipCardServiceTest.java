@@ -47,10 +47,10 @@ public class VipCardServiceTest extends BaseTest {
         Vip vip = new Vip();
         vip.setVipId(10002L);
         vipCard.setVip(vip);
-        vipCard.setType(4);
+        vipCard.setType("年卡");
         vipCard.setAmount(5000);
         vipCard.setNum(0);
-        vipCard.setState(1);
+        vipCard.setState("已激活");
         vipCard.setCreateTime(new Date());
         vipCard.setExpireTime(new Date());
 
@@ -64,7 +64,7 @@ public class VipCardServiceTest extends BaseTest {
     public void testDModifyVipCard() {
         VipCard vipCard = new   VipCard();
         vipCard.setVipCardId(6L);
-        vipCard.setState(0);
+        vipCard.setState("已失效");
 
         VipCardExecution vipCardExecution = vipCardService.modifyVipCard(vipCard);
         assertEquals(VipCardStateEnum.SUCCESS.getState(),vipCardExecution.getState());

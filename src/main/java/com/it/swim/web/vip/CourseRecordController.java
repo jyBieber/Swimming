@@ -41,44 +41,6 @@ public class CourseRecordController {
     private CoachService coachService;
 
     /*
-     * @description: 根据coursePayId返回游泳记录列表-返回为Map类型
-     * @param coursePayId
-     * @return java.util.Map<java.lang.String,java.lang.Object>
-     */
-    @RequestMapping(value = "/listCourseRecordMapByCoursePayId",method = RequestMethod.GET)
-    @ResponseBody
-    private Map<String,Object> listCourseRecordMapByCoursePayId(@RequestParam("coursePayId") Long coursePayId){
-        Map<String,Object> modelMap = new HashMap<>();
-        List<CourseRecord> courseRecordList = courseRecordService.getCourseRecordByCoursePayId(coursePayId);
-        modelMap.put("success",true);
-        modelMap.put("courseRecordList",courseRecordList);
-        return modelMap;
-    }
-
-    /*
-     * @description: 根据coursePayId返回游泳记录列表-返回为Layui类型
-     * @param coursePayId
-     * @return Layui
-     */
-    @RequestMapping(value = "/listCourseRecordByCoursePayId",method = RequestMethod.GET)
-    @ResponseBody
-    private Layui listCourseRecordByCoursePayId(@RequestParam("coursePayId") Long coursePayId){
-        List<CourseRecord> courseRecordList = courseRecordService.getCourseRecordByCoursePayId(coursePayId);
-        return Layui.data(courseRecordList.size(),courseRecordList);
-    }
-
-    /*
-     * @description: 根据coursePayId返回游泳记录列表-返回为Layui类型
-     * @param coursePayId
-     * @return Layui
-     */
-    @RequestMapping(value = "/listCourseRecordByCourseId",method = RequestMethod.GET)
-    @ResponseBody
-    private Layui listCourseRecordByCourseId(@RequestParam("courseId") Long courseId){
-        List<CourseRecord> courseRecordList = courseRecordService.getCourseRecordByCourseId(courseId);
-        return Layui.data(courseRecordList.size(),courseRecordList);
-    }
-    /*
      * @description: 根据vipId返回游泳记录列表-返回为Layui类型
      * @param vipId
      * @return Layui
@@ -125,46 +87,34 @@ public class CourseRecordController {
      * @return java.util.Map<java.lang.String,java.lang.Object>
      */
     //获取前端ajax传递的字符串，解析字符串为相应的courseRecord实体，根据解析好的数据添加上课记录信息
-    @RequestMapping(value = "/addCourseRecord",method = RequestMethod.POST)
+    @RequestMapping(value = "/addCourseRecord", method = RequestMethod.POST)
     @ResponseBody
-    private Map<String,Object> addCourseRecord(HttpServletRequest request){
+    public Map<String,Object> addCourseRecord(HttpServletRequest request){
         Map<String,Object> modelMap = new HashMap<>();
-
-        //1.接受并转化相应的参数
-        //获取前端传过来的上课记录信息，并将它转换成实体类；
         String courseRecordStr = HttpServletRequestUtil.getString(request,"courseRecordStr");
         if (courseRecordStr == null){
             modelMap.put("success",false);
-            modelMap.put("errMsg","请输入上课记录信息");
+            modelMap.put("errMsg","请输入选课信息");
             return modelMap;
         }
         ObjectMapper mapper = new ObjectMapper();
         CourseRecord courseRecord;
         try {
-            courseRecord = mapper.readValue(courseRecordStr,CourseRecord.class);
-        }catch (JsonProcessingException e) {
+            courseRecord = mapper.readValue(courseRecordStr, CourseRecord.class);
+        } catch (JsonProcessingException e) {
             e.printStackTrace();
             modelMap.put("success",false);
             modelMap.put("errMsg",e.getMessage());
             return modelMap;
         }
 
-        CommonsMultipartResolver commonsMultipartResolver =
-                new CommonsMultipartResolver(
-                        request.getSession().getServletContext()
-                );
-        MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
-
-        //2.添加上课记录信息
-        CourseRecordExecution courseRecordExecution;
-        courseRecordExecution = courseRecordService.addCourseRecord(courseRecord);
+        CourseRecordExecution courseRecordExecution = courseRecordService.addCourseRecord(courseRecord);
         if (courseRecordExecution.getState() == CourseRecordStateEnum.SUCCESS.getState()){
             modelMap.put("success",true);
-        }else{
+        }else {
             modelMap.put("success",false);
             modelMap.put("errMsg",courseRecordExecution.getStateInfo());
         }
-
         return modelMap;
     }
 }

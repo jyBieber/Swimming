@@ -29,41 +29,24 @@ public class CardRecordManagementController {
 
     /*
      * @description: 列出所有游泳记录列表-返回为Layui类型
-     * @param
-     * @return Layui
+     * @return com.it.swim.util.Layui
      */
     @RequestMapping(value = "/listCardRecord",method = RequestMethod.GET)
     @ResponseBody
-    private Layui listCardRecord(){
+    public Layui listCardRecord(){
         //查询游泳记录列表数据
         List<CardRecord> cardRecordList = cardRecordService.getCardRecordList();
         return Layui.data(cardRecordList.size(),cardRecordList);
     }
 
     /*
-     * @description: 列出所有游泳记录列表-返回为Map类型
-     * @param
-     * @return java.util.Map<java.lang.String,java.lang.Object>
-     */
-    @RequestMapping(value = "/listCardRecordMap",method = RequestMethod.GET)
-    @ResponseBody
-    private Map<String,Object> listCardRecordMap(){
-        //查询游泳记录列表数据
-        Map<String,Object> modelMap = new HashMap<>();
-        List<CardRecord> cardRecordList = cardRecordService.getCardRecordList();
-        modelMap.put("success",true);
-        modelMap.put("cardRecordList",cardRecordList);
-        return modelMap;
-    }
-
-    /*
-     * @description: 根据CardRecordId返回唯一的游泳记录信息-返回为Map类型
+     * @description: 根据cardRecordId返回唯一的游泳记录信息-返回为Map类型
      * @param cardRecordId
      * @return java.util.Map<java.lang.String,java.lang.Object>
      */
     @RequestMapping(value = "/listCardRecordById",method = RequestMethod.GET)
     @ResponseBody
-    private Map<String,Object> listCardRecordById(@RequestParam("cardRecordId") Long cardRecordId){
+    public Map<String,Object> listCardRecordById(@RequestParam("cardRecordId") Long cardRecordId){
         CardRecord cardRecord = cardRecordService.getCardRecordById(cardRecordId);
         Map<String,Object> modelMap = new HashMap<>();
         modelMap.put("success",true);
@@ -79,8 +62,8 @@ public class CardRecordManagementController {
     //获取前端ajax传递的字符串，解析字符串为相应的cardRecord实体，根据解析好的数据添加游泳记录信息
     @RequestMapping(value = "/addCardRecord", method = RequestMethod.POST)
     @ResponseBody
-    private Map<String,Object> addCardRecord(HttpServletRequest request){
-        Map<String, Object> modelMap = new HashMap<>();
+    public Map<String,Object> addCardRecord(HttpServletRequest request){
+        Map<String,Object> modelMap = new HashMap<>();
         String cardRecordStr = HttpServletRequestUtil.getString(request,"cardRecordStr");
         if (cardRecordStr == null){
             modelMap.put("success",false);
@@ -101,7 +84,7 @@ public class CardRecordManagementController {
         CardRecordExecution cardRecordExecution = cardRecordService.addCardRecord(cardRecord);
         if (cardRecordExecution.getState() == CardRecordStateEnum.SUCCESS.getState()){
             modelMap.put("success",true);
-        }else{
+        }else {
             modelMap.put("success",false);
             modelMap.put("errMsg",cardRecordExecution.getStateInfo());
         }
@@ -116,38 +99,39 @@ public class CardRecordManagementController {
     //获取前端ajax传递的字符串，解析字符串为相应的cardRecord实体，根据解析好的数据修改游泳记录信息
     @RequestMapping(value = "/modifyCardRecord", method = RequestMethod.POST)
     @ResponseBody
-    private Map<String,Object> modifyCardRecord(HttpServletRequest request){
+    public Map<String,Object> modifyCardRecord(HttpServletRequest request){
         Map<String,Object> modelMap = new HashMap<>();
-        //1.接受并转化相应的参数，包括游泳记录信息
-        //获取前端传过来的游泳记录信息，并将它转换成CardRecord实体类；
         String cardRecordStr = HttpServletRequestUtil.getString(request,"cardRecordStr");
+        if (cardRecordStr == null){
+            modelMap.put("success",false);
+            modelMap.put("errMsg","请输入游泳记录信息");
+            return modelMap;
+        }
         ObjectMapper mapper = new ObjectMapper();
         CardRecord cardRecord;
         try {
-            cardRecord = mapper.readValue(cardRecordStr,CardRecord.class);
+            cardRecord = mapper.readValue(cardRecordStr, CardRecord.class);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
             modelMap.put("success",false);
             modelMap.put("errMsg",e.getMessage());
             return modelMap;
         }
-        //2.修改游泳记录
-        if(cardRecord != null && cardRecord.getCardRecordId() != null){
-            CardRecordExecution cardRecordExecution;
-            cardRecordExecution = cardRecordService.modifyCardRecord(cardRecord);
+
+        if (cardRecord != null && cardRecord.getCardRecordId() != null){
+            CardRecordExecution cardRecordExecution = cardRecordService.modifyCardRecord(cardRecord);
             if (cardRecordExecution.getState() == CardRecordStateEnum.SUCCESS.getState()){
                 modelMap.put("success",true);
-            }else{
+            }else {
                 modelMap.put("success",false);
                 modelMap.put("errMsg",cardRecordExecution.getStateInfo());
             }
             return modelMap;
         }else {
             modelMap.put("success",false);
-            modelMap.put("errMsg","请输入游泳记录Id");
+            modelMap.put("errMsg","请输入要修改的游泳记录信息Id号");
             return modelMap;
         }
-        //3.返回结果
     }
 
     /*
@@ -160,17 +144,17 @@ public class CardRecordManagementController {
     @ResponseBody
     private Map<String, Object> deleteCardRecord(@RequestParam("cardRecordId") Long cardRecordId) {
         Map<String, Object> modelMap = new HashMap<>();
-        if (cardRecordId != null) {
+        if (cardRecordId != null){
             CardRecordExecution cardRecordExecution = cardRecordService.deleteCardRecord(cardRecordId);
-            if (cardRecordExecution.getState() == CardRecordStateEnum.SUCCESS.getState()) {
-                modelMap.put("success", true);
-            } else {
-                modelMap.put("success", false);
-                modelMap.put("errMsg", cardRecordExecution.getStateInfo());
+            if (cardRecordExecution.getState() == CardRecordStateEnum.SUCCESS.getState()){
+                modelMap.put("success",true);
+            }else {
+                modelMap.put("success",false);
+                modelMap.put("errMsg",cardRecordExecution.getStateInfo());
             }
         } else {
             modelMap.put("success", false);
-            modelMap.put("errMsg", "未选择要删除的游泳记录");
+            modelMap.put("errMsg", "未选择要删除的游泳记录信息");
         }
         return modelMap;
     }

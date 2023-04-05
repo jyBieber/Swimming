@@ -46,7 +46,7 @@ public class CourseRecordDaoTest extends BaseTest {
         Course course = new Course();
         course.setCourseId(1L);
         courseRecord.setCourse(course);
-        courseRecord.setIsAttend(0);
+        courseRecord.setIsAttend("未上课");
 
         /*courseRecord.setCreateTime(new Date());*/
         int effectedNum = courseRecordDao.addCourseRecord(courseRecord);
@@ -58,7 +58,7 @@ public class CourseRecordDaoTest extends BaseTest {
     public void testDModifyCourseRecord(){
         CourseRecord courseRecord = new CourseRecord();
         courseRecord.setCourseRecordId(33L);
-        courseRecord.setIsAttend(1);
+        courseRecord.setIsAttend("未上课");
 
         int effectedNum = courseRecordDao.modifyCourseRecord(courseRecord);
         assertEquals(1,effectedNum);
