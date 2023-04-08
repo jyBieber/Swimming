@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.it.swim.dao.StatisticsDao">
+
+    <select id="turnoverStatistics" resultType="com.it.swim.entity.TypeStatis">
+        SELECT '会员卡营业额统计'  as typeName,
+               sum(amount) as money
+        FROM `vip_card`
+        UNION
+        SELECT '课程营业额统计'   as typeName,
+               sum(amount) as money
+        FROM `course_pay`
+    </select>
+
+
+    <select id="performanceStatistics" resultType="com.it.swim.entity.CoachStatis">
+        SELECT c.coach_id as coachId,
+               c.coach_name as coachName,
+               count(1)  as num
+        FROM course_record cr,
+             course co,
+             coach c
+        where cr.course_id = co.course_id
+          AND co.coach_id = c.coach_id
+          and DATE_FORMAT(co.create_time, '%Y%m') = DATE_FORMAT(CURRENT_DATE, '%Y%m')
+          and cr.is_attend = '已上课'
+        GROUP BY c.coach_id
+        order by  count(1) desc
+    </select>
+</mapper>

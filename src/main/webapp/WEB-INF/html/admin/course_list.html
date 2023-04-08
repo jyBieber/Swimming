@@ -137,7 +137,8 @@
 
     //监听弹出框表单提交，massage是修改界面的表单数据'submit(edit-course),是修改按钮的绑定
     function setFormValue(obj,data){
-      getCoachList();
+
+      getCoachList(data.coach.coachId);
       $('input[name="courseId"]').val(data.courseId);
       $('#createTime').val(data.createTime);
 
@@ -180,13 +181,13 @@
     }
 
     // 获取教练列表
-    function getCoachList(){
+    function getCoachList(coachId){
       $.get('/admin/listCoachMap', function(res) {
         if (res.success){
           var tempHtml = '';
           //根据教练列表动态拼接html
           res.coachList.map(function (item, index) {
-            tempHtml += '<option data-id="' + item.coachId + '">'
+            tempHtml += '<option '+(coachId ==item.coachId?'selected=selected ':'' )+' data-id="' + item.coachId + '">'
                     + item.coachName + '</option>';
           });
           $('#coach').html(tempHtml);

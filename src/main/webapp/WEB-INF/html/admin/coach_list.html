@@ -96,6 +96,7 @@
           layer.close(index);
         });
       } else if(obj.event === 'edit'){
+        console.log(data);
         layer.open({
           //layer提供了5种层类型。可传入的值有：0（信息框，默认）1（页面层）2（iframe层）3（加载层）4（tips层）
           type: 1,
@@ -110,6 +111,7 @@
 
     //监听弹出框表单提交，massage是修改界面的表单数据'submit(edit-coach),是修改按钮的绑定
     function setFormValue(obj,data){
+
       $('input[name="coachId"]').val(data.coachId);
       $('input[name="coachName"]').val(data.coachName);
       $('input[name="age"]').val(data.age);

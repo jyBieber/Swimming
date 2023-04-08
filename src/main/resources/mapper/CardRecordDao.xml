@@ -55,6 +55,12 @@
         ORDER BY cr.card_record_id
     </select>
 
+    <select id="countByCardId" resultType="java.lang.Integer">
+        SELECT count(*)
+        FROM card_record
+        WHERE vip_card_id = #{vipCardId}
+    </select>
+
     <insert id="addCardRecord" useGeneratedKeys="true" keyColumn="card_record_id" keyProperty="cardRecordId">
         INSERT INTO
             card_record(card_record_id, vip_card_id, create_time, remarks)

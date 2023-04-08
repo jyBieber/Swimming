@@ -94,6 +94,20 @@ public class AdminPageController {
     @RequestMapping(value = "/courseRecordList",method = RequestMethod.GET)
     private String courseRecordList() { return "admin/courseRecord_list"; }
 
+
+    /*
+     * 营业额统计
+     */
+    @RequestMapping(value = "/turnoverStatistics",method = RequestMethod.GET)
+    private String turnoverStatistics() { return "admin/turnover_list"; }
+
+    /*
+     * 教练业绩统计
+     */
+    @RequestMapping(value = "/performanceStatistics",method = RequestMethod.GET)
+    private String performanceStatistics() { return "admin/performance_list"; }
+
+
     /*
      * 个人信息界面路由
      */

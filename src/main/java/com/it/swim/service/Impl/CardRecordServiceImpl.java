@@ -69,6 +69,8 @@ public class CardRecordServiceImpl implements CardRecordService {
         if (cardRecord == null){
             return new CardRecordExecution(CardRecordStateEnum.EMPTY);
         }
+
+
         //给游泳记录信息赋初始值
         //cardRecord.setCreateTime(new Date());
         //添加游泳记录信息

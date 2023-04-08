@@ -29,7 +29,8 @@ public class VipServiceImpl implements VipService {
      */
     @Override
     public List<Vip> getVipList() {
-        return vipDao.queryVip();
+        List<Vip> vips = vipDao.queryVip();
+        return vips;
     }
 
     /*

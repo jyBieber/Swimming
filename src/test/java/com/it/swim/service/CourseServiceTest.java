@@ -4,7 +4,6 @@ import com.it.swim.BaseTest;
 import com.it.swim.dto.CourseExecution;
 import com.it.swim.entity.Course;
 import com.it.swim.entity.Coach;
-import com.it.swim.entity.Course;
 import com.it.swim.enums.CourseStateEnum;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -26,7 +25,7 @@ public class CourseServiceTest extends BaseTest {
 
     @Test
     public void testAQueryCourse(){
-        List<Course> courseList = courseService.getCourseList();
+        List<Course> courseList = courseService.getCourseList(null);
         assertEquals(3,courseList.size());
         System.out.println(courseList.size());
     }

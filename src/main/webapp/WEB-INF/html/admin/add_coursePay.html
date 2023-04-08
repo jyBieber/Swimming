@@ -143,13 +143,13 @@
 
     getVipList();
     // 获取会员列表
-    function getVipList(){
+    function getVipList(vipId){
       $.get('/admin/listVipMap', function(res) {
         if (res.success){
           var tempHtml = '';
           //根据会员列表动态拼接html
           res.vipList.map(function (item, index) {
-            tempHtml += '<option data-id="' + item.vipId + '">'
+            tempHtml += '<option '+(vipId ==item.vipId?'selected=selected ':'' )+'data-id="' + item.vipId + '">'
                     + item.vipName + ' — 会员ID：' + item.vipId + '</option>';
           });
           $('#vip').html(tempHtml);

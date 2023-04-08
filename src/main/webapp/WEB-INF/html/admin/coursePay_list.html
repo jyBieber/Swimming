@@ -96,6 +96,7 @@
            }},
         {field:'amount', title:'充值金额',width:120},
         {field:'num', title:'次数',width:80},
+        {field:'surplusNum', title:'剩余次数',width:100},
         {field:'points', title:'积分',width:80},
         {field:'isRedeem', title:'是否兑换',width:120},
         {field:'redeemNum', title:'兑换课程次数',width:150},
@@ -145,7 +146,7 @@
 
     //监听弹出框表单提交，massage是修改界面的表单数据'submit(edit-coursePay),是修改按钮的绑定
     function setFormValue(obj,data){
-      getVipList();
+      getVipList(data.vip.vipId);
       $('input[name="coursePayId"]').val(data.coursePayId);
       $('input[name="amount"]').val(data.amount);
       $('input[name="num"]').val(data.num);
@@ -211,13 +212,13 @@
     }
 
     // 获取会员列表
-    function getVipList(){
+    function getVipList(vipId){
       $.get('/admin/listVipMap', function(res) {
         if (res.success){
           var tempHtml = '';
           //根据教练列表动态拼接html
           res.vipList.map(function (item, index) {
-            tempHtml += '<option data-id="' + item.vipId + '">'
+            tempHtml += '<option '+(vipId ==item.vipId?'selected=selected ':'' )+'data-id="' + item.vipId + '">'
                     + item.vipName + '</option>';
           });
           $('#vip').html(tempHtml);

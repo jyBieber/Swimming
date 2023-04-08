@@ -6,7 +6,7 @@
     <resultMap id="courseMap" type="com.it.swim.entity.Course">
         <id column="course_id" property="courseId"/>
         <result column="create_time" property="createTime"/>
-        
+
         <association property="coach" column="coach_id" javaType="com.it.swim.entity.Coach">
             <id column="coach_id" property="coachId"/>
             <result column="coach_name" property="coachName"/>
@@ -15,40 +15,45 @@
 
     <select id="queryCourse" resultMap="courseMap">
         SELECT
-            co.course_id, co.coach_id, c.coach_name, co.create_time 
+        co.course_id, co.coach_id, c.coach_name, co.create_time
         FROM
-            course co, coach c 
+        course co, coach c
         WHERE
-            co.coach_id = c.coach_id
+        co.coach_id = c.coach_id
+        <if test="future != null">
+            and co.create_time > now() and DATE_ADD(now(),INTERVAL 7 DAY) >= co.create_time
+        </if>
         ORDER BY co.course_id
     </select>
 
     <select id="queryCourseById" resultMap="courseMap" parameterType="Long">
-        SELECT
-            co.course_id, co.coach_id, c.coach_name, co.create_time 
-        FROM
-            course co, coach c 
-        WHERE
-            co.course_id = #{courseId} AND co.coach_id = c.coach_id
+        SELECT co.course_id,
+               co.coach_id,
+               c.coach_name,
+               co.create_time
+        FROM course co,
+             coach c
+        WHERE co.course_id = #{courseId}
+          AND co.coach_id = c.coach_id
         ORDER BY co.course_id
     </select>
 
     <select id="queryCourseByCoachId" resultMap="courseMap">
-        SELECT
-            co.course_id, co.coach_id, c.coach_name, co.create_time 
-        FROM
-            course co, coach c 
-        WHERE
-            co.coach_id = #{coach.coachId} AND co.coach_id = c.coach_id
+        SELECT co.course_id,
+               co.coach_id,
+               c.coach_name,
+               co.create_time
+        FROM course co,
+             coach c
+        WHERE co.coach_id = #{coach.coachId}
+          AND co.coach_id = c.coach_id
         ORDER BY co.course_id
     </select>
 
     <insert id="addCourse" useGeneratedKeys="true" keyColumn="course_id" keyProperty="courseId">
-        INSERT INTO
-            course
-        (course_id, coach_id, create_time)
-        VALUES
-        (#{courseId},#{coach.coachId},#{createTime})
+        INSERT INTO course
+            (course_id, coach_id, create_time)
+        VALUES (#{courseId}, #{coach.coachId}, #{createTime})
     </insert>
 
     <update id="modifyCourse" parameterType="com.it.swim.entity.Course">
@@ -61,9 +66,8 @@
     </update>
 
     <delete id="deleteCourse">
-        DELETE FROM
-            course
-        WHERE
-            course_id = #{courseId}
+        DELETE
+        FROM course
+        WHERE course_id = #{courseId}
     </delete>
 </mapper>

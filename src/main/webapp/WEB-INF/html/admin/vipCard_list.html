@@ -96,6 +96,7 @@
         {field:'type', title:'会员卡类型'},
         {field:'amount', title:'充值金额'},
         {field:'num', title:'充值次数'},
+        {field:'surplusNum', title:'剩余次数'},
         {field:'state', title:'会员卡状态'},
         // {field: 'createTime', title: '激活时间', sort: true},
         // {field: 'expireTime', title: '到期时间', sort: true},
@@ -149,8 +150,14 @@
 
     //监听弹出框表单提交，massage是修改界面的表单数据'submit(edit-vipCard),是修改按钮的绑定
     function setFormValue(obj,data){
-      getVipList();
+
+      console.log(data)
+      getVipList(data.vip.vipId);
       $('input[name="vipCardId"]').val(data.vipCardId);
+
+
+
+
       //$('input[name="type"]').val(data.type);
       $('input[name="amount"]').val(data.amount);
       $('input[name="num"]').val(data.num);
@@ -204,13 +211,13 @@
     }
 
     // 获取会员列表
-    function getVipList(){
+    function getVipList(vipId){
       $.get('/admin/listVipMap', function(res) {
         if (res.success){
           var tempHtml = '';
           //根据会员列表动态拼接html
           res.vipList.map(function (item, index) {
-            tempHtml += '<option data-id="' + item.vipId + '">'
+            tempHtml += '<option '+(vipId ==item.vipId?'selected=selected ':'' )+'   data-id="' + item.vipId + '">'
                     + item.vipName + '</option>';
           });
           $('#vip').html(tempHtml);

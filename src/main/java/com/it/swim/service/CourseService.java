@@ -11,7 +11,7 @@ public interface CourseService {
      * @param
      * @return java.util.List< Course>
      */
-    List<Course> getCourseList();
+    List<Course> getCourseList(Integer future);
 
     /*
      * @description: 通过课程ID获取指定课程信息

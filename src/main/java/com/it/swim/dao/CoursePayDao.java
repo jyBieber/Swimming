@@ -55,4 +55,10 @@ public interface CoursePayDao {
      * @return int
      */
     int deleteCoursePay(long coursePayId);
+    /*
+     * @description: 通过 coursePayId 查询游泳记录信息次数
+     * @param coursePayId
+     * @return Integer
+     */
+    Integer countByCoursePayId(Long coursePayId);
 }

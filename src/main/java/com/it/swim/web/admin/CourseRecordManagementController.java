@@ -1,8 +1,11 @@
 package com.it.swim.web.admin;
 
 import com.it.swim.dto.CourseRecordExecution;
+import com.it.swim.entity.CoursePay;
 import com.it.swim.entity.CourseRecord;
+import com.it.swim.entity.VipCard;
 import com.it.swim.enums.CourseRecordStateEnum;
+import com.it.swim.service.CoursePayService;
 import com.it.swim.service.CourseRecordService;
 import com.it.swim.util.HttpServletRequestUtil;
 import com.it.swim.util.Layui;
@@ -28,7 +31,8 @@ import java.util.Map;
 public class CourseRecordManagementController {
     @Autowired
     private CourseRecordService courseRecordService;
-
+    @Autowired
+    private CoursePayService coursePayService;
     /*
      * @description: 列出所有选课列表-返回为Layui类型
      * @return com.bjtu.edu.util.Layui
@@ -80,6 +84,13 @@ public class CourseRecordManagementController {
             e.printStackTrace();
             modelMap.put("success",false);
             modelMap.put("errMsg",e.getMessage());
+            return modelMap;
+        }
+
+        CoursePay coursePay = coursePayService.getCoursePayById(courseRecord.getCoursePay().getCoursePayId());
+        if (coursePay.getSurplusNum() < 1) {
+            modelMap.put("success", false);
+            modelMap.put("errMsg", "课程剩余次数为0");
             return modelMap;
         }
 

@@ -123,7 +123,8 @@
         contentType : false,
         processData : false,
         success:function(res){
-          if (res.success){
+          console.log(res.success )
+          if (res.success  ){
             layer.msg("添加游泳记录信息成功");
           }else {
             layer.msg("添加游泳记录信息失败" + res.errMsg);

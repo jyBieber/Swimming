@@ -1,5 +1,6 @@
 package com.it.swim.service.Impl;
 
+import com.it.swim.dao.CardRecordDao;
 import com.it.swim.dao.VipCardDao;
 import com.it.swim.dto.VipCardExecution;
 import com.it.swim.entity.VipCard;
@@ -8,6 +9,7 @@ import com.it.swim.exception.VipCardOperationException;
 import com.it.swim.service.VipCardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -19,6 +21,8 @@ import java.util.List;
 public class VipCardServiceImpl implements VipCardService {
     @Autowired
     private VipCardDao vipCardDao;
+    @Autowired
+    private CardRecordDao cardRecordDao;
 
     /*
      * @return java.util.List<com.it.swim.entity.VipCard>
@@ -26,7 +30,9 @@ public class VipCardServiceImpl implements VipCardService {
      */
     @Override
     public List<VipCard> getVipCardList() {
-        return vipCardDao.queryVipCard();
+        List<VipCard> vipCards = vipCardDao.queryVipCard();
+
+        return getSurplusNum(vipCards);
     }
 
     /*
@@ -36,7 +42,7 @@ public class VipCardServiceImpl implements VipCardService {
      */
     @Override
     public VipCard getVipCardById(long vipCardId) {
-        return vipCardDao.queryVipCardById(vipCardId);
+        return getSurplusNum(vipCardDao.queryVipCardById(vipCardId));
     }
 
     /*
@@ -46,7 +52,8 @@ public class VipCardServiceImpl implements VipCardService {
      */
     @Override
     public List<VipCard> getVipCardByVipId(long vipId) {
-        return vipCardDao.queryVipCardByVipId(vipId);
+        List<VipCard> vipCards = vipCardDao.queryVipCardByVipId(vipId);
+        return getSurplusNum(vipCards);
     }
 
     /*
@@ -57,7 +64,7 @@ public class VipCardServiceImpl implements VipCardService {
     @Override
     public VipCardExecution addVipCard(VipCard vipCard) {
         //空值判断
-        if (vipCard == null){
+        if (vipCard == null) {
             return new VipCardExecution(VipCardStateEnum.EMPTY);
         }
         //设置创建时间
@@ -65,10 +72,10 @@ public class VipCardServiceImpl implements VipCardService {
         //添加会员卡信息
         int effectedNum = vipCardDao.addVipCard(vipCard);
         //判断是否添加成功
-        if (effectedNum <= 0){
+        if (effectedNum <= 0) {
             throw new VipCardOperationException("添加会员卡信息失败");
         }
-        return new VipCardExecution(VipCardStateEnum.SUCCESS,vipCard);
+        return new VipCardExecution(VipCardStateEnum.SUCCESS, vipCard);
     }
 
     /*
@@ -79,7 +86,7 @@ public class VipCardServiceImpl implements VipCardService {
     @Override
     public VipCardExecution modifyVipCard(VipCard vipCard) {
         //空值判断
-        if (vipCard == null || vipCard.getVipCardId() == null){
+        if (vipCard == null || vipCard.getVipCardId() == null) {
             return new VipCardExecution(VipCardStateEnum.EMPTY);
         }
         //设置更新时间
@@ -87,10 +94,10 @@ public class VipCardServiceImpl implements VipCardService {
         //修改会员卡信息
         int effectedNum = vipCardDao.modifyVipCard(vipCard);
         //判断是否修改成功
-        if (effectedNum <= 0){
+        if (effectedNum <= 0) {
             throw new VipCardOperationException("修改会员卡信息失败");
         }
-        return new VipCardExecution(VipCardStateEnum.SUCCESS,vipCard);
+        return new VipCardExecution(VipCardStateEnum.SUCCESS, vipCard);
     }
 
     /*
@@ -108,5 +115,33 @@ public class VipCardServiceImpl implements VipCardService {
         } else {
             return new VipCardExecution(VipCardStateEnum.SUCCESS);
         }
+    }
+
+
+    /*
+     * @param vipCards
+     * @return List<VipCard>
+     * @description: 获取已用次数和剩余次数
+     */
+    private List<VipCard> getSurplusNum(List<VipCard> vipCards) {
+        if (!CollectionUtils.isEmpty(vipCards)) {
+            vipCards.forEach(this::getSurplusNum);
+        }
+        return vipCards;
+    }
+
+    /*
+     * @param vipCards
+     * @return List<VipCard>
+     * @description: 获取已用次数和剩余次数
+     */
+    private VipCard getSurplusNum(VipCard vipCard) {
+        vipCard.setUseNum(cardRecordDao.countByCardId(vipCard.getVipCardId()));
+        if (!"年卡".equals(vipCard.getType())) {
+            vipCard.setSurplusNum(vipCard.getNum() - vipCard.getUseNum());
+        }else{
+            vipCard.setSurplusNum(1000);
+        }
+        return vipCard;
     }
 }

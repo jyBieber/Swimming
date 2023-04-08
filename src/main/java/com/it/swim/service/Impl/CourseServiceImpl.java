@@ -25,8 +25,8 @@ public class CourseServiceImpl implements CourseService {
      * @description: 查询全部课程信息
      */
     @Override
-    public List<Course> getCourseList() {
-        return courseDao.queryCourse();
+    public List<Course> getCourseList(Integer future) {
+        return courseDao.queryCourse(future);
     }
 
     /*

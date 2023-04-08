@@ -17,6 +17,10 @@ public class VipCard {
     private Integer amount;
     //充值次数
     private Integer num;
+    //使用次数
+    private Integer useNum;
+    //剩余次数
+    private Integer surplusNum;
     //会员卡状态
     private String state;
 
@@ -102,5 +106,21 @@ public class VipCard {
 
     public void setVip(Vip vip) {
         this.vip = vip;
+    }
+
+    public Integer getUseNum() {
+        return useNum;
+    }
+
+    public void setUseNum(Integer useNum) {
+        this.useNum = useNum;
+    }
+
+    public Integer getSurplusNum() {
+        return surplusNum;
+    }
+
+    public void setSurplusNum(Integer surplusNum) {
+        this.surplusNum = surplusNum;
     }
 }

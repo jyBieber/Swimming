@@ -115,7 +115,7 @@
 
     // 获取课程列表
     function getCourseList(){
-      $.get('/admin/listCourseMap', function(res) {
+      $.get('/admin/listCourseMap?future=1', function(res) {
         if (res.success){
           var tempHtml = '';
           //根据课程缴费列表动态拼接html

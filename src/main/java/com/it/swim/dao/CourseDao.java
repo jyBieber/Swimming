@@ -13,7 +13,7 @@ public interface CourseDao {
      * @param
      * @return java.util.List< Course>
      */
-    List<Course> queryCourse();
+    List<Course> queryCourse(Integer future);
 
     /*
      * @description: 通过courseId查询指定课程信息

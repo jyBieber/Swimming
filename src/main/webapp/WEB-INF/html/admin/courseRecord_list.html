@@ -41,6 +41,9 @@
 <script src="../../../resources/layuiadmin/layui/layui.js"></script>
 <script src="../../../resources/js/common.js"></script>
 <script>
+
+
+  var coursePayId ;
   layui.config({
     base: '../../../resources/layuiadmin/' //静态资源所在路径
   }).extend({
@@ -128,8 +131,9 @@
 
     //监听弹出框表单提交，massage是修改界面的表单数据'submit(edit-courseRecord),是修改按钮的绑定
     function setFormValue(obj,data){
-      getCoursePayList();
-      getCourseList();
+      getCoursePayList(data.coursePay.coursePayId);
+      coursePayId= data.coursePay.coursePayId;
+      getCourseList(data.course.courseId);
       $('input[name="courseRecordId"]').val(data.courseRecordId);
       //$('input[name="isAttend"]').val(data.isAttend);
       $('textarea[name="remarks"]').text(data.remarks);
@@ -179,13 +183,13 @@
     }
 
     // 获取课程缴费列表
-    function getCoursePayList(){
+    function getCoursePayList(coursePayId){
       $.get('/admin/listCoursePayMap', function(res) {
         if (res.success){
           var tempHtml = '';
           //根据课程缴费列表动态拼接html
           res.coursePayList.map(function (item, index) {
-            tempHtml += '<option data-id="' + item.coursePayId + '">'
+            tempHtml += '<option  '+(coursePayId ==item.coursePayId?'selected=selected ':'' )+'data-id="' + item.coursePayId + '">'
                     + ' — 会员：' + item.vip.vipName + '（会员ID：'+ item.vip.vipId +'）' + '</option>';
           });
           $('#coursePay').html(tempHtml);
@@ -195,13 +199,13 @@
     }
 
     // 获取课程列表
-    function getCourseList(){
+    function getCourseList(courseId){
       $.get('/admin/listCourseMap', function(res) {
         if (res.success){
           var tempHtml = '';
           //根据课程缴费列表动态拼接html
           res.courseList.map(function (item, index) {
-            tempHtml += '<option data-id="' + item.courseId + '">'
+            tempHtml += '<option  '+(courseId ==item.courseId?'selected=selected ':'' )+' data-id="' + item.courseId + '">'
                     + ' — 教练：' + item.coach.coachName + ' — 上课时间：' + item.createTime
                     + '</option>';
           });

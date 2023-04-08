@@ -2,7 +2,6 @@ package com.it.swim.dao;
 
 import com.it.swim.BaseTest;
 import com.it.swim.entity.Coach;
-import com.it.swim.entity.CoursePay;
 import com.it.swim.entity.Course;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -24,7 +23,7 @@ public class CourseDaoTest extends BaseTest {
 
     @Test
     public void testAQueryCourse(){
-        List<Course> courseList = courseDao.queryCourse();
+        List<Course> courseList = courseDao.queryCourse(null);
         assertEquals(3,courseList.size());
         System.out.println(courseList.size());
     }

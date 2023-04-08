@@ -1,13 +1,15 @@
 package com.it.swim.web.admin;
 
-import com.it.swim.dto.CardRecordExecution;
-import com.it.swim.entity.CardRecord;
-import com.it.swim.enums.CardRecordStateEnum;
-import com.it.swim.service.CardRecordService;
-import com.it.swim.util.HttpServletRequestUtil;
-import com.it.swim.util.Layui;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.it.swim.dto.CardRecordExecution;
+import com.it.swim.entity.CardRecord;
+import com.it.swim.entity.VipCard;
+import com.it.swim.enums.CardRecordStateEnum;
+import com.it.swim.service.CardRecordService;
+import com.it.swim.service.VipCardService;
+import com.it.swim.util.HttpServletRequestUtil;
+import com.it.swim.util.Layui;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /*
  * @description: 游泳记录管理类-管理员界面
@@ -26,7 +30,8 @@ import java.util.*;
 public class CardRecordManagementController {
     @Autowired
     private CardRecordService cardRecordService;
-
+    @Autowired
+    private VipCardService vipCardService;
     /*
      * @description: 列出所有游泳记录列表-返回为Layui类型
      * @return com.it.swim.util.Layui
@@ -81,6 +86,19 @@ public class CardRecordManagementController {
             return modelMap;
         }
 
+        VipCard vipCard = vipCardService.getVipCardById(cardRecord.getVipCard().getVipCardId());
+
+        if(!"已激活".equals(vipCard.getState())){
+            modelMap.put("success", false);
+            modelMap.put("errMsg", "会员卡未激活");
+            return modelMap;
+        }
+
+        if (vipCard.getSurplusNum() < 1) {
+            modelMap.put("success", false);
+            modelMap.put("errMsg", "会员卡剩余次数为0");
+            return modelMap;
+        }
         CardRecordExecution cardRecordExecution = cardRecordService.addCardRecord(cardRecord);
         if (cardRecordExecution.getState() == CardRecordStateEnum.SUCCESS.getState()){
             modelMap.put("success",true);

@@ -24,7 +24,7 @@
                 <a class="fly-nav-avatar" href="javascript:;">
                     <cite class="layui-hide-xs" id="cite-name1"></cite>
                     <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：会员"></i>
-                    <img src="" alt="" id="profileImg1">
+                    <img src="" alt="" id="profileImg">
                 </a>
                 <dl class="layui-nav-child">
                     <dd><a href="/vip/set"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
@@ -113,6 +113,7 @@
         //访问后台，获取会员信息
         $.getJSON('/vip/getVipInfo', function(data) {
             if (data.success) {
+                //获取后台传递过来的教练信息
                 var vip = data.vip;
 
                 //判断从后台传入的图片流是否为空，
@@ -161,7 +162,7 @@
 
         // 获取课程列表
         function getCourseList(){
-            $.get('/admin/listCourseMap', function(res) {
+            $.get('/admin/listCourseMap?future=1', function(res) {
                 if (res.success){
                     var tempHtml = '';
                     //根据课程缴费列表动态拼接html

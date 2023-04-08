@@ -88,13 +88,17 @@ public class CourseRecordServiceImpl implements CourseRecordService {
                 throw new CourseRecordOperationException("添加选课信息失败");
             }
         }catch (Exception e){
-            throw new CourseRecordOperationException("addCourseRecord error:" + e.getMessage());
+            CourseRecordExecution execution = new CourseRecordExecution();
+            execution.setState(-1);
+            execution.setStateInfo(" 课程已被预约");
+            return  execution;
+           // throw new CourseRecordOperationException("addCourseRecord error:" + e.getMessage());
         }
         return new CourseRecordExecution(CourseRecordStateEnum.SUCCESS,courseRecord);
     }
 
     /*
-     * @param courseRecord
+     * @param courseRecordX
      * @return com.it.swim.dto.CourseRecordExecution
      * @description: 修改选课信息
      */

@@ -38,7 +38,7 @@ public class CourseManagementController {
     @ResponseBody
     private Layui listCourse(){
         //查询课程列表数据
-        List<Course> courseList = courseService.getCourseList();
+        List<Course> courseList = courseService.getCourseList(null);
         return Layui.data(courseList.size(),courseList);
     }
 
@@ -49,10 +49,10 @@ public class CourseManagementController {
      */
     @RequestMapping(value = "/listCourseMap",method = RequestMethod.GET)
     @ResponseBody
-    private Map<String,Object> listCourseMap(){
+    private Map<String,Object> listCourseMap(@RequestParam(required = false) Integer future){
         //查询课程列表数据
         Map<String,Object> modelMap = new HashMap<>();
-        List<Course> courseList = courseService.getCourseList();
+        List<Course> courseList = courseService.getCourseList(future);
         modelMap.put("success",true);
         modelMap.put("courseList",courseList);
         return modelMap;

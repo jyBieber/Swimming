@@ -56,4 +56,10 @@ public interface CardRecordDao {
      * @return int
      */
     int deleteCardRecord(long cardRecordId);
+    /*
+     * @description: 通过vipCardId查询游泳记录信息次数
+     * @param vipCardId
+     * @return Integer
+     */
+    Integer countByCardId(Long vipCardId);
 }

@@ -50,6 +50,12 @@
         ORDER BY cp.course_pay_id
     </select>
 
+    <select id="countByCoursePayId" resultType="java.lang.Integer">
+        SELECT count(*)
+        FROM course_pay
+        WHERE course_pay_id=#{coursePayId}
+    </select>
+
     <insert id="addCoursePay" useGeneratedKeys="true" keyColumn="course_pay_id" keyProperty="coursePayId">
         INSERT INTO
             course_pay
