@@ -17,7 +17,7 @@ public class VipCard {
     private Integer amount;
     //充值次数
     private Integer num;
-    //使用次数
+    //次数
     private Integer useNum;
     //剩余次数
     private Integer surplusNum;

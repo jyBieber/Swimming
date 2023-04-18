@@ -22,13 +22,6 @@ public interface CardRecordService {
     CardRecord getCardRecordById(long cardRecordId);
 
     /*
-     * @description: 通过vipCardId查询游泳记录信息列表
-     * @param vipCardId
-     * @return java.util.List<CardRecord>
-     */
-    // List<CardRecord> getCardRecordByVipCardId(long vipCardId);
-
-    /*
      * @description: 通过vipId查询游泳记录信息列表
      * @param vipId
      * @return java.util.List<CardRecord>

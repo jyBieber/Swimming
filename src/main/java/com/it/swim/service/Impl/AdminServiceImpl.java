@@ -57,7 +57,6 @@ public class AdminServiceImpl implements AdminService {
                     addAdminImg(admin, imageHolder);
                 }
             }
-
             //2.修改管理员信息
             //修改管理员信息
             int effectedNum = adminDao.modifyAdmin(admin);

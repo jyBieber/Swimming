@@ -19,7 +19,6 @@ import java.util.Random;
  */
 public class ImageUtil {
     private static String basePath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
-
     private static final SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
     private static final Random r = new Random();
 
@@ -71,7 +70,6 @@ public class ImageUtil {
     private static String getFileExtension(String fileName) {
         return fileName.substring(fileName.lastIndexOf("."));
     }
-
 
     /*
      * @description: 创建目标路径所涉及到的目录
@@ -140,6 +138,4 @@ public class ImageUtil {
                 .outputQuality(0.8f)
                 .toFile("D:/慕课网学习/xiaohuangrennew.jpg");
     }
-
-
 }

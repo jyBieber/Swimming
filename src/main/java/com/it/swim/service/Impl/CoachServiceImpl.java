@@ -102,7 +102,6 @@ public class CoachServiceImpl implements CoachService {
                     addCoachImg(coach, imageHolder);
                 }
             }
-
             //2.修改教练信息
             //修改教练信息
             int effectedNum = coachDao.modifyCoach(coach);
@@ -130,7 +129,6 @@ public class CoachServiceImpl implements CoachService {
         if (coach.getProfileImg() != null){
             ImageUtil.deleteFileOrPath(coach.getProfileImg());
         }
-
         //删除该教练信息
         try {
             int effectedNum = coachDao.deleteCoach(coachId);

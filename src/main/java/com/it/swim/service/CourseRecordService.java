@@ -35,27 +35,6 @@ public interface CourseRecordService {
     List<CourseRecord> getCourseRecordByCoachId(long coachId);
 
     /*
-     * @description: 通过coursePayId查询上课记录信息列表
-     * @param coursePayId
-     * @return  CourseRecord
-     */
-    // List<CourseRecord> getCourseRecordByCoursePayId(long coursePayId);
-
-    /*
-     * @description: 通过courseId查询上课记录信息列表
-     * @param courseId
-     * @return  CourseRecord
-     */
-    // List<CourseRecord> getCourseRecordByCourseId(long courseId);
-
-    /*
-     * @description: 通过courseRecord查询缴费信息列表
-     * @param coursePayId
-     * @return  CourseRecord
-     */
-    // List<CourseRecord> getCoursePayByCourseRecordId(long CourseRecordId);
-
-    /*
      * @description: 新增上课记录信息
      * @param courseRecord
      * @return  CourseRecordExecution

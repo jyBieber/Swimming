@@ -41,7 +41,6 @@ public class DESUtil {
 	/*
 	 * 获取加密后的信息
 	 * @param str
-	 * @return
 	 */
 	public static String getEncryptString(String str) {
 		// 基于BASE64编码，接收byte[]并转换成String
@@ -66,7 +65,6 @@ public class DESUtil {
 	/*
 	 * 获取解密之后的信息
 	 * @param str
-	 * @return
 	 */
 	public static String getDecryptString(String str) {
 		// 基于BASE64编码，接收byte[]并转换成String

@@ -25,31 +25,31 @@ public class VipPageController {
     /*
      * 会员卡列表界面路由
      */
-    @RequestMapping(value = "/vipCard",method = RequestMethod.GET)
+    @RequestMapping(value = "/vipCardList",method = RequestMethod.GET)
     private String vipCardList() { return "vip/vipCard_list"; }
 
     /*
      * 游泳记录界面路由
      */
-    @RequestMapping(value = "/cardRecord",method = RequestMethod.GET)
-    private String cardRecord() { return "vip/cardRecord_list"; }
+    @RequestMapping(value = "/cardRecordList",method = RequestMethod.GET)
+    private String cardRecordList() { return "vip/cardRecord_list"; }
 
     /*
      * 课程缴费列表界面路由
      */
-    @RequestMapping(value = "/coursePay",method = RequestMethod.GET)
-    private String coursePay() { return "vip/coursePay_list"; }
+    @RequestMapping(value = "/coursePayList",method = RequestMethod.GET)
+    private String coursePayList() { return "vip/coursePay_list"; }
 
     /*
      * 上课记录界面路由
      */
-    @RequestMapping(value = "/courseRecord",method = RequestMethod.GET)
-    private String courseRecord() { return "vip/courseRecord_list"; }
+    @RequestMapping(value = "/courseRecordList",method = RequestMethod.GET)
+    private String courseRecordList() { return "vip/courseRecord_list"; }
 
     /*
      * 预约课程界面路由
      */
     @RequestMapping(value = "/add",method = RequestMethod.GET)
-    private String vipInfo() { return "vip/add_courseRecord"; }
+    private String addCourseRecord() { return "vip/add_courseRecord"; }
 
 }

@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class StatisticsServiceImpl implements StatisticsService {
-
     @Autowired
     private CoachDao coachDao;
     @Autowired
@@ -40,7 +39,6 @@ public class StatisticsServiceImpl implements StatisticsService {
      */
     @Override
     public List<CoachStatis> performanceStatistics() {
-
         List<Coach> coaches = coachDao.queryCoach();
         List<CoachStatis> coachStatis = statisticsDao.performanceStatistics();
         Map<Long, Long> existMap = coachStatis.stream().collect(Collectors.toMap(CoachStatis::getCoachId, CoachStatis::getNum));
@@ -55,8 +53,6 @@ public class StatisticsServiceImpl implements StatisticsService {
                 }
             });
         }
-
-
         return coachStatis;
     }
 }

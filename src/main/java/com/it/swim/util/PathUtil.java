@@ -30,16 +30,4 @@ public class PathUtil {
         String imagePath = "/imageUpload/item/admin/"+ adminId + "/";
         return imagePath.replace("/", seperator);
     }
-
-    // public static String getFileBasePath(){
-    //     String os = System.getProperty("os.name");
-    //     String basePath = "";
-    //     if (os.toLowerCase().startsWith("win")){
-    //         basePath = "D:/projectHMS/file";
-    //     }else {
-    //         basePath = "/Users/work/file";
-    //     }
-    //     basePath = basePath.replace("/",seperator);
-    //     return basePath;
-    // }
 }

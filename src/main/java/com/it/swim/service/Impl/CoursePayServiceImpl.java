@@ -50,16 +50,6 @@ public class CoursePayServiceImpl implements CoursePayService {
     }
 
     /*
-     * @param coursePayId
-     * @return   CoursePay
-     * @description: 通过CoursePayId查询会员信息列表
-     */
-    /*@Override
-    public List<CoursePay> getVipByCoursePayId(long coursePayId) {
-        return coursePayDao.queryVipByCoursePayId(coursePayId);
-    }*/
-
-    /*
      * @param coursePay
      * @return   CoursePayExecution
      * @description: 新增课程缴费信息

@@ -29,13 +29,6 @@ public interface CoursePayDao {
     List<CoursePay> queryCoursePayByVipId(long vipId);
 
     /*
-     * @description: 通过CoursePayId查询会员信息列表
-     * @param CoursePayId
-     * @return  CoursePay
-     */
-    /*List<CoursePay> queryVipByCoursePayId(long coursePayId);*/
-
-    /*
      * @description: 新增课程缴费充值记录信息
      * @param coursePay
      * @return int

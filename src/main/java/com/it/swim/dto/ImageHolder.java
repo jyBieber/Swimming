@@ -30,5 +30,4 @@ public class ImageHolder {
 	public void setImage(InputStream image) {
 		this.image = image;
 	}
-
 }

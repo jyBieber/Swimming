@@ -4,7 +4,6 @@ import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 
 /*
  * @description: 解密工具类
- * @return
  */
 public class EncryptPropertyPlaceholderConfigurer extends PropertyPlaceholderConfigurer {
 	// 需要加密的字段数组

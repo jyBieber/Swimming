@@ -7,7 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 
 /*
- * @description: 会员上课记录实体类
+ * @description: 上课记录实体类
  */
 // @JsonIgnoreProperties(ignoreUnknown = true)
 public class CourseRecord {

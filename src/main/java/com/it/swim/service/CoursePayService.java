@@ -28,13 +28,6 @@ public interface CoursePayService {
     List<CoursePay> getCoursePayByVipId(long vipId);
 
     /*
-     * @description: 通过CoursePayId查询会员信息列表
-     * @param CoursePay
-     * @return  CoursePay
-     */
-    /*List<CoursePay> getVipByCoursePayId(long coursePayId);*/
-
-    /*
      * @description: 新增课程缴费信息
      * @param coursePay
      * @return  CoursePayExecution

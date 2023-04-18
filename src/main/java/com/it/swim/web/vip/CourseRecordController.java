@@ -49,35 +49,6 @@ public class CourseRecordController {
     }
 
     /*
-     * @description: 列出所有教练列表-返回为Layui类型
-     * @param
-     * @return   Layui
-     *//*
-    @RequestMapping(value = "/listCoach",method = RequestMethod.GET)
-    @ResponseBody
-    public Layui listCoach(){
-        //查询教练列表数据
-        List<Coach> coachList = coachService.getCoachList();
-        return Layui.data(coachList.size(), coachList);
-    }
-
-    *//*
-     * @description: 列出所有教练列表-返回为Map类型
-     * @param
-     * @return java.util.Map<java.lang.String,java.lang.Object>
-     *//*
-    @RequestMapping(value = "/listCoachMap",method = RequestMethod.GET)
-    @ResponseBody
-    public Map<String,Object> listCoachMap(){
-        //查询教练列表数据
-        Map<String,Object> modelMap = new HashMap<>();
-        List<Coach> coachList = coachService.getCoachList();
-        modelMap.put("success",true);
-        modelMap.put("coachList",coachList);
-        return modelMap;
-    }*/
-
-    /*
      * @description: 添加上课记录信息
      * @param request
      * @return java.util.Map<java.lang.String,java.lang.Object>

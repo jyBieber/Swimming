@@ -49,16 +49,6 @@ public class CardRecordServiceImpl implements CardRecordService {
     }
 
     /*
-     * @param courseId
-     * @return com.it.swim.entity.CardRecord
-     * @description: 通过课程ID获取学生列表信息
-     */
-    /*@Override
-    public List<CardRecord> getVipByCourseId(long courseId) {
-        return cardRecordDao.queryVipByCourseId(courseId);
-    }*/
-
-    /*
      * @param cardRecord
      * @return com.it.swim.dto.CardRecordExecution
      * @description: 新增游泳记录信息
@@ -69,8 +59,6 @@ public class CardRecordServiceImpl implements CardRecordService {
         if (cardRecord == null){
             return new CardRecordExecution(CardRecordStateEnum.EMPTY);
         }
-
-
         //给游泳记录信息赋初始值
         //cardRecord.setCreateTime(new Date());
         //添加游泳记录信息

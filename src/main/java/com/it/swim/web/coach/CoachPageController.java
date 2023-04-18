@@ -25,13 +25,13 @@ public class CoachPageController {
     /*
      * 课程信息界面路由
      */
-    @RequestMapping(value = "/course",method = RequestMethod.GET)
-    private String course() { return "coach/course_list"; }
+    @RequestMapping(value = "/courseList",method = RequestMethod.GET)
+    private String courseList() { return "coach/course_list"; }
 
     /*
      * 上课记录界面路由
      */
-    @RequestMapping(value = "/courseRecord",method = RequestMethod.GET)
-    private String courseRecord() { return "coach/courseRecord_list"; }
+    @RequestMapping(value = "/courseRecordList",method = RequestMethod.GET)
+    private String courseRecordList() { return "coach/courseRecord_list"; }
 
 }

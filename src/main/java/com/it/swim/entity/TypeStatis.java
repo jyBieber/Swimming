@@ -11,7 +11,6 @@ public class TypeStatis {
     //营业额
     private Long money;
 
-
     public String getTypeName() {
         return typeName;
     }

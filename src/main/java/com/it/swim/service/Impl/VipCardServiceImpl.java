@@ -31,7 +31,6 @@ public class VipCardServiceImpl implements VipCardService {
     @Override
     public List<VipCard> getVipCardList() {
         List<VipCard> vipCards = vipCardDao.queryVipCard();
-
         return getSurplusNum(vipCards);
     }
 
@@ -116,7 +115,6 @@ public class VipCardServiceImpl implements VipCardService {
             return new VipCardExecution(VipCardStateEnum.SUCCESS);
         }
     }
-
 
     /*
      * @param vipCards

@@ -139,7 +139,6 @@ public class VipServiceImpl implements VipService {
         if (vip.getProfileImg() != null){
             ImageUtil.deleteFileOrPath(vip.getProfileImg());
         }
-
         //删除该会员信息
         try {
             int effectedNum = vipDao.deleteVip(vipId);
