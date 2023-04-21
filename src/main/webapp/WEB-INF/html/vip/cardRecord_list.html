@@ -45,7 +45,7 @@
         <li><a id="listVipCard">会员卡管理</a></li>
         <li><a id="listCardRecord">游泳记录管理</a></li>
         <li><a id="listCoursePay">课程缴费管理</a></li>
-        <li><a id="listCourseRecord">课程管理</a></li>
+        <li><a id="listCourseRecord">上课记录管理</a></li>
         <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><span class="fly-mid"></span></li>
       </ul>
 
@@ -111,10 +111,10 @@
         //attr-给标签添加新的属性值
         $('#cite-name').html(vip.vipName);
         $('.vip-index').attr('href', '/vip/index?vipId=' + vip.vipId);
-        $('#listVipCard').attr('href','/vip/vipCard?vipId=' + vip.vipId);
-        $('#listCardRecord').attr('href','/vip/cardRecord?vipId=' + vip.vipId);
-        $('#listCoursePay').attr('href','/vip/coursePay?vipId=' + vip.vipId);
-        $('#listCourseRecord').attr('href','/vip/courseRecord?vipId=' + vip.vipId);
+        $('#listVipCard').attr('href','/vip/vipCardList?vipId=' + vip.vipId);
+        $('#listCardRecord').attr('href','/vip/cardRecordList?vipId=' + vip.vipId);
+        $('#listCoursePay').attr('href','/vip/coursePayList?vipId=' + vip.vipId);
+        $('#listCourseRecord').attr('href','/vip/courseRecordList?vipId=' + vip.vipId);
       }
     });
 

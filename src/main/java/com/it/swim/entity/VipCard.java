@@ -9,7 +9,7 @@ import java.util.Date;
  * @description: 会员卡实体类
  */
 public class VipCard {
-    //会员卡号
+    //会员卡ID
     private Long vipCardId;
     //会员卡类型
     private String type;
@@ -17,7 +17,7 @@ public class VipCard {
     private Integer amount;
     //充值次数
     private Integer num;
-    //次数
+    //使用次数
     private Integer useNum;
     //剩余次数
     private Integer surplusNum;

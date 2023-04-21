@@ -10,7 +10,7 @@ import java.util.Date;
  * @description: 课程实体类
  */
 public class Course {
-    //课程号
+    //课程ID
     private Long courseId;
     
     //激活时间

@@ -41,7 +41,7 @@
           </div>
         </div>
 
-        <div class="layui-form-item layui-layout-admin">
+        <div class="layui-form-item">
           <div class="layui-input-block">
             <div class="layui-footer" style="left: 0;">
               <button class="layui-btn" lay-submit="" lay-filter="add-cardRecord">立即提交</button>
@@ -92,7 +92,7 @@
           //根据会员卡列表动态拼接html
           res.vipCardList.map(function (item, index) {
             tempHtml += '<option data-id="' + item.vipCardId + '">'
-                    + item.type + ' — 会员：' + item.vip.vipName + '（会员号：'+ item.vip.vipId +'）' + '</option>';
+                    + item.type + ' — 会员：' + item.vip.vipName + '（会员ID：'+ item.vip.vipId +'）' + '</option>';
           });
           $('#vipCard').html(tempHtml);
           form.render('select');

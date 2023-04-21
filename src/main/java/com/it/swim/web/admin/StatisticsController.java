@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 /*
- * @description: 统计管理类-管理员界面
+ * @description: 课程管理类-管理员界面
  */
 @Controller
 @RequestMapping("/statistics")
@@ -57,6 +57,4 @@ public class StatisticsController {
         List<CoachStatis> courseList = statisticsService.performanceStatistics();
         return Layui.data(courseList.size(),courseList);
     }
-
-
 }

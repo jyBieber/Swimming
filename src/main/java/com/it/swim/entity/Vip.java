@@ -28,6 +28,7 @@ public class Vip {
     //备注
     private String remarks;
 
+
     public Long getVipId() {
         return vipId;
     }

@@ -60,8 +60,6 @@ public class CoursePayServiceImpl implements CoursePayService {
         if (coursePay == null) {
             return new CoursePayExecution(CoursePayStateEnum.EMPTY);
         }
-        //设置上课时间
-        //coursePay.setCreateTime(new Date());
         //添加课程缴费信息
         int effectedNum = coursePayDao.addCoursePay(coursePay);
         //判断是否添加成功
@@ -82,8 +80,6 @@ public class CoursePayServiceImpl implements CoursePayService {
         if (coursePay == null || coursePay.getCoursePayId() == null) {
             return new CoursePayExecution(CoursePayStateEnum.EMPTY);
         }
-        //设置更新时间
-        //coursePay.setLastEditTime(new Date());
         //修改课程缴费信息
         int effectedNum = coursePayDao.modifyCoursePay(coursePay);
         //判断是否修改成功

@@ -60,8 +60,6 @@ public class CourseServiceImpl implements CourseService {
         if (course == null){
             return new CourseExecution(CourseStateEnum.EMPTY);
         }
-        //设置创建时间
-        course.setCreateTime(new Date());
         //添加课程信息
         int effectedNum = courseDao.addCourse(course);
         //判断是否添加成功
@@ -82,8 +80,6 @@ public class CourseServiceImpl implements CourseService {
         if (course == null || course.getCourseId() == null){
             return new CourseExecution(CourseStateEnum.EMPTY);
         }
-        //设置更新时间
-        //course.setLastEditTime(new Date());
         //修改课程信息
         int effectedNum = courseDao.modifyCourse(course);
         //判断是否修改成功

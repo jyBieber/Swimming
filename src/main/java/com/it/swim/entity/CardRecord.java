@@ -5,7 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 
 /*
- * @description: 游泳记录实体类
+ * @description: 会员游泳记录实体类
  */
 public class CardRecord {
     //会员游泳记录ID

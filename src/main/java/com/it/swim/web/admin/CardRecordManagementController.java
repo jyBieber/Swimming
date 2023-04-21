@@ -147,7 +147,7 @@ public class CardRecordManagementController {
             return modelMap;
         }else {
             modelMap.put("success",false);
-            modelMap.put("errMsg","请输入要修改的游泳记录信息Id号");
+            modelMap.put("errMsg","请输入要修改的游泳记录信息ID");
             return modelMap;
         }
     }

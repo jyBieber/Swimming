@@ -6,16 +6,16 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 
 /*
- * @description: 课程缴费实体类
+ * @description: 会员卡实体类
  */
 public class CoursePay {
-    //会员卡号
+    //会员卡ID
     private Long coursePayId;
     //缴费金额
     private Integer amount;
     //充值次数
     private Integer num;
-    //次数
+    //使用次数
     private Integer useNum;
     //剩余次数
     private Integer surplusNum;

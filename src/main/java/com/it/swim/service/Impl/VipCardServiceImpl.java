@@ -66,8 +66,6 @@ public class VipCardServiceImpl implements VipCardService {
         if (vipCard == null) {
             return new VipCardExecution(VipCardStateEnum.EMPTY);
         }
-        //设置创建时间
-        vipCard.setCreateTime(new Date());
         //添加会员卡信息
         int effectedNum = vipCardDao.addVipCard(vipCard);
         //判断是否添加成功
@@ -88,8 +86,6 @@ public class VipCardServiceImpl implements VipCardService {
         if (vipCard == null || vipCard.getVipCardId() == null) {
             return new VipCardExecution(VipCardStateEnum.EMPTY);
         }
-        //设置更新时间
-        //vipCard.setLastEditTime(new Date());
         //修改会员卡信息
         int effectedNum = vipCardDao.modifyVipCard(vipCard);
         //判断是否修改成功

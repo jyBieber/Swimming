@@ -84,8 +84,8 @@
       ,toolbar: '#operation'
       ,title: '课程信息列表'
       ,cols: [[
-        {field:'courseId', title:'课程ID号', fixed: 'left', unresize: true, sort: true},
-        {title:'教授ID号', sort: true, templet: function(data){
+        {field:'courseId', title:'课程ID', fixed: 'left', unresize: true, sort: true},
+        {title:'教授ID', sort: true, templet: function(data){
             return data.coach.coachId;
           }},
         {title:'教练姓名', sort: true, templet: function(data){
@@ -206,7 +206,7 @@
   <div class="layui-col-md10">
     <form class="layui-form layui-from-pane" action="" style="margin-top:20px" lay-filter="modify-course">
       <div class="layui-form-item">
-        <label class="layui-form-label">课程号</label>
+        <label class="layui-form-label">课程ID</label>
         <div class="layui-input-block">
           <input type="text" name="courseId" autocomplete="off" class="layui-input" readonly>
         </div>
@@ -229,7 +229,7 @@
         </div>
       </div>
 
-      <div class="layui-form-item layui-layout-admin">
+      <div class="layui-form-item">
         <div class="layui-input-block">
           <div class="layui-footer" style="left: 0;">
             <button class="layui-btn" lay-submit="" lay-filter="edit-course">立即提交</button>

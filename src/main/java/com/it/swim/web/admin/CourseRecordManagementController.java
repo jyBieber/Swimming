@@ -142,7 +142,7 @@ public class CourseRecordManagementController {
             return modelMap;
         }else {
             modelMap.put("success",false);
-            modelMap.put("errMsg","请输入要修改的选课信息Id号");
+            modelMap.put("errMsg","请输入要修改的选课信息ID");
             return modelMap;
         }
     }

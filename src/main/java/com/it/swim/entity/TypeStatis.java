@@ -5,7 +5,6 @@ package com.it.swim.entity;
  * @description: 营业额统计
  */
 public class TypeStatis {
-
     //类别名称
     private String typeName;
     //营业额

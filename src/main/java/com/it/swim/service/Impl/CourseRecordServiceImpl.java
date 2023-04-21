@@ -30,7 +30,7 @@ public class CourseRecordServiceImpl implements CourseRecordService {
 
     /*
      * @return java.util.List<com.it.swim.entity.CourseRecord>
-     * @description: 查询全部上课记录信息
+     * @description: 查询全部选课信息
      */
     @Override
     public List<CourseRecord> getCourseRecordList() {
@@ -40,7 +40,7 @@ public class CourseRecordServiceImpl implements CourseRecordService {
     /*
      * @param courseRecordId
      * @return com.it.swim.entity.CourseRecord
-     * @description: 通过上课记录ID获取指定上课记录信息
+     * @description: 通过选课ID获取指定选课信息
      */
     @Override
     public CourseRecord getCourseRecordById(long courseRecordId) {
@@ -50,7 +50,7 @@ public class CourseRecordServiceImpl implements CourseRecordService {
     /*
      * @param vipId
      * @return java.util.List<com.it.swim.entity.CourseRecord>
-     * @description: 通过vipId查询上课记录信息列表
+     * @description: 通过vipId查询选课信息列表
      */
     @Override
     public List<CourseRecord> getCourseRecordByVipId(long vipId) {
@@ -70,7 +70,7 @@ public class CourseRecordServiceImpl implements CourseRecordService {
     /*
      * @param courseRecord
      * @return com.it.swim.dto.CourseRecordExecution
-     * @description: 新增上课记录信息
+     * @description: 新增选课信息
      */
     @Override
     public CourseRecordExecution addCourseRecord(CourseRecord courseRecord) {
@@ -78,14 +78,12 @@ public class CourseRecordServiceImpl implements CourseRecordService {
         if (courseRecord == null){
             return new CourseRecordExecution(CourseRecordStateEnum.EMPTY);
         }
-        //给上课记录信息赋初始值
-        //courseRecord.setCreateTime(new Date());
-        //添加上课记录信息
+        //添加选课信息
         try{
             int effectedNum = courseRecordDao.addCourseRecord(courseRecord);
             //判断是否添加成功
             if (effectedNum <= 0){
-                throw new CourseRecordOperationException("添加上课记录信息失败");
+                throw new CourseRecordOperationException("添加选课信息失败");
             }
         }catch (Exception e){
             CourseRecordExecution execution = new CourseRecordExecution();
@@ -100,7 +98,7 @@ public class CourseRecordServiceImpl implements CourseRecordService {
     /*
      * @param courseRecordX
      * @return com.it.swim.dto.CourseRecordExecution
-     * @description: 修改上课记录信息
+     * @description: 修改选课信息
      */
     @Override
     public CourseRecordExecution modifyCourseRecord(CourseRecord courseRecord) {
@@ -108,13 +106,11 @@ public class CourseRecordServiceImpl implements CourseRecordService {
         if (courseRecord == null || courseRecord.getCourseRecordId() == null){
             return new CourseRecordExecution(CourseRecordStateEnum.EMPTY);
         }
-        //给上课记录信息赋初始值
-        //courseRecord.setLastEditTime(new Date());
-        //修改上课记录信息
+        //修改选课信息
         int effectedNum = courseRecordDao.modifyCourseRecord(courseRecord);
         //判断是否修改成功
         if (effectedNum <= 0){
-            throw new CourseRecordOperationException("修改上课记录信息失败");
+            throw new CourseRecordOperationException("修改选课信息失败");
         }
         return new CourseRecordExecution(CourseRecordStateEnum.SUCCESS,courseRecord);
     }
@@ -122,15 +118,15 @@ public class CourseRecordServiceImpl implements CourseRecordService {
     /*
      * @param courseRecordId
      * @return com.it.swim.dto.CourseRecordExecution
-     * @description: 删除指定上课记录信息
+     * @description: 删除指定选课信息
      */
     @Override
     public CourseRecordExecution deleteCourseRecord(long courseRecordId) {
-        //删除该上课记录信息
+        //删除该选课信息
         int effectedNum = courseRecordDao.deleteCourseRecord(courseRecordId);
         //判断是否删除成功
         if (effectedNum <= 0){
-            throw new CourseRecordOperationException("上课记录信息删除失败");
+            throw new CourseRecordOperationException("选课信息删除失败");
         }else {
             return new CourseRecordExecution(CourseRecordStateEnum.SUCCESS);
         }

@@ -26,7 +26,7 @@
 
           <div class="layui-form-item">
             <div class="layui-inline">
-              <label class="layui-form-label">会员号</label>
+              <label class="layui-form-label">会员ID</label>
               <div class="layui-input-inline">
                 <input type="text" name="vipId" lay-verify="required|vipId" autocomplete="off" class="layui-input">
               </div>
@@ -69,29 +69,6 @@
             </div>
           </div>
 
-          <!--<div class="layui-form-item">
-            <label class="layui-form-label">会员卡种类</label>
-            <div class="layui-input-block">
-              <input type="radio" name="type" value="年卡" title="年卡">
-              <input type="radio" name="type" value="季卡" title="季卡">
-              <input type="radio" name="type" value="月卡" title="月卡">
-            </div>
-          </div>
-
-          <div class="layui-form-item">
-            <label class="layui-form-label">激活时间</label>
-            <div class="layui-input-inline">
-              <input type="text" class="layui-input" id="createTime" placeholder="yyyy-MM-dd">
-            </div>
-          </div>
-
-          <div class="layui-form-item">
-            <label class="layui-form-label">到期时间</label>
-            <div class="layui-input-inline">
-              <input type="text" class="layui-input" id="expireTime" placeholder="yyyy-MM-dd">
-            </div>
-          </div>-->
-
           <div class="layui-form-item layui-form-text">
             <label class="layui-form-label">备注</label>
             <div class="layui-input-block">
@@ -99,7 +76,7 @@
             </div>
           </div>
 
-          <div class="layui-form-item layui-layout-admin">
+          <div class="layui-form-item">
             <div class="layui-input-block">
               <div class="layui-footer" style="left: 0;">
                 <button class="layui-btn" lay-submit="" lay-filter="add-vip">立即提交</button>
@@ -155,7 +132,7 @@
     form.verify({
       vipId: function(value){
         if(hasLetter(value) === true || isChina(value) === true){
-          return '会员号不能含有中文';
+          return '会员ID不能含有中文';
         }
       }
       ,vipName: function(value){
